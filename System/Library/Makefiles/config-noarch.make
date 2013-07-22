@@ -1,0 +1,1 @@
+/usr/local/share/GNUstep/Makefiles/config-noarch.make

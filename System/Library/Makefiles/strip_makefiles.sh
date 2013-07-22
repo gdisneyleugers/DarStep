@@ -1,0 +1,1 @@
+/usr/local/share/GNUstep/Makefiles/strip_makefiles.sh
