@@ -1,0 +1,9 @@
+{
+  NOTE = "Automatically generated, do not edit!";
+  NSExecutable = "PreferencePanes";
+  NSMainNibFile = "";
+  NSPrincipalClass = "PreferencePanes";
+  Classes = 
+("NSPreferencePane")
+  ;
+}

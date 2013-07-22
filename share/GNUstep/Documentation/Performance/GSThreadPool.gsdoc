@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSThreadPool">
+  <head>
+    <title>GSThreadPool class documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSThreadPool class
+      </heading>
+      <class name="GSThreadPool" super="NSObject">
+        <declared>GSThreadPool.h</declared>
+        <desc>
+          This class provides a thread pool for performing methods
+          of objects in parallel in other threads. <br /> This is
+          similar to the NSOperationQueue class but is a
+          lightweight alternative designed to operate
+          rather faster though with slightly decreased
+          functionality... for instance there is no
+          dependency checking supported.
+        </desc>
+        <ivariable type="GSLinkedList*" name="idle" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSLinkedList*" name="live" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSUInteger" name="maxOperations" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSUInteger" name="maxThreads" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSLinkedList*" name="operations" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSRecursiveLock*" name="poolLock" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSUInteger" name="processed" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="BOOL" name="shutdown" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="BOOL" name="suspended" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSLinkedList*" name="unused" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <method type="GSThreadPool*" factory="yes">
+          <sel>sharedPool</sel>
+          <desc>
+            Returns an instance intended for sharing between
+            sections of code which wish to make use of
+            threading by performing operations in other
+            threads, but which don't mind operations being
+            interleaved with those belonging to oither
+            sections of code. <br /> Always returns the same
+            instance whenever the method is called.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>drain:</sel>
+          <arg type="NSDate*">before</arg>
+          <desc>
+            Waits until the pool of operations is empty or until
+            the specified timestamp. Returns <code>YES</code> if
+            the pool was emptied, <code>NO</code> otherwise.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>flush</sel>
+          <desc>
+            Removes all operations which have not yet started,
+            returning a count of the abandoned operations.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>isEmpty</sel>
+          <desc>
+            Returns <code>YES</code> if no operations are
+            waiting to be performed, <code>NO</code> otherwise.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>isIdle</sel>
+          <desc>
+            Returns <code>YES</code> if <code>NO</code>
+            operations are in progress, <code>NO</code>
+            otherwise.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>isSuspended</sel>
+          <desc>
+            Returns <code>YES</code> if startup of new
+            operations is suspended, <code>NO</code>
+            otherwise.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>maxOperations</sel>
+          <desc>
+            Returns the currently configured maximum number of
+            operations which may be scheduled at any one
+            time.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>maxThreads</sel>
+          <desc>
+            Returns the currently configured maximum number of
+            threads in the pool.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>resume</sel>
+          <desc>
+            Reverses the effect of
+            <ref type="method" id="-suspend">
+              -suspend
+            </ref>
+            .
+          </desc>
+        </method>
+        <method type="void">
+          <sel>scheduleSelector:</sel>
+          <arg type="SEL">aSelector</arg>
+          <sel>onReceiver:</sel>
+          <arg type="NSObject*">aReceiver</arg>
+          <sel>withObject:</sel>
+          <arg type="NSObject*">anArgument</arg>
+          <desc>
+            Adds the object to the queue for which operations
+            should be performed. <br /> You may add an object
+            more than once, but that may result in the operation
+            being performed simultaneously in more than one
+            thread. <br /> If the pool is configured with zero
+            threads or zero operations, this method will simply
+            perform the operation immediately. <br /> The
+            operation will be performed in a context where
+            there is an exception handler set to trap exceptions,
+            and an autorelease pool to deal with autoreleased
+            objects.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setOperations:</sel>
+          <arg type="NSUInteger">max</arg>
+          <desc>
+            Specify the number of operations which may be
+            waiting. <br /> Default is 100. <br /> Setting a
+            value of zero ensures that operations are performed
+            immediately rather than being queued.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setThreads:</sel>
+          <arg type="NSUInteger">max</arg>
+          <desc>
+            Specify the maximum number of threads in the pool
+            (the actual number used may be lower than this value).
+            <br /> Default is 2. <br /> The pool creates threads
+            on demand up to the specified limit (or a lower limit if
+            dictated by system resources) but will not destroy
+            idle threads unless the limit is subsequently
+            released. <br /> Setting a value of zero means
+            that operations are performed in the main thread. In
+            this case
+            <ref type="method" id="-drain:">
+              -drain:
+            </ref>
+            will be used (with a 30 second limit) followed by
+            <ref type="method" id="-flush">
+              -flush
+            </ref>
+            to ensure that the queue is emptied before the threads
+            are shut down.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>suspend</sel>
+          <desc>
+            Turns off startup of new operations.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+  </body>
+</gsdoc>

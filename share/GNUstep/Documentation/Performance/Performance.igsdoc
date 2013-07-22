@@ -1,0 +1,700 @@
+{
+    categories = {
+	NSMutableArray = {
+	    GSSkipMutableArray = GSSkipMutableArray;
+	};
+	NSObject = {
+	    GSCacheSizeInBytes = GSCache;
+	};
+    };
+    category = {
+	"NSMutableArray(GSSkipMutableArray)" = GSSkipMutableArray;
+	"NSObject(GSCacheSizeInBytes)" = GSCache;
+    };
+    class = {
+	GSCache = GSCache;
+	GSFIFO = GSFIFO;
+	GSIOThreadPool = GSIOThreadPool;
+	GSLinkedList = GSLinkedList;
+	GSListLink = GSLinkedList;
+	GSThreadPool = GSThreadPool;
+	GSThroughput = GSThroughput;
+	GSTicker = GSTicker;
+    };
+    classvars = {
+	GSFIFO = {
+	    "_capacity" = GSFIFO;
+	    "_getTryFailure" = GSFIFO;
+	    "_getTrySuccess" = GSFIFO;
+	    "_head" = GSFIFO;
+	    "_items" = GSFIFO;
+	    "_putTryFailure" = GSFIFO;
+	    "_putTrySuccess" = GSFIFO;
+	    "_tail" = GSFIFO;
+	};
+	GSIOThreadPool = {
+	    maxThreads = GSIOThreadPool;
+	    poolLock = GSIOThreadPool;
+	    threads = GSIOThreadPool;
+	    timeout = GSIOThreadPool;
+	};
+	GSLinkedList = {
+	    count = GSLinkedList;
+	    head = GSLinkedList;
+	    tail = GSLinkedList;
+	};
+	GSListLink = {
+	    item = GSLinkedList;
+	    next = GSLinkedList;
+	    owner = GSLinkedList;
+	    previous = GSLinkedList;
+	};
+	GSThreadPool = {
+	    idle = GSThreadPool;
+	    live = GSThreadPool;
+	    maxOperations = GSThreadPool;
+	    maxThreads = GSThreadPool;
+	    operations = GSThreadPool;
+	    poolLock = GSThreadPool;
+	    processed = GSThreadPool;
+	    shutdown = GSThreadPool;
+	    suspended = GSThreadPool;
+	    unused = GSThreadPool;
+	};
+	GSThroughput = {
+	    "_data" = GSThroughput;
+	};
+    };
+    constant = {
+	GSThroughputCountKey = GSThroughput;
+	GSThroughputMaximumKey = GSThroughput;
+	GSThroughputMinimumKey = GSThroughput;
+	GSThroughputNotification = GSThroughput;
+	GSThroughputTimeKey = GSThroughput;
+	GSThroughputTotalKey = GSThroughput;
+    };
+    function = {
+	GSGetFastFIFO = GSFIFO;
+	GSGetFastNonBlockingFIFO = GSFIFO;
+	GSLinkCircularInsertAfter = GSLinkedList;
+	GSLinkCircularInsertBefore = GSLinkedList;
+	GSLinkCircularRemove = GSLinkedList;
+	GSLinkInsertAfter = GSLinkedList;
+	GSLinkInsertBefore = GSLinkedList;
+	GSLinkRemove = GSLinkedList;
+	GSLinkedListFindEqual = GSLinkedList;
+	GSLinkedListFindIdentical = GSLinkedList;
+	GSLinkedListInsertAfter = GSLinkedList;
+	GSLinkedListInsertBefore = GSLinkedList;
+	GSLinkedListMoveToHead = GSLinkedList;
+	GSLinkedListMoveToTail = GSLinkedList;
+	GSLinkedListRemove = GSLinkedList;
+	GSPutFastFIFO = GSFIFO;
+	GSPutFastNonBlockingFIFO = GSFIFO;
+	GSTickerTimeLast = GSTicker;
+	GSTickerTimeNow = GSTicker;
+	GSTickerTimeStart = GSTicker;
+	GSTickerTimeTick = GSTicker;
+    };
+    ivariable = {
+	"_capacity" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_data" = {
+	    GSThroughput = GSThroughput;
+	};
+	"_getTryFailure" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_getTrySuccess" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_head" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_items" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_putTryFailure" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_putTrySuccess" = {
+	    GSFIFO = GSFIFO;
+	};
+	"_tail" = {
+	    GSFIFO = GSFIFO;
+	};
+	count = {
+	    GSLinkedList = GSLinkedList;
+	};
+	head = {
+	    GSLinkedList = GSLinkedList;
+	};
+	idle = {
+	    GSThreadPool = GSThreadPool;
+	};
+	item = {
+	    GSListLink = GSLinkedList;
+	};
+	live = {
+	    GSThreadPool = GSThreadPool;
+	};
+	maxOperations = {
+	    GSThreadPool = GSThreadPool;
+	};
+	maxThreads = {
+	    GSIOThreadPool = GSIOThreadPool;
+	    GSThreadPool = GSThreadPool;
+	};
+	next = {
+	    GSListLink = GSLinkedList;
+	};
+	operations = {
+	    GSThreadPool = GSThreadPool;
+	};
+	owner = {
+	    GSListLink = GSLinkedList;
+	};
+	poolLock = {
+	    GSIOThreadPool = GSIOThreadPool;
+	    GSThreadPool = GSThreadPool;
+	};
+	previous = {
+	    GSListLink = GSLinkedList;
+	};
+	processed = {
+	    GSThreadPool = GSThreadPool;
+	};
+	shutdown = {
+	    GSThreadPool = GSThreadPool;
+	};
+	suspended = {
+	    GSThreadPool = GSThreadPool;
+	};
+	tail = {
+	    GSLinkedList = GSLinkedList;
+	};
+	threads = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	timeout = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	unused = {
+	    GSThreadPool = GSThreadPool;
+	};
+    };
+    method = {
+	"+allInstances" = {
+	    GSCache = GSCache;
+	    GSThroughput = GSThroughput;
+	};
+	"+description" = {
+	    GSCache = GSCache;
+	    GSThroughput = GSThroughput;
+	};
+	"+last" = {
+	    GSTicker = GSTicker;
+	};
+	"+newSecond:" = {
+	    GSTicker = GSTicker;
+	};
+	"+now" = {
+	    GSTicker = GSTicker;
+	};
+	"+registerObserver:userInfo:" = {
+	    GSTicker = GSTicker;
+	};
+	"+setTick:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"+sharedPool" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	    GSThreadPool = GSThreadPool;
+	};
+	"+skipArray" = {
+	    "NSMutableArray(GSSkipMutableArray)" = GSSkipMutableArray;
+	};
+	"+start" = {
+	    GSTicker = GSTicker;
+	};
+	"+stats" = {
+	    GSFIFO = GSFIFO;
+	};
+	"+tick" = {
+	    GSThroughput = GSThroughput;
+	    GSTicker = GSTicker;
+	};
+	"+unregisterObserver:" = {
+	    GSTicker = GSTicker;
+	};
+	"+update" = {
+	    GSTicker = GSTicker;
+	};
+	"-acquireThread" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	"-add:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-add:duration:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-addDuration:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-append:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-count" = {
+	    GSFIFO = GSFIFO;
+	    GSLinkedList = GSLinkedList;
+	};
+	"-countForThread:" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	"-currentObjects" = {
+	    GSCache = GSCache;
+	};
+	"-currentSize" = {
+	    GSCache = GSCache;
+	};
+	"-delegate" = {
+	    GSCache = GSCache;
+	};
+	"-description" = {
+	    GSCache = GSCache;
+	    GSThroughput = GSThroughput;
+	};
+	"-drain:" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-empty" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-enableNotifications:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-endDuration" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-endDuration:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-findEqual:from:back:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-findIdentical:from:back:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-flush" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-get" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-get:count:shouldBlock:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-head" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-init" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-initCircular" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-initWithCapacity:granularity:timeout:multiProducer:multiConsumer:boundaries:name:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-initWithCapacity:name:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-initWithDurations:forPeriods:ofLength:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-initWithName:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-insert:after:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-insert:before:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-isEmpty" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-isIdle" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-isSuspended" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-item" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-last" = {
+	    GSTicker = GSTicker;
+	};
+	"-lifetime" = {
+	    GSCache = GSCache;
+	};
+	"-maxObjects" = {
+	    GSCache = GSCache;
+	};
+	"-maxOperations" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-maxSize" = {
+	    GSCache = GSCache;
+	};
+	"-maxThreads" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	    GSThreadPool = GSThreadPool;
+	};
+	"-mayRefreshItem:withKey:lifetime:after:" = {
+	    "(GSCacheDelegate)" = GSCache;
+	};
+	"-name" = {
+	    GSCache = GSCache;
+	    GSThroughput = GSThroughput;
+	};
+	"-newSecond:" = {
+	    "(GSTicker)" = GSTicker;
+	    GSTicker = GSTicker;
+	};
+	"-next" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-now" = {
+	    GSTicker = GSTicker;
+	};
+	"-objectForKey:" = {
+	    GSCache = GSCache;
+	};
+	"-owner" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-previous" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-purge" = {
+	    GSCache = GSCache;
+	};
+	"-put:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-put:count:shouldBlock:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-removeLink:" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-resume" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-scheduleSelector:onReceiver:withObject:" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-setDelegate:" = {
+	    GSCache = GSCache;
+	};
+	"-setItem:" = {
+	    GSListLink = GSLinkedList;
+	};
+	"-setLifetime:" = {
+	    GSCache = GSCache;
+	};
+	"-setMaxObjects:" = {
+	    GSCache = GSCache;
+	};
+	"-setMaxSize:" = {
+	    GSCache = GSCache;
+	};
+	"-setName:" = {
+	    GSCache = GSCache;
+	    GSThroughput = GSThroughput;
+	};
+	"-setObject:forKey:" = {
+	    GSCache = GSCache;
+	};
+	"-setObject:forKey:lifetime:" = {
+	    GSCache = GSCache;
+	};
+	"-setObject:forKey:until:" = {
+	    GSCache = GSCache;
+	};
+	"-setOperations:" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-setThreads:" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	    GSThreadPool = GSThreadPool;
+	};
+	"-setTimeout:" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	"-shouldKeepItem:withKey:lifetime:after:" = {
+	    "(GSCacheDelegate)" = GSCache;
+	};
+	"-shrinkObjects:andSize:" = {
+	    GSCache = GSCache;
+	};
+	"-sizeInBytes:" = {
+	    "NSObject(GSCacheSizeInBytes)" = GSCache;
+	};
+	"-start" = {
+	    GSTicker = GSTicker;
+	};
+	"-startDuration:" = {
+	    GSThroughput = GSThroughput;
+	};
+	"-stats" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-statsGet" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-statsPut" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-suspend" = {
+	    GSThreadPool = GSThreadPool;
+	};
+	"-tail" = {
+	    GSLinkedList = GSLinkedList;
+	};
+	"-tick" = {
+	    GSTicker = GSTicker;
+	};
+	"-timeout" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	"-tryGet" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-tryPut:" = {
+	    GSFIFO = GSFIFO;
+	};
+	"-unacquireThread:" = {
+	    GSIOThreadPool = GSIOThreadPool;
+	};
+	"-update" = {
+	    GSTicker = GSTicker;
+	};
+    };
+    output = {
+	"GSCache.h" = (
+	    "Performance/GSCache.gsdoc"
+	);
+	"GSFIFO.h" = (
+	    "Performance/GSFIFO.gsdoc"
+	);
+	"GSIOThreadPool.h" = (
+	    "Performance/GSIOThreadPool.gsdoc"
+	);
+	"GSLinkedList.h" = (
+	    "Performance/GSLinkedList.gsdoc"
+	);
+	"GSSkipMutableArray.h" = (
+	    "Performance/GSSkipMutableArray.gsdoc"
+	);
+	"GSThreadPool.h" = (
+	    "Performance/GSThreadPool.gsdoc"
+	);
+	"GSThroughput.h" = (
+	    "Performance/GSThroughput.gsdoc"
+	);
+	"GSTicker.h" = (
+	    "Performance/GSTicker.gsdoc"
+	);
+    };
+    protocol = {
+	"(GSCacheDelegate)" = GSCache;
+	"(GSTicker)" = GSTicker;
+    };
+    source = {
+	"GSCache.h" = (
+	    "GSCache.m"
+	);
+	"GSFIFO.h" = (
+	    "GSFIFO.m"
+	);
+	"GSIOThreadPool.h" = (
+	    "GSIOThreadPool.m"
+	);
+	"GSLinkedList.h" = (
+	    "GSLinkedList.m"
+	);
+	"GSSkipMutableArray.h" = (
+	    "GSSkipMutableArray.m"
+	);
+	"GSThreadPool.h" = (
+	    "GSThreadPool.m"
+	);
+	"GSThroughput.h" = (
+	    "GSThroughput.m"
+	);
+	"GSTicker.h" = (
+	    "GSTicker.m"
+	);
+    };
+    super = {
+	GSCache = NSObject;
+	GSFIFO = NSObject;
+	GSIOThreadPool = NSObject;
+	GSLinkedList = NSObject;
+	GSListLink = NSObject;
+	GSThreadPool = NSObject;
+	GSThroughput = NSObject;
+	GSTicker = NSObject;
+    };
+    title = {
+	GSCache = "GSCache class documentation";
+	GSFIFO = "GSFIFO class documentation";
+	GSIOThreadPool = "GSIOThreadPool class documentation";
+	GSLinkedList = "GSLinkedList documentation";
+	GSSkipMutableArray = "GSSkipMutableArray documentation";
+	GSThreadPool = "GSThreadPool class documentation";
+	GSThroughput = "GSThroughput class documentation";
+	GSTicker = "GSTicker class documentation";
+    };
+    type = {
+	NSUInteger = GSLinkedList;
+    };
+    unitmethods = {
+	"(GSCacheDelegate)" = {
+	    "-mayRefreshItem:withKey:lifetime:after:" = GSCache;
+	    "-shouldKeepItem:withKey:lifetime:after:" = GSCache;
+	};
+	"(GSTicker)" = {
+	    "-newSecond:" = GSTicker;
+	};
+	GSCache = {
+	    "+allInstances" = GSCache;
+	    "+description" = GSCache;
+	    "-currentObjects" = GSCache;
+	    "-currentSize" = GSCache;
+	    "-delegate" = GSCache;
+	    "-description" = GSCache;
+	    "-lifetime" = GSCache;
+	    "-maxObjects" = GSCache;
+	    "-maxSize" = GSCache;
+	    "-name" = GSCache;
+	    "-objectForKey:" = GSCache;
+	    "-purge" = GSCache;
+	    "-setDelegate:" = GSCache;
+	    "-setLifetime:" = GSCache;
+	    "-setMaxObjects:" = GSCache;
+	    "-setMaxSize:" = GSCache;
+	    "-setName:" = GSCache;
+	    "-setObject:forKey:" = GSCache;
+	    "-setObject:forKey:lifetime:" = GSCache;
+	    "-setObject:forKey:until:" = GSCache;
+	    "-shrinkObjects:andSize:" = GSCache;
+	};
+	GSFIFO = {
+	    "+stats" = GSFIFO;
+	    "-count" = GSFIFO;
+	    "-get" = GSFIFO;
+	    "-get:count:shouldBlock:" = GSFIFO;
+	    "-initWithCapacity:granularity:timeout:multiProducer:multiConsumer:boundaries:name:" = GSFIFO;
+	    "-initWithCapacity:name:" = GSFIFO;
+	    "-initWithName:" = GSFIFO;
+	    "-put:" = GSFIFO;
+	    "-put:count:shouldBlock:" = GSFIFO;
+	    "-stats" = GSFIFO;
+	    "-statsGet" = GSFIFO;
+	    "-statsPut" = GSFIFO;
+	    "-tryGet" = GSFIFO;
+	    "-tryPut:" = GSFIFO;
+	};
+	GSIOThreadPool = {
+	    "+sharedPool" = GSIOThreadPool;
+	    "-acquireThread" = GSIOThreadPool;
+	    "-countForThread:" = GSIOThreadPool;
+	    "-maxThreads" = GSIOThreadPool;
+	    "-setThreads:" = GSIOThreadPool;
+	    "-setTimeout:" = GSIOThreadPool;
+	    "-timeout" = GSIOThreadPool;
+	    "-unacquireThread:" = GSIOThreadPool;
+	};
+	GSLinkedList = {
+	    "-append:" = GSLinkedList;
+	    "-count" = GSLinkedList;
+	    "-empty" = GSLinkedList;
+	    "-findEqual:from:back:" = GSLinkedList;
+	    "-findIdentical:from:back:" = GSLinkedList;
+	    "-head" = GSLinkedList;
+	    "-insert:after:" = GSLinkedList;
+	    "-insert:before:" = GSLinkedList;
+	    "-removeLink:" = GSLinkedList;
+	    "-tail" = GSLinkedList;
+	};
+	GSListLink = {
+	    "-initCircular" = GSLinkedList;
+	    "-item" = GSLinkedList;
+	    "-next" = GSLinkedList;
+	    "-owner" = GSLinkedList;
+	    "-previous" = GSLinkedList;
+	    "-setItem:" = GSLinkedList;
+	};
+	GSThreadPool = {
+	    "+sharedPool" = GSThreadPool;
+	    "-drain:" = GSThreadPool;
+	    "-flush" = GSThreadPool;
+	    "-isEmpty" = GSThreadPool;
+	    "-isIdle" = GSThreadPool;
+	    "-isSuspended" = GSThreadPool;
+	    "-maxOperations" = GSThreadPool;
+	    "-maxThreads" = GSThreadPool;
+	    "-resume" = GSThreadPool;
+	    "-scheduleSelector:onReceiver:withObject:" = GSThreadPool;
+	    "-setOperations:" = GSThreadPool;
+	    "-setThreads:" = GSThreadPool;
+	    "-suspend" = GSThreadPool;
+	};
+	GSThroughput = {
+	    "+allInstances" = GSThroughput;
+	    "+description" = GSThroughput;
+	    "+setTick:" = GSThroughput;
+	    "+tick" = GSThroughput;
+	    "-add:" = GSThroughput;
+	    "-add:duration:" = GSThroughput;
+	    "-addDuration:" = GSThroughput;
+	    "-description" = GSThroughput;
+	    "-enableNotifications:" = GSThroughput;
+	    "-endDuration" = GSThroughput;
+	    "-endDuration:" = GSThroughput;
+	    "-init" = GSThroughput;
+	    "-initWithDurations:forPeriods:ofLength:" = GSThroughput;
+	    "-name" = GSThroughput;
+	    "-setName:" = GSThroughput;
+	    "-startDuration:" = GSThroughput;
+	};
+	GSTicker = {
+	    "+last" = GSTicker;
+	    "+newSecond:" = GSTicker;
+	    "+now" = GSTicker;
+	    "+registerObserver:userInfo:" = GSTicker;
+	    "+start" = GSTicker;
+	    "+tick" = GSTicker;
+	    "+unregisterObserver:" = GSTicker;
+	    "+update" = GSTicker;
+	    "-last" = GSTicker;
+	    "-newSecond:" = GSTicker;
+	    "-now" = GSTicker;
+	    "-start" = GSTicker;
+	    "-tick" = GSTicker;
+	    "-update" = GSTicker;
+	};
+	"NSMutableArray(GSSkipMutableArray)" = {
+	    "+skipArray" = GSSkipMutableArray;
+	};
+	"NSObject(GSCacheSizeInBytes)" = {
+	    "-sizeInBytes:" = GSCache;
+	};
+    };
+}

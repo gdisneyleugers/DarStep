@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSTicker">
+  <head>
+    <title>GSTicker class documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2005 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSTicker class
+      </heading>
+      <class name="GSTicker" super="NSObject">
+        <declared>GSTicker.h</declared>
+        <conform>GSTicker</conform>
+        <desc>
+          Wrapper round the more efficient ticker functions...
+          this class provides convenience methods to get NSDate
+          objects, and also provides support for registering
+          observers ofr second by second ticks.
+        </desc>
+        <method type="NSDate*" factory="yes">
+          <sel>last</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeLast">
+              GSTickerTimeLast()
+            </ref>
+            and returns the result as an NSDate.
+          </desc>
+        </method>
+        <method type="void" factory="yes">
+          <sel>newSecond:</sel>
+          <arg type="id">userInfo</arg>
+          <desc>
+            A dummy method... does nothing, but allows the GSTicker
+            class itsself to act as an observer of regular
+            timeouts. <br /> Thus, you may register the class
+            as its own observer in order to set up a timer to ensure
+            that date/time information is updated at the start of
+            every second.
+          </desc>
+        </method>
+        <method type="NSDate*" factory="yes">
+          <sel>now</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeNow">
+              GSTickerTimeNow()
+            </ref>
+            and returns the result as an NSDate.
+          </desc>
+        </method>
+        <method type="void" factory="yes">
+          <sel>registerObserver:</sel>
+          <arg type="id&lt;GSTicker&gt;">anObject</arg>
+          <sel>userInfo:</sel>
+          <arg type="id">userInfo</arg>
+          <desc>
+            Registers an object to receive a
+            <ref type="method" id="-newSecond:" class="(GSTicker)">
+              [&lt;GSTicker&gt;-newSecond:]
+            </ref>
+            message at the start of every second. <br /> Also
+            starts a timer in the current thread (unless one is
+            already running) to notify registered objects of
+            new seconds. <br /> The observer and the
+            <var>userInfo</var> are retained by the ticker.
+            <br /> Adding an observer more than once has no
+            effect. <br /> NB. You must not add or remove
+            observers inside the callback routine.
+          </desc>
+        </method>
+        <method type="NSDate*" factory="yes">
+          <sel>start</sel>
+          <desc>
+            Returns the result of
+            <ref type="function" id="GSTickerTimeStart">
+              GSTickerTimeStart()
+            </ref>
+            as an NSDate.
+          </desc>
+        </method>
+        <method type="unsigned" factory="yes">
+          <sel>tick</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeTick">
+              GSTickerTimeTick()
+            </ref>
+            and returns the result.
+          </desc>
+        </method>
+        <method type="void" factory="yes">
+          <sel>unregisterObserver:</sel>
+          <arg type="id&lt;GSTicker&gt;">anObject</arg>
+          <desc>
+            Unregisters an observer previously set in the
+            current thread using the
+            <ref type="method" id="+registerObserver:userInfo:">
+              +registerObserver:userInfo:
+            </ref>
+            method. <br /> If all observers in a thread are
+            removed, the timer for the thread is cancelled at
+            the start of the next second.
+          </desc>
+        </method>
+        <method type="void" factory="yes">
+          <sel>update</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeNow">
+              GSTickerTimeNow()
+            </ref>
+            ;
+          </desc>
+        </method>
+        <method type="NSDate*">
+          <sel>last</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeLast">
+              GSTickerTimeLast()
+            </ref>
+            and returns the result as an NSDate.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>newSecond:</sel>
+          <arg type="id">userInfo</arg>
+          <desc>
+            See
+            <ref type="method" id="+newSecond:">
+              +newSecond:
+            </ref>
+          </desc>
+        </method>
+        <method type="NSDate*">
+          <sel>now</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeNow">
+              GSTickerTimeNow()
+            </ref>
+            and returns the result as an NSDate.
+          </desc>
+        </method>
+        <method type="NSDate*">
+          <sel>start</sel>
+          <desc>
+            Returns the result of
+            <ref type="function" id="GSTickerTimeStart">
+              GSTickerTimeStart()
+            </ref>
+            as an NSDate.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>tick</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeTick">
+              GSTickerTimeTick()
+            </ref>
+            and returns the result.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>update</sel>
+          <desc>
+            Calls
+            <ref type="function" id="GSTickerTimeNow">
+              GSTickerTimeNow()
+            </ref>
+            ;
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>
+        Software documentation for the GSTicker protocol
+      </heading>
+      <protocol name="GSTicker">
+        <declared>GSTicker.h</declared>
+        <conform>NSObject</conform>
+        <desc>
+          <em>Description forthcoming.</em>
+        </desc>
+        <method type="void">
+          <sel>newSecond:</sel>
+          <arg type="id">userInfo</arg>
+          <desc>
+            Sent to tell observers that the ticker has noticed
+            that a new second has occurred. The tick argument is
+            the user information provided in when registering the
+            observer. <br /> This message is sent to each
+            registered observer when the timeout for the
+            thread occurs. It is not guaranteed to be called
+            every second... other processing in the thread may
+            delay it.
+          </desc>
+        </method>
+      </protocol>
+    </chapter>
+    <chapter>
+      <heading>GSTicker functions</heading>
+      <p></p>
+      <function type="NSTimeInterval" name="GSTickerTimeLast">
+        <desc>
+          Returns the timestamp of the most recent call to
+          <ref type="function" id="GSTickerTimeNow">
+            GSTickerTimeNow()
+          </ref>
+          .
+        </desc>
+      </function>
+      <function type="NSTimeInterval" name="GSTickerTimeNow">
+        <desc>
+          Convenience function to provide timing
+          information quickly. <br /> This returns the
+          current date/time, and stores the value for use by
+          the
+          <ref type="function" id="GSTickerTimeLast">
+            GSTickerTimeLast()
+          </ref>
+          function.
+        </desc>
+      </function>
+      <function type="NSTimeInterval" name="GSTickerTimeStart">
+        <desc>
+          This returns the timestamp from which GSTicker was first
+          used.
+        </desc>
+      </function>
+      <function type="unsigned int" name="GSTickerTimeTick">
+        <desc>
+          A convenience method to return the current clock 'tick'...
+          which is the current second based on the time we
+          started. This does <em>not</em> check the current
+          time, but relies on
+          <ref type="function" id="GSTickerTimeLast">
+            GSTickerTimeLast()
+          </ref>
+          returning an up to date value (so if you need an
+          accurate tick, you should ensure that
+          <ref type="function" id="GSTickerTimeNow">
+            GSTickerTimeNow()
+          </ref>
+          is called at least once a second). <br /> The returned
+          value is always greater than zero, and is basically
+          calculated as (GSTickerTimeLast() -
+          <ref type="function" id="GSTickerTimeStart">
+            GSTickerTimeStart()
+          </ref>
+          + 1). <br /> In the event that the system clock is reset
+          into the past, the value of
+          <ref type="function" id="GSTickerTimeStart">
+            GSTickerTimeStart()
+          </ref>
+          is automatically adjusted to ensure that the result of a
+          call to
+          <ref type="function" id="GSTickerTimeTick">
+            GSTickerTimeTick()
+          </ref>
+          is never less than the result of any earlier call to the
+          function.
+        </desc>
+      </function>
+    </chapter>
+  </body>
+</gsdoc>

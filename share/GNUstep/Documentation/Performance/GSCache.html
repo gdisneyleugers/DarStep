@@ -1,0 +1,619 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSCache class documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSCache">GSCache class documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2005 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the GSCache class</a>
+        </li>
+        <li>
+          <a href="#002000000000">Software documentation for the
+        NSObject(GSCacheSizeInBytes)
+        category</a>
+        </li>
+        <li>
+          <a href="#003000000000">Software documentation for the GSCacheDelegate
+        protocol</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSCache class
+      </a></h1>
+    <h2><a name="class$GSCache">GSCache</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSCache.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          The GSCache class is used to maintain a cache of objects
+          in memory for relatively rapid access. <br /> Typical
+          usage might be to keep the results of a database query
+          around for a while in order to re-use them... for
+          instance when application configuration is obtained
+          from a database which might be updated while the
+          application is running. <br /> When the cache is
+          full, old objects are removed to make room for new ones
+          on a least-recently-used basis. <br /> Cache sizes may be
+          limited by the number of objects in the cache, or by
+          the memory used by the cache, or both. Calculation of the
+          size of items in the cache is relatively expensive, so
+          caches are only limited by number of objects in the
+          default case. <br /> Objects stored in the cache may
+          be given a limited lifetime, in which case an attempt to
+          fetch an <em>expired</em> object from the cache will
+          cause it to be removed from the cache instead (subject
+          to control by the delegate). <br /> Cache keys may be
+          objects of any type as <strong>long</strong> as they
+          are copyable (and the copied keys are immutable) and
+          implement the
+          
+            -hash
+          
+
+          and -isEqual:
+
+          methods such that any two keys can be tested for
+          equality and used as dictionary keys. <br /> NB.
+          GSCache currently does not support subclassing... use
+          it as is or extend it via categories, but do not try to
+          add instance variables.
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache+allInstances">+allInstances</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache+description">+description</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-currentObjects">-currentObjects</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-currentSize">-currentSize</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-delegate">-delegate</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-description">-description</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-lifetime">-lifetime</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-maxObjects">-maxObjects</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-maxSize">-maxSize</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-name">-name</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-objectForKey$">-objectForKey:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-purge">-purge</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setDelegate$">-setDelegate:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setLifetime$">-setLifetime:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setMaxObjects$">-setMaxObjects:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setMaxSize$">-setMaxSize:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setName$">-setName:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setObject$forKey$">-setObject:forKey:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setObject$forKey$lifetime$">-setObject:forKey:lifetime:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-setObject$forKey$until$">-setObject:forKey:until:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$GSCache-shrinkObjects$andSize$">-shrinkObjects:andSize:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSCache+allInstances">allInstances&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSArray.html#class$NSArray">NSArray</a>*) <b>allInstances</b>;<br />
+    <div class="desc">
+      
+            Return all the current cache instances... useful if
+            you want to do something to all cache instances in your
+            process.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache+description">description&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>description</b>;<br />
+    <div class="desc">
+      
+            Return a report on all GSCache instances... calls
+            the
+            <a rel="gsdoc" href="#method$GSCache-description">
+              [GSCache -description]
+            </a>
+
+            method of the individual cache instances to get a
+            report on each one.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-currentObjects">currentObjects&nbsp;</a></h3>
+    - (unsigned) <b>currentObjects</b>;<br />
+    <div class="desc">
+      
+            Return the count of objects currently in the cache.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-currentSize">currentSize&nbsp;</a></h3>
+    - (unsigned) <b>currentSize</b>;<br />
+    <div class="desc">
+      
+            Return the total size of the objects currently in
+            the cache.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-delegate">delegate&nbsp;</a></h3>
+    - (id) <b>delegate</b>;<br />
+    <div class="desc">
+      
+            Return the delegate object previously set using the
+            <a rel="gsdoc" href="#method$GSCache-setDelegate$">
+              -setDelegate:
+            </a>
+
+            method.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-description">description&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>description</b>;<br />
+    <div class="desc">
+      
+            Returns a string describing the status of the
+            receiver for debug/reporting.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-lifetime">lifetime&nbsp;</a></h3>
+    - (unsigned) <b>lifetime</b>;<br />
+    <div class="desc">
+      
+            Return the default lifetime for items set in the
+            cache. <br /> A value of zero means that items are
+            not purged based on lifetime.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-maxObjects">maxObjects&nbsp;</a></h3>
+    - (unsigned) <b>maxObjects</b>;<br />
+    <div class="desc">
+      
+            Return the maximum number of items in the cache.
+            <br /> A value of zero means there is no limit.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-maxSize">maxSize&nbsp;</a></h3>
+    - (unsigned) <b>maxSize</b>;<br />
+    <div class="desc">
+      
+            Return the maximum tital size of items in the cache.
+            <br /> A value of zero means there is no limit.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-name">name&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>name</b>;<br />
+    <div class="desc">
+      
+            Return the name of this instance (as set using
+            -setName:)
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-objectForKey$">objectForKey:&nbsp;</a></h3>
+    - (id) <b>objectForKey:</b> (id)aKey;<br />
+    <div class="desc">
+      
+            Return the cached value for the specified key, or
+            <code>nil</code> if there is no value in the cache.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-purge">purge&nbsp;</a></h3>
+    - (void) <b>purge</b>;<br />
+    <div class="desc">
+      
+            Remove all items whose lifetimes have passed (if
+            lifetimes are in use for the cache). <br />
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setDelegate$">setDelegate:&nbsp;</a></h3>
+    - (void) <b>setDelegate:</b> (id)anObject;<br />
+    <div class="desc">
+      
+            Sets the delegate for the receiver. <br /> The
+            delegate object is not retained. <br /> If a
+            delegate it set, it will be sent the messages in
+            the (GSCacheDelegate) protocol (if it implements them
+            ... which it does not need to do).
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setLifetime$">setLifetime:&nbsp;</a></h3>
+    - (void) <b>setLifetime:</b> (unsigned)max;<br />
+    <div class="desc">
+      
+            Sets the lifetime (seconds) for items added to the
+            cache. If this is set to zero then items are not
+            removed from the cache based on lifetimes when the
+            cache is full and an object is added, though
+            <em>expired</em> items are still removed when an
+            attempt to retrieve them is made.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setMaxObjects$">setMaxObjects:&nbsp;</a></h3>
+    - (void) <b>setMaxObjects:</b> (unsigned)max;<br />
+    <div class="desc">
+      
+            Sets the maximum number of objects in the cache. If
+            this is non-zero then an attempt to set an object in a
+            full cache will result in the least recently used item
+            in the cache being removed.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setMaxSize$">setMaxSize:&nbsp;</a></h3>
+    - (void) <b>setMaxSize:</b> (unsigned)max;<br />
+    <div class="desc">
+      
+            Sets the maximum total size for objects in the cache.
+            If this is non-zero then an attempt to set an object
+            whose size would exceed the cache limit will result
+            in the least recently used items in the cache being
+            removed.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setName$">setName:&nbsp;</a></h3>
+    - (void) <b>setName:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)name;<br />
+    <div class="desc">
+      
+            Sets the <var>name</var> of this instance.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setObject$forKey$">setObject:&nbsp;forKey:&nbsp;</a></h3>
+    - (void) <b>setObject:</b> (id)anObject<b> forKey:</b> (id)aKey;<br />
+    <div class="desc">
+      
+            Sets (or replaces)the cached value for the specified
+            key. <br /> The value of <var>anObject</var> may be
+            <code>nil</code> to remove any cached object for
+            <var>aKey</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setObject$forKey$lifetime$">setObject:&nbsp;forKey:&nbsp;lifetime:&nbsp;</a></h3>
+    - (void) <b>setObject:</b> (id)anObject<b> forKey:</b> (id)aKey<b> lifetime:</b> (unsigned)lifetime;<br />
+    <div class="desc">
+      
+            Sets (or replaces)the cached value for the specified
+            key, giving the value the specified
+            <var>lifetime</var> (in seconds). A
+            <var>lifetime</var> of zero means that the item is
+            not limited by <var>lifetime</var>. <br /> The value of
+            <var>anObject</var> may be <code>nil</code> to remove
+            any cached object for <var>aKey</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-setObject$forKey$until$">setObject:&nbsp;forKey:&nbsp;until:&nbsp;</a></h3>
+    - (void) <b>setObject:</b> (id)anObject<b> forKey:</b> (id)aKey<b> until:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*)expires;<br />
+    <div class="desc">
+      
+            Sets (or replaces)the cached value for the specified
+            key, giving the value the specified expiry date. Calls
+            <a rel="gsdoc" href="#method$GSCache-setObject$forKey$lifetime$">
+              -setObject:forKey:lifetime:
+            </a>
+
+            to do the real work... this is just a convenience method
+            to handle working out the lifetime in seconds. <br /> If
+            <var>expires</var> is <code>nil</code> or not in the
+            future, this method simply removes the cache entry
+            for <var>aKey</var>. If it is many years in the future,
+            the item is set in the cache so that it is not limited
+            by lifetime.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSCache-shrinkObjects$andSize$">shrinkObjects:&nbsp;andSize:&nbsp;</a></h3>
+    - (void) <b>shrinkObjects:</b> (unsigned)objects<b> andSize:</b> (unsigned)size;<br />
+    <div class="desc">
+      
+            Called by
+            <a rel="gsdoc" href="#method$GSCache-setObject$forKey$lifetime$">
+              -setObject:forKey:lifetime:
+            </a>
+
+            to make space for a new object in the cache (also when
+            the cache is resized). <br /> This will, if a lifetime
+            is set (see the
+            <a rel="gsdoc" href="#method$GSCache-setLifetime$">
+              -setLifetime:
+            </a>
+
+            method) first purge all <em>expired</em>
+            <var>objects</var> from the cache, then (if
+            necessary) remove <var>objects</var> from the
+            cache until the number of <var>objects</var> and
+            <var>size</var> of cache meet the limits specified.
+            <br /> If the <var>objects</var> argument is zero
+            then all <var>objects</var> are removed from the
+            cache. <br /> The <var>size</var> argument is used
+            <em>only</em> if a maximum <var>size</var> is set for
+            the cache.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+
+          <h1><a name="002000000000">
+        Software documentation for the
+        NSObject(GSCacheSizeInBytes)
+        category
+      </a></h1>
+    <h2><a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>(<a name="category$NSObject(GSCacheSizeInBytes)">GSCacheSizeInBytes</a>)</h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSCache.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          
+    </p>
+    <p>
+
+            This category declares the
+            <a rel="gsdoc" href="#method$NSObject(GSCacheSizeInBytes)-sizeInBytes$">
+              -sizeInBytes:
+            </a>
+
+            method which is used by
+            <a rel="gsdoc" href="#class$GSCache">GSCache</a>
+
+              to ask objects for their size when adding them to a
+              cache which has a limited size in bytes.
+                </p>
+    <p>
+      
+            
+    </p>
+    <p>
+
+              The
+              <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>
+
+                implementation of this method is
+                intended to provide a rough estimnate of
+                object size which subclasses may refine in order
+                to provide more accurate sizing information. <br />
+                Subclasses should call the superclass
+                implementation and use the resulting
+                size information (if it is zero then the object is
+                in the exclude set and the subclass implementation
+                should also return zero) as a starting point on
+                which to add the sizes of any objects contained.
+                  </p>
+    <p>
+      
+              For example:
+
+<pre>
+ - (unsigned) sizeInBytes: (NSMutableSet*)exclude
+ {
+   unsigned size = [super sizeInBytes: exclude];
+   if (size &gt; 0)
+     {
+       size += [myInstanceVariable sizeInBytes: exclude];
+     }
+   return size;
+ }
+ </pre>
+      
+          
+    </p>
+    <p>
+
+            The performance library contains implementations giving
+            reasonable size estimates for several common
+            classes:
+              </p>
+    <p>
+      
+          
+      <ul>
+        <li>
+          NSArray
+        </li>
+        <li>
+          NSData
+        </li>
+        <li>
+          NSDictionary
+        </li>
+        <li>
+          NSSet
+        </li>
+        <li>
+          NSString
+        </li>
+        <li>
+          
+              GSMimeDocument (if built with the GNUstep
+              base library)
+            
+        </li>
+      </ul>
+      
+          
+    </p>
+    <p>
+
+            The default
+            <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>
+
+              ) implementation provides a reasonable size for any
+              class whose instance variables do not include other
+              objects or pointers to memory allocated on the
+              heap.
+                </p>
+    <p>
+      
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSCache.html#method$NSObject(GSCacheSizeInBytes)-sizeInBytes$">-sizeInBytes:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$NSObject(GSCacheSizeInBytes)-sizeInBytes$">sizeInBytes:&nbsp;</a></h3>
+    - (unsigned) <b>sizeInBytes:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSSet.html#class$NSMutableSet">NSMutableSet</a>*)exclude;<br />
+    <div class="desc">
+      
+            If the receiver is a member of the <var>exclude</var>
+            set, this method simply returns zero. Otherwise, the
+            receiver adds itsself to the <var>exclude</var>
+            set and returns its own size in bytes (the size of the
+            memory used to hold all the instance variables
+            defined for the receiver&apos;s class including all
+            superclasses).
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+
+          <h1><a name="003000000000">
+        Software documentation for the GSCacheDelegate
+        protocol
+      </a></h1>
+    <h2><a name="protocol$(GSCacheDelegate)">GSCacheDelegate</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSCache.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          This protocol defines the messages which may be sent to
+          a delegate of a GSCache object. The messages are only sent
+          if the delegate actually implements them, so a delegate
+          does not need to actually conform to the protocol.
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSCache.html#method$(GSCacheDelegate)-mayRefreshItem$withKey$lifetime$after$">-mayRefreshItem:withKey:lifetime:after:</a></li>
+      <li><a rel="gsdoc" href="GSCache.html#method$(GSCacheDelegate)-shouldKeepItem$withKey$lifetime$after$">-shouldKeepItem:withKey:lifetime:after:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$(GSCacheDelegate)-mayRefreshItem$withKey$lifetime$after$">mayRefreshItem:&nbsp;withKey:&nbsp;lifetime:&nbsp;after:&nbsp;</a></h3>
+    - (void) <b>mayRefreshItem:</b> (id)anObject<b> withKey:</b> (id)aKey<b> lifetime:</b> (unsigned)lifetime<b> after:</b> (unsigned)delay;<br />
+    <div class="desc">
+      
+            Alerts the delegate to the fact that
+            <var>anObject</var>, which was cached using
+            <var>aKey</var> and will expire <var>delay</var>
+            seconds in the future has been looked up now, and
+            needs to be refreshed if it is not to expire from the
+            cache. <br /> This is called the first time an
+            attempt is made to access the cached value for
+            <var>aKey</var> and the object is found in the cache
+            but more than half its <var>lifetime</var> has expired.
+            <br /> The delegate method (if implemented) may
+            replace the item in the cache immediately, or do it
+            later asynchronously, or may simply take no action.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$(GSCacheDelegate)-shouldKeepItem$withKey$lifetime$after$">shouldKeepItem:&nbsp;withKey:&nbsp;lifetime:&nbsp;after:&nbsp;</a></h3>
+    - (BOOL) <b>shouldKeepItem:</b> (id)anObject<b> withKey:</b> (id)aKey<b> lifetime:</b> (unsigned)lifetime<b> after:</b> (unsigned)delay;<br />
+    <div class="desc">
+      
+            Asks the delegate to decide whether
+            <var>anObject</var>, which was cached using
+            <var>aKey</var> and expired <var>delay</var> seconds
+            ago should still be retained in the cache. <br /> This
+            is called when an attempt is made to access the cached
+            value for <var>aKey</var> and the object is found in
+            the cache but it is no longer valid (has expired).
+            <br /> If the method returns <code>YES</code>, then
+            <var>anObject</var> will not be removed as it
+            normally would. This allows the delegate to change
+            the cached item or refresh it. <br /> For instance, the
+            delegate could replace the object in the cache
+            before returning <code>YES</code> in order to update
+            the cached value when its <var>lifetime</var> has
+            expired. <br /> Another possibility would be for
+            the delegate to return <code>YES</code> (in order to
+            continue using the existing object) and queue an
+            asynchronous database query to update the
+            cache later. In this case the expiry time of the item
+            will be reset relative to the current time, based upon
+            its original <var>lifetime</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+    <br />
+    </font>
+</body>
+</html>

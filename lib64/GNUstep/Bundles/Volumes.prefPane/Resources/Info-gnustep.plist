@@ -1,0 +1,9 @@
+{
+    CFBundleIdentifier = "org.gnustep.volumesmodule";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = Volumes;
+    NSMainNibFile = Volumes;
+    NSPrefPaneIconFile = "Volumes.tiff";
+    NSPrefPaneIconLabel = Volumes;
+    NSPrincipalClass = Volumes;
+}

@@ -1,0 +1,47 @@
+{
+    DKDBus = (
+	"+busWithBusType:",
+	"+sessionBus",
+	"+systemBus"
+    );
+    DKNotificationCenter = (
+	"+sessionBusCenter",
+	"+systemBusCenter",
+	"+centerForBusType:",
+	"-addObserver:selector:name:object:",
+	"-addObserver:selector:name:sender:destination:",
+	"-addObserver:selector:signal:interface:sender:destination:",
+	"-addObserver:selector:signal:interface:sender:destination:filter:atIndex:",
+	"-addObserver:selector:signal:interface:sender:destination:filtersAndIndices:,...",
+	"-removeObserver:",
+	"-removeObserver:name:object:",
+	"-removeObserver:name:sender:destination:",
+	"-removeObserver:signal:interface:object:",
+	"-removeObserver:signal:interface:sender:destination:",
+	"-removeObserver:signal:interface:sender:destination:filter:atIndex:",
+	"-removeObserver:signal:interface:sender:destination:filtersAndIndices:,...",
+	"-postNotification:",
+	"-postNotificationName:object:",
+	"-postSignalName:interface:object:",
+	"-postNotificationName:object:userInfo:",
+	"-postSignalName:interface:object:userInfo:",
+	"-registerNotificationName:asSignal:inInterface:"
+    );
+    DKPort = (
+	"+portForBusType:",
+	"+sessionBusPort",
+	"+systemBusPort",
+	"+enableWorkerThread",
+	"-initWithRemote:",
+	"-initWithRemote:onBus:"
+    );
+    DKProxy = (
+	"+proxyWithPort:path:",
+	"+proxyWithService:path:bus:",
+	"-initWithPort:path:",
+	"-initWithService:path:bus:",
+	"-initWithEndpoint:andService:andPath:",
+	"-hasSameScopeAs:",
+	"-setPrimaryDBusInterface:"
+    );
+}

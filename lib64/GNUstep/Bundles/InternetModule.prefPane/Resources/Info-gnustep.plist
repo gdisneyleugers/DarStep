@@ -1,0 +1,9 @@
+{
+    CFBundleIdentifier = "org.gnustep.internetmodule";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = InternetModule;
+    NSMainNibFile = InternetModule;
+    NSPrefPaneIconFile = "InternetModule.tiff";
+    NSPrefPaneIconLabel = Internet;
+    NSPrincipalClass = InternetModule;
+}

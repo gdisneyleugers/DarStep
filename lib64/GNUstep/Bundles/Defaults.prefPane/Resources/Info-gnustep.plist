@@ -1,0 +1,9 @@
+{
+    CFBundleIdentifier = "org.gnustep.userdefaultsprefs";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = Defaults;
+    NSMainNibFile = Defaults;
+    NSPrefPaneIconFile = "Defaults.tiff";
+    NSPrefPaneIconLabel = Defaults;
+    NSPrincipalClass = Defaults;
+}

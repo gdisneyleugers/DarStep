@@ -1,0 +1,9 @@
+{
+    CFBundleIdentifier = "org.gnustep.modifierkeysprefs";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = ModifierKeys;
+    NSMainNibFile = ModifierKeys;
+    NSPrefPaneIconFile = "ModifierKeys.tiff";
+    NSPrefPaneIconLabel = "Modifier keys";
+    NSPrincipalClass = ModifierKeys;
+}

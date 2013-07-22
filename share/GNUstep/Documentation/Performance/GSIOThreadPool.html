@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSIOThreadPool class documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSIOThreadPool">GSIOThreadPool class documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2010 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the GSIOThreadPool class</a>
+        </li>
+        <li>
+          <a href="#002000000000">GSIOThreadPool types</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSIOThreadPool class
+      </a></h1>
+    <h2><a name="class$GSIOThreadPool">GSIOThreadPool</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSIOThreadPool.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          This class provides a thread pool for performing methods
+          which need to make use of a runloop for I/O and/or
+          timers. <br /> Operations are performed on these
+          threads using the standard
+          <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSThread.html#method$NSObject(NSThreadPerformAdditions)-performSelector$onThread$withObject$waitUntilDone$">-performSelector:onThread:withObject:waitUntilDone:</a>
+ method... the pool is simply used to keep track of allocation of threads so that you can share jobs between them. <br /> NB. The threading API in OSX 10.4 and earlier is incapable of supporting this functionality... in that case this class cannot be instantiated and initialised.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_GSIOThreadPool_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool+sharedPool">+sharedPool</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-acquireThread">-acquireThread</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-countForThread$">-countForThread:</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-maxThreads">-maxThreads</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-setThreads$">-setThreads:</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-setTimeout$">-setTimeout:</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-timeout">-timeout</a></li>
+      <li><a rel="gsdoc" href="GSIOThreadPool.html#method$GSIOThreadPool-unacquireThread$">-unacquireThread:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSIOThreadPool+sharedPool">sharedPool&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="#class$GSIOThreadPool">GSIOThreadPool</a>*) <b>sharedPool</b>;<br />
+    <div class="desc">
+      
+            Returns an instance intended for sharing between
+            sections of code which wish to make use of
+            threading by performing operations in other
+            threads, but which don&apos;t mind operations being
+            interleaved with those belonging to oither
+            sections of code. <br /> Always returns the same
+            instance whenever the method is called.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-acquireThread">acquireThread&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSThread.html#class$NSThread">NSThread</a>*) <b>acquireThread</b>;<br />
+    <div class="desc">
+      
+            Selects a thread from the pool to be used for some
+            job.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-countForThread$">countForThread:&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#type$NSUInteger">NSUInteger</a>) <b>countForThread:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSThread.html#class$NSThread">NSThread</a>*)aThread;<br />
+    <div class="desc">
+      
+            Returns the acquire count for the specified thread.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-maxThreads">maxThreads&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#type$NSUInteger">NSUInteger</a>) <b>maxThreads</b>;<br />
+    <div class="desc">
+      
+            Returns the currently configured maximum number of
+            threads in the pool.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-setThreads$">setThreads:&nbsp;</a></h3>
+    - (void) <b>setThreads:</b> (<a rel="gsdoc" href="#type$NSUInteger">NSUInteger</a>)max;<br />
+    <div class="desc">
+      
+            Specify the maximum number of threads in the pool
+            (the actual number used may be lower than this value).
+            <br /> Default is 0 (no thread pooling in use).
+            <br /> The pool creates threads on demand up to the
+            specified limit (or a lower limit if dictated by
+            system resources) but will not destroy idle threads
+            unless the limit is subsequently lowered. <br />
+            Setting a value of zero means that operations are
+            performed in the main thread.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-setTimeout$">setTimeout:&nbsp;</a></h3>
+    - (void) <b>setTimeout:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/TypesAndConstants.html#type$NSTimeInterval">NSTimeInterval</a>)t;<br />
+    <div class="desc">
+      
+            Specifies the timeout allowed for a thread to
+            close down when the pool is deallocated or has its
+            size decreased. Any operations in progress in the
+            thread need to close down within this period.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-timeout">timeout&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/TypesAndConstants.html#type$NSTimeInterval">NSTimeInterval</a>) <b>timeout</b>;<br />
+    <div class="desc">
+      
+            Returns the current timeout set for the pool.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSIOThreadPool-unacquireThread$">unacquireThread:&nbsp;</a></h3>
+    - (void) <b>unacquireThread:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSThread.html#class$NSThread">NSThread</a>*)aThread;<br />
+    <div class="desc">
+      
+            Releases a thread previously selected from the
+            pool.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_GSIOThreadPool_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for GSIOThreadPool Class</h2>
+    <h3><a name="ivariable$GSIOThreadPool*maxThreads">maxThreads</a></h3>
+    @protected NSUInteger <b>maxThreads</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSIOThreadPool*poolLock">poolLock</a></h3>
+    @protected NSLock* <b>poolLock</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSIOThreadPool*threads">threads</a></h3>
+    @protected NSMutableArray* <b>threads</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSIOThreadPool*timeout">timeout</a></h3>
+    @protected NSTimeInterval <b>timeout</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+
+          <h1><a name="002000000000">GSIOThreadPool types</a></h1>
+    <p>
+    </p>
+    <h3><a name="type$NSUInteger">NSUInteger</a></h3>
+    typedef unsigned int NSUInteger;<br />
+    <div class="desc">
+      
+          <em>Description forthcoming.</em>
+        
+    </div>
+    <hr width="25%" align="left" />
+    <br />
+    </font>
+</body>
+</html>

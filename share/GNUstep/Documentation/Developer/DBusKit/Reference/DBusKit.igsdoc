@@ -1,0 +1,221 @@
+{
+    class = {
+	DKDBus = DKProxy;
+	DKNotificationCenter = DKNotificationCenter;
+	DKPort = DKPort;
+	DKProxy = DKProxy;
+    };
+    classvars = {
+	DKDBus = {
+	    isDisconnected = DKProxy;
+	};
+    };
+    ivariable = {
+	isDisconnected = {
+	    DKDBus = DKProxy;
+	};
+    };
+    method = {
+	"+busWithBusType:" = {
+	    DKDBus = DKProxy;
+	};
+	"+centerForBusType:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"+enableWorkerThread" = {
+	    DKPort = DKPort;
+	};
+	"+portForBusType:" = {
+	    DKPort = DKPort;
+	};
+	"+proxyWithPort:path:" = {
+	    DKProxy = DKProxy;
+	};
+	"+proxyWithService:path:bus:" = {
+	    DKProxy = DKProxy;
+	};
+	"+sessionBus" = {
+	    DKDBus = DKProxy;
+	};
+	"+sessionBusCenter" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"+sessionBusPort" = {
+	    DKPort = DKPort;
+	};
+	"+systemBus" = {
+	    DKDBus = DKProxy;
+	};
+	"+systemBusCenter" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"+systemBusPort" = {
+	    DKPort = DKPort;
+	};
+	"-addObserver:selector:name:object:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-addObserver:selector:name:sender:destination:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-addObserver:selector:signal:interface:sender:destination:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-addObserver:selector:signal:interface:sender:destination:filter:atIndex:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-addObserver:selector:signal:interface:sender:destination:filtersAndIndices:,..." = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-hasSameScopeAs:" = {
+	    DKProxy = DKProxy;
+	};
+	"-initWithEndpoint:andService:andPath:" = {
+	    DKProxy = DKProxy;
+	};
+	"-initWithPort:path:" = {
+	    DKProxy = DKProxy;
+	};
+	"-initWithRemote:" = {
+	    DKPort = DKPort;
+	};
+	"-initWithRemote:onBus:" = {
+	    DKPort = DKPort;
+	};
+	"-initWithService:path:bus:" = {
+	    DKProxy = DKProxy;
+	};
+	"-postNotification:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-postNotificationName:object:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-postNotificationName:object:userInfo:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-postSignalName:interface:object:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-postSignalName:interface:object:userInfo:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-registerNotificationName:asSignal:inInterface:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:name:object:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:name:sender:destination:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:signal:interface:object:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:signal:interface:sender:destination:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:signal:interface:sender:destination:filter:atIndex:" = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-removeObserver:signal:interface:sender:destination:filtersAndIndices:,..." = {
+	    DKNotificationCenter = DKNotificationCenter;
+	};
+	"-setPrimaryDBusInterface:" = {
+	    DKProxy = DKProxy;
+	};
+    };
+    output = {
+	"../Headers/../Headers/DKNotificationCenter.h" = (
+	    "Reference/DKNotificationCenter.gsdoc"
+	);
+	"../Headers/../Headers/DKPort.h" = (
+	    "Reference/DKPort.gsdoc"
+	);
+	"../Headers/../Headers/DKProxy.h" = (
+	    "Reference/DKProxy.gsdoc",
+	    "Reference/TypesAndConstants.gsdoc"
+	);
+    };
+    source = {
+	"../Headers/../Headers/DKNotificationCenter.h" = (
+	    "../Headers/../Headers/DKNotificationCenter.h"
+	);
+	"../Headers/../Headers/DKPort.h" = (
+	    "../Headers/../Headers/DKPort.h"
+	);
+	"../Headers/../Headers/DKProxy.h" = (
+	    "../Headers/../Headers/DKProxy.h"
+	);
+    };
+    super = {
+	DKDBus = DKProxy;
+	DKNotificationCenter = NSObject;
+	DKPort = NSPort;
+	DKProxy = NSProxy;
+    };
+    title = {
+	DBusKit = "Reference Documentation for the DBusKit Framework";
+	DKNotificationCenter = "DKNotificationCenter class documentation";
+	DKPort = "DKPort class documentation";
+	DKProxy = "DKProxy documentation";
+	TypesAndConstants = Typedefs;
+    };
+    type = {
+	DKDBusBusType = TypesAndConstants;
+    };
+    unitmethods = {
+	DKDBus = {
+	    "+busWithBusType:" = DKProxy;
+	    "+sessionBus" = DKProxy;
+	    "+systemBus" = DKProxy;
+	};
+	DKNotificationCenter = {
+	    "+centerForBusType:" = DKNotificationCenter;
+	    "+sessionBusCenter" = DKNotificationCenter;
+	    "+systemBusCenter" = DKNotificationCenter;
+	    "-addObserver:selector:name:object:" = DKNotificationCenter;
+	    "-addObserver:selector:name:sender:destination:" = DKNotificationCenter;
+	    "-addObserver:selector:signal:interface:sender:destination:" = DKNotificationCenter;
+	    "-addObserver:selector:signal:interface:sender:destination:filter:atIndex:" = DKNotificationCenter;
+	    "-addObserver:selector:signal:interface:sender:destination:filtersAndIndices:,..." = DKNotificationCenter;
+	    "-postNotification:" = DKNotificationCenter;
+	    "-postNotificationName:object:" = DKNotificationCenter;
+	    "-postNotificationName:object:userInfo:" = DKNotificationCenter;
+	    "-postSignalName:interface:object:" = DKNotificationCenter;
+	    "-postSignalName:interface:object:userInfo:" = DKNotificationCenter;
+	    "-registerNotificationName:asSignal:inInterface:" = DKNotificationCenter;
+	    "-removeObserver:" = DKNotificationCenter;
+	    "-removeObserver:name:object:" = DKNotificationCenter;
+	    "-removeObserver:name:sender:destination:" = DKNotificationCenter;
+	    "-removeObserver:signal:interface:object:" = DKNotificationCenter;
+	    "-removeObserver:signal:interface:sender:destination:" = DKNotificationCenter;
+	    "-removeObserver:signal:interface:sender:destination:filter:atIndex:" = DKNotificationCenter;
+	    "-removeObserver:signal:interface:sender:destination:filtersAndIndices:,..." = DKNotificationCenter;
+	};
+	DKPort = {
+	    "+enableWorkerThread" = DKPort;
+	    "+portForBusType:" = DKPort;
+	    "+sessionBusPort" = DKPort;
+	    "+systemBusPort" = DKPort;
+	    "-initWithRemote:" = DKPort;
+	    "-initWithRemote:onBus:" = DKPort;
+	};
+	DKProxy = {
+	    "+proxyWithPort:path:" = DKProxy;
+	    "+proxyWithService:path:bus:" = DKProxy;
+	    "-hasSameScopeAs:" = DKProxy;
+	    "-initWithEndpoint:andService:andPath:" = DKProxy;
+	    "-initWithPort:path:" = DKProxy;
+	    "-initWithService:path:bus:" = DKProxy;
+	    "-setPrimaryDBusInterface:" = DKProxy;
+	};
+    };
+    variable = {
+	DKBusDisconnectedNotification = TypesAndConstants;
+	DKBusReconnectedNotification = TypesAndConstants;
+    };
+}

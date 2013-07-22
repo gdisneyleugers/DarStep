@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Categories=X-GNUstep;
+Name=SystemPreferences
+Comment=GNUstep System Preferences
+Icon=/usr/local/lib64/GNUstep/Applications/SystemPreferences.app/Resources/SystemPreferences.tiff
+Exec=/bin/openapp SystemPreferences
+FilePattern=SystemPreferences.app;SystemPreferences;

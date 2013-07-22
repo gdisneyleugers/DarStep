@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSFIFO class documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSFIFO">GSFIFO class documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2011 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the GSFIFO class</a>
+        </li>
+        <li>
+          <a href="#002000000000">GSFIFO functions</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSFIFO class
+      </a></h1>
+    <h2><a name="class$GSFIFO">GSFIFO</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSFIFO.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          GSFIFO manages a first-in-first-out queue of items.
+          <br /> Items in the queue are <em>NOT</em> retained
+          objects... memory management is not the job of this
+          class and it is not intended to be treated as a
+          &apos;collection&apos;, rather its role is intended to be
+          that of an inter-thread coordination mechanism. <br />
+          Instances of the GSFIFO class are intended to
+          support the producer-consumer model of processing.
+          The ideal example is that of a production line, where you
+          have a stream of items to be processed and while that
+          processing can be broken down into separate
+          stages, they must be done in a particular order. The
+          FIFO is used as the link betwen those stages, ensuring
+          that the required ordering is maintained even when
+          separate threads handle each stage. <br /> Where
+          there is a single producer and a single consumer
+          thread, a fast lock-free algorthm is used to get/pu
+          items from the FIFO. <br /> To minimise the overheads
+          of using the FIFO, we provide inline functions to support
+          the addition of items in the single producer thread case
+          and to support the removal of items in the single
+          consumer thread case. When operating that way, the
+          overhead of using the FIFO is only a few CPU cycles
+          and it becomes reasonable to split sequentional
+          processing into a <strong>long</strong> series of
+          small operations each handled by a separate thread
+          (making effective use of a multi-cpu machine). <br />
+          The FIFO may also be useful where you don&apos;t have a
+          strictly sequential process to manage, but some
+          parts need to be sequential... in these cases it may
+          make sense to have multiple consumers and/or producers.
+          In these cases, some locking is required and the use of
+          the inline functions is not allowed (you must call the
+          <a rel="gsdoc" href="#method$GSFIFO-get">
+            -get
+          </a>
+
+          and <a rel="gsdoc" href="#method$GSFIFO-put$">-put:</a>
+ methods.
+          <br /> It is recommended that you create FIFOs using
+          the
+          <a rel="gsdoc" href="#method$GSFIFO-initWithName$">
+            -initWithName:
+          </a>
+
+          method so that you can easily use the NSUserDefaults
+          system to adjust their configurations to tests/tweak
+          performance.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_GSFIFO_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO+stats">+stats</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-count">-count</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-get">-get</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-get$count$shouldBlock$">-get:count:shouldBlock:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-initWithCapacity$granularity$timeout$multiProducer$multiConsumer$boundaries$name$">-initWithCapacity:granularity:timeout:multiProducer:multiConsumer:boundaries:name:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-initWithCapacity$name$">-initWithCapacity:name:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-initWithName$">-initWithName:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-put$">-put:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-put$count$shouldBlock$">-put:count:shouldBlock:</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-stats">-stats</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-statsGet">-statsGet</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-statsPut">-statsPut</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-tryGet">-tryGet</a></li>
+      <li><a rel="gsdoc" href="GSFIFO.html#method$GSFIFO-tryPut$">-tryPut:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSFIFO+stats">stats&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>stats</b>;<br />
+    <div class="desc">
+      
+            Return statistics for all current GSFIFO instances.
+            <br /> Statistics for FIFOs which are configued to
+            be lock-free are empty (listing the name only) except
+            where we can safely obtain get or put stats because
+            the FIFOs consumer/producer thread is the same as the
+            current thread.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-count">count&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>) <b>count</b>;<br />
+    <div class="desc">
+      
+            Returns the approximate number of items in the
+            FIFO.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-get">get&nbsp;</a></h3>
+    - (void*) <b>get</b>;<br />
+    <div class="desc">
+      
+            Gets the next item from the FIFO, blocking if
+            necessary until an item is available. Raises an
+            exception if the FIFO is configured with a
+            timeout and it is exceeded. <br /> Implemented
+            using
+            <a rel="gsdoc" href="#method$GSFIFO-get$count$shouldBlock$">
+              -get:count:shouldBlock:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-get$count$shouldBlock$">get:&nbsp;count:&nbsp;shouldBlock:&nbsp;</a></h3>
+    - (unsigned) <b>get:</b> (void**)buf<b> count:</b> (unsigned)count<b> shouldBlock:</b> (BOOL)block;<br />
+    <div class="desc">
+      
+            Reads up to <var>count</var> items from the FIFO into
+            <var>buf</var>. If <var>block</var> is
+            <code>YES</code>, this blocks if necessary until at
+            least one item is available, and raises an exception
+            if the FIFO is configured with a timeout and it is
+            exceeded. <br /> Returns the number of items
+            actually read.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-initWithCapacity$granularity$timeout$multiProducer$multiConsumer$boundaries$name$">initWithCapacity:&nbsp;granularity:&nbsp;timeout:&nbsp;multiProducer:&nbsp;multiConsumer:&nbsp;boundaries:&nbsp;name:&nbsp;</a></h3>
+    - (id) <b>initWithCapacity:</b> (uint32_t)c<b> granularity:</b> (uint16_t)g<b> timeout:</b> (uint16_t)t<b> multiProducer:</b> (BOOL)mp<b> multiConsumer:</b> (BOOL)mc<b> boundaries:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSArray.html#class$NSArray">NSArray</a>*)a<b> name:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)n;<br />
+This is a designated initialiser for the class.<br />
+    <div class="desc">
+      
+            Initialises the receiver with the specified
+            capacity (buffer size). <br /> The capacity must
+            lie in the range from one to <var>a</var> million,
+            othewrwise the receiver is deallocated and this
+            method returns <code>nil</code>. <br /> If the
+            granularity value is non-zero, it is treated as
+            the maximum time in milliseconds for which <var>a</var>
+            <a rel="gsdoc" href="#method$GSFIFO-get">
+              -get
+            </a>
+
+            or <a rel="gsdoc" href="#method$GSFIFO-put$">-put:</a>
+ operation
+            will pause between successive attempts. <br /> If the
+            timeout value is non-zero, it is treated as the
+            total time in milliseconds for which <var>a</var>
+            <a rel="gsdoc" href="#method$GSFIFO-get">
+              -get
+            </a>
+
+            or <a rel="gsdoc" href="#method$GSFIFO-put$">-put:</a>
+ operation
+            may block, and <var>a</var> longer delay will cause
+            those methods to raise an exception. <br /> If the
+            multiProducer or multiConsumer flag is
+            <code>YES</code>, the FIFO is configured to support
+            multiple producer/consumer threads using locking.
+            <br /> The boundaries array is an ordered list of
+            NSNumber objects containing time intervals found
+            boundaries of bands into which to categorise
+            wait time stats. Any wait whose duration is less than
+            the interval specified in the Nth element is counted in
+            the stat&apos;s for the Nth band. If this is
+            <code>nil</code>, <var>a</var> default set of
+            bundaries is used. If it is an empty array then
+            no time based stats are recorded. <br /> The name string
+            is <var>a</var> unique identifier for the receiver and
+            is used when printing diagnostics and statistics. If an
+            instance with the same name already exists, the
+            receiveris deallocated and an exception is
+            raised.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-initWithCapacity$name$">initWithCapacity:&nbsp;name:&nbsp;</a></h3>
+    - (id) <b>initWithCapacity:</b> (uint32_t)c<b> name:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)n;<br />
+    <div class="desc">
+      
+            Initialises the receiver as a multi-producer,
+            multi-consumer FIFO with no timeout and with
+            default stats gathering enabled. <br /> However,
+            these values (including the supplied capacity) may be
+            overridden as specified in
+            <a rel="gsdoc" href="#method$GSFIFO-initWithName$">
+              -initWithName:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-initWithName$">initWithName:&nbsp;</a></h3>
+    - (id) <b>initWithName:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)n;<br />
+    <div class="desc">
+      
+            Initialises the receiver using the specified
+            name and obtaining other details from the
+            NSUserDefaults system using defaults keys
+            where &apos;NNN&apos; is the supplied name. <br /> The
+            GSFIFOCapacityNNN default specifies the
+            capacity for the FIFO, and if missing a capacity
+            of 1000 is assumed. <br /> The GSFIFOGranularityNNN
+            integer is zero by default. <br /> The
+            GSFIFOTimeoutNNN integer is zero by
+            default. <br /> The GSFIFOSingleConsumerNNN
+            boolean is <code>NO</code> by default. <br /> The
+            GSFIFOSingleProducerNNN boolean is
+            <code>NO</code> by default. <br /> The
+            GSFIFOBoundariesNNN array is missing by
+            default. <br />
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-put$">put:&nbsp;</a></h3>
+    - (void) <b>put:</b> (void*)item;<br />
+    <div class="desc">
+      
+            Adds an <var>item</var> to the FIFO, blocking if
+            necessary until there is space in the buffer.
+            Raises an exception if the FIFO is configured with a
+            timeout and it is exceeded.br /&gt; Implemented using
+            <a rel="gsdoc" href="#method$GSFIFO-put$count$shouldBlock$">
+              -put:count:shouldBlock:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-put$count$shouldBlock$">put:&nbsp;count:&nbsp;shouldBlock:&nbsp;</a></h3>
+    - (unsigned) <b>put:</b> (void**)buf<b> count:</b> (unsigned)count<b> shouldBlock:</b> (BOOL)block;<br />
+    <div class="desc">
+      
+            Writes up to <var>count</var> items from
+            <var>buf</var> into the FIFO. If <var>block</var> is
+            <code>YES</code>, this blocks if necessary until at
+            least one item can be written, and raises an
+            exception if the FIFO is configured with a
+            timeout and it is exceeded. <br /> Returns the
+            number of items actually written.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-stats">stats&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>stats</b>;<br />
+    <div class="desc">
+      
+            Return any available statistics for the receiver.
+            <br />
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-statsGet">statsGet&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>statsGet</b>;<br />
+    <div class="desc">
+      
+            Return statistics on get operations for the
+            receiver. <br /> NB. If the recever is not
+            configured for multiple consumers, this method
+            may only be called from the single consumer thread.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-statsPut">statsPut&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*) <b>statsPut</b>;<br />
+    <div class="desc">
+      
+            Return statistics on put operations for the
+            receiver. <br /> NB. If the recever is not
+            configured for multiple producers, this method
+            may only be called from the single producer thread.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-tryGet">tryGet&nbsp;</a></h3>
+    - (void*) <b>tryGet</b>;<br />
+    <div class="desc">
+      
+            Checks the FIFO and returns the first available item
+            or NULL if the FIFO is empty. <br /> Implemented using
+            <a rel="gsdoc" href="#method$GSFIFO-get$count$shouldBlock$">
+              -get:count:shouldBlock:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSFIFO-tryPut$">tryPut:&nbsp;</a></h3>
+    - (BOOL) <b>tryPut:</b> (void*)item;<br />
+    <div class="desc">
+      
+            Attempts to put an <var>item</var> into the FIFO,
+            returning <code>YES</code> on success or
+            <code>NO</code> if the FIFO is full. <br />
+            Implemented using
+            <a rel="gsdoc" href="#method$GSFIFO-put$count$shouldBlock$">
+              -put:count:shouldBlock:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_GSFIFO_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for GSFIFO Class</h2>
+    <h3><a name="ivariable$GSFIFO*_capacity">_capacity</a></h3>
+    @public uint32_t <b>_capacity</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_getTryFailure">_getTryFailure</a></h3>
+    @public uint64_t <b>_getTryFailure</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_getTrySuccess">_getTrySuccess</a></h3>
+    @public uint64_t <b>_getTrySuccess</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_head">_head</a></h3>
+    @public volatile uint64_t <b>_head</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_items">_items</a></h3>
+    @public void** <b>_items</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_putTryFailure">_putTryFailure</a></h3>
+    @public uint64_t <b>_putTryFailure</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_putTrySuccess">_putTrySuccess</a></h3>
+    @public uint64_t <b>_putTrySuccess</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSFIFO*_tail">_tail</a></h3>
+    @public volatile uint64_t <b>_tail</b>;<br />
+    <div class="desc">
+      
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+
+          <h1><a name="002000000000">GSFIFO functions</a></h1>
+    <p>
+    </p>
+    <h3><a name="function$GSGetFastFIFO">GSGetFastFIFO</a></h3>
+    void* GSGetFastFIFO(<a rel="gsdoc" href="#class$GSFIFO">GSFIFO</a>* <b>receiver</b>);<br />
+    <div class="desc">
+      
+          Function to efficiently get an item from a fast
+          FIFO, blocking if necessary until an item is available
+          or the timeout occurs. <br /> Warning... only for use if
+          the FIFO is NOT configured for multiple consumers.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSGetFastNonBlockingFIFO">GSGetFastNonBlockingFIFO</a></h3>
+    void* GSGetFastNonBlockingFIFO(<a rel="gsdoc" href="#class$GSFIFO">GSFIFO</a>* <b>receiver</b>);<br />
+    <div class="desc">
+      
+          Function to efficiently get an item from a fast
+          FIFO. <br /> Returns NULL if the FIFO is empty. <br />
+          Warning... only for use if the FIFO is NOT configured
+          for multiple consumers.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSPutFastFIFO">GSPutFastFIFO</a></h3>
+    void GSPutFastFIFO(<a rel="gsdoc" href="#class$GSFIFO">GSFIFO</a>* <b>receiver</b>, void* <b>item</b>);<br />
+    <div class="desc">
+      
+          Function to efficiently put an <var>item</var> to a
+          fast FIFO, blocking if necessary untile there is space
+          in the FIFO or until the timeout occurs. <br /> Warning...
+          only for use if the FIFO is NOT configured for multiple
+          producers.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSPutFastNonBlockingFIFO">GSPutFastNonBlockingFIFO</a></h3>
+    BOOL GSPutFastNonBlockingFIFO(<a rel="gsdoc" href="#class$GSFIFO">GSFIFO</a>* <b>receiver</b>, void* <b>item</b>);<br />
+    <div class="desc">
+      
+          Function to efficiently put an <var>item</var> to a
+          fast FIFO. <br /> Returns <code>YES</code> on success,
+          <code>NO</code> on failure (FIFO is full). <br />
+          Warning... only for use if the FIFO is NOT configured
+          for multiple producers.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <br />
+    </font>
+</body>
+</html>

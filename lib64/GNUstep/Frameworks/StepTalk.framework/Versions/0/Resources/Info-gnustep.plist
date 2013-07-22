@@ -1,0 +1,9 @@
+{
+  NOTE = "Automatically generated, do not edit!";
+  NSExecutable = "StepTalk";
+  NSMainNibFile = "";
+  NSPrincipalClass = "StepTalk";
+  Classes = 
+("STActor", "STBehaviourInfo", "STBundleInfo", "STClassInfo", "STContext", "STConversation", "STRemoteConversation", "STEngine", "STEnvironment", "STEnvironmentDescription", "STFileScript", "STLanguageManager", "STObjectReference", "STScript", "STScriptsManager", "STScriptObject", "STSelector", "STStructure", "STUndefinedObject", "StepTalkScriptingInfo")
+  ;
+}

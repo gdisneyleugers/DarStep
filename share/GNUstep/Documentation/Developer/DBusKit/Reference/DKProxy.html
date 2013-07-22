@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>DKProxy documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$DKProxy">DKProxy documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Niels Grewe (<a href="mailto:niels.grewe@halbordnung.de"><code>niels.grewe@halbordnung.de</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2010 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the DKDBus class</a>
+        </li>
+        <li>
+          <a href="#002000000000">Software documentation for the DKProxy class</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the DKDBus class
+      </a></h1>
+    <h2><a name="class$DKDBus">DKDBus</a> : <a rel="gsdoc" href="#class$DKProxy">DKProxy</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>DBusKit/DKProxy.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          The DKDBus class exposes the D-Bus objects specifically
+          (i.e. the &quot;org.freedesktop.DBus&quot; service). The
+          instances returned by this class are shared
+          objects: Calling
+          <a rel="gsdoc" href="#method$DKProxy-setPrimaryDBusInterface$">
+            -setPrimaryDBusInterface:
+          </a>
+
+          on them has no effect. DKDBus instances also emit
+          notifications about the state of the bus they
+          represent. An application can watch for a
+          <code>DKBusDisconnectedNotification</code> and
+          <code>DKBusReconnectedNotification</code> to be
+          notified about state changes for the bus.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_DKDBus_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKDBus+busWithBusType$">+busWithBusType:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKDBus+sessionBus">+sessionBus</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKDBus+systemBus">+systemBus</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$DKDBus+busWithBusType$">busWithBusType:&nbsp;</a></h3>
+    + (id) <b>busWithBusType:</b> (<a rel="gsdoc" href="TypesAndConstants.html#type$DKDBusBusType">DKDBusBusType</a>)type;<br />
+    <div class="desc">
+      
+            Returns a reference to the org.freedesktop.DBus
+            service on the bus specified by <var>type</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKDBus+sessionBus">sessionBus&nbsp;</a></h3>
+    + (id) <b>sessionBus</b>;<br />
+    <div class="desc">
+      
+            Returns a reference to the org.freedesktop.DBus
+            service on the session message bus.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKDBus+systemBus">systemBus&nbsp;</a></h3>
+    + (id) <b>systemBus</b>;<br />
+    <div class="desc">
+      
+            Returns a reference to the org.freedesktop.DBus
+            service on the system message bus.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_DKDBus_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for DKDBus Class</h2>
+    <h3><a name="ivariable$DKDBus*isDisconnected">isDisconnected</a></h3>
+    @protected BOOL <b>isDisconnected</b>;<br />
+    <div class="desc">
+      
+            The isDisconnected flag is set by a bus object that
+            experiences a bus failure and tries to
+            reconnect to the bus.
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+
+          <h1><a name="002000000000">
+        Software documentation for the DKProxy class
+      </a></h1>
+    <h2><a name="class$DKProxy">DKProxy</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSProxy.html#class$NSProxy">NSProxy</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>DBusKit/DKProxy.h</dd>
+      </dl>
+    </blockquote>
+    <blockquote>
+      <dl>
+        <dt><b>Conforms to:</b></dt>
+        <dd><a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#protocol$(NSCoding)">NSCoding</a></dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          The DKProxy class is used to send messages to D-Bus
+          objects. Usually, you don&apos;t create them yourself but
+          by using the DKPort and NSConnection classes.
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy+proxyWithPort$path$">+proxyWithPort:path:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy+proxyWithService$path$bus$">+proxyWithService:path:bus:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy-hasSameScopeAs$">-hasSameScopeAs:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy-initWithEndpoint$andService$andPath$">-initWithEndpoint:andService:andPath:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy-initWithPort$path$">-initWithPort:path:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy-initWithService$path$bus$">-initWithService:path:bus:</a></li>
+      <li><a rel="gsdoc" href="DKProxy.html#method$DKProxy-setPrimaryDBusInterface$">-setPrimaryDBusInterface:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$DKProxy+proxyWithPort$path$">proxyWithPort:&nbsp;path:&nbsp;</a></h3>
+    + (id) <b>proxyWithPort:</b> (<a rel="gsdoc" href="DKPort.html#class$DKPort">DKPort</a>*)aPort<b> path:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aPath;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy+proxyWithService$path$bus$">proxyWithService:&nbsp;path:&nbsp;bus:&nbsp;</a></h3>
+    + (id) <b>proxyWithService:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aService<b> path:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aPath<b> bus:</b> (<a rel="gsdoc" href="TypesAndConstants.html#type$DKDBusBusType">DKDBusBusType</a>)type;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy-hasSameScopeAs$">hasSameScopeAs:&nbsp;</a></h3>
+    - (BOOL) <b>hasSameScopeAs:</b> (<a rel="gsdoc" href="#class$DKProxy">DKProxy</a>*)aProxy;<br />
+    <div class="desc">
+      
+            Checks whether the to proxies are attached to the
+            same D-Bus service.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy-initWithEndpoint$andService$andPath$">initWithEndpoint:&nbsp;andService:&nbsp;andPath:&nbsp;</a></h3>
+    - (id) <b>initWithEndpoint:</b> (DKEndpoint*)anEndpoint<b> andService:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aService<b> andPath:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aPath;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy-initWithPort$path$">initWithPort:&nbsp;path:&nbsp;</a></h3>
+    - (id) <b>initWithPort:</b> (<a rel="gsdoc" href="DKPort.html#class$DKPort">DKPort</a>*)aPort<b> path:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aPath;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy-initWithService$path$bus$">initWithService:&nbsp;path:&nbsp;bus:&nbsp;</a></h3>
+    - (id) <b>initWithService:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aService<b> path:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)aPath<b> bus:</b> (<a rel="gsdoc" href="TypesAndConstants.html#type$DKDBusBusType">DKDBusBusType</a>)type;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$DKProxy-setPrimaryDBusInterface$">setPrimaryDBusInterface:&nbsp;</a></h3>
+    - (void) <b>setPrimaryDBusInterface:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSString.html#class$NSString">NSString</a>*)anInterface;<br />
+    <div class="desc">
+      
+            D-Bus allows identically named methods to appear in
+            multiple interfaces. By default and in accordance
+            with the D-Bus specification, DKProxy will call the
+            first available implementation unless you specify the
+            interface. If you usually call methods from a
+            specific interface, you can designate the
+            interface as the primary one by calling
+            <a rel="gsdoc" href="#method$DKProxy-setPrimaryDBusInterface$">
+              -setPrimaryDBusInterface:
+            </a>
+
+            .
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+    <br />
+    </font>
+</body>
+</html>

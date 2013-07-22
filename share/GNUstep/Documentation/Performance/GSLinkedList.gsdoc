@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSLinkedList">
+  <head>
+    <title>GSLinkedList documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSLinkedList class
+      </heading>
+      <class name="GSLinkedList" super="NSObject">
+        <declared>GSLinkedList.h</declared>
+        <desc>
+          GSLinkedList manages a list of GSListLink
+          objects.
+        </desc>
+        <ivariable type="NSUInteger" name="count" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSListLink*" name="head" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSListLink*" name="tail" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <method type="void">
+          <sel>append:</sel>
+          <arg type="GSListLink*">link</arg>
+          <desc>
+            Appends <var>link</var> at the end of the linked
+            list managed by the receiver. <br /> Retains the
+            <var>link</var>.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>count</sel>
+          <desc>
+            Returns the number of links in the list.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>empty</sel>
+          <desc>
+            Remove all links from the list and release them all.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>findEqual:</sel>
+          <arg type="NSObject*">object</arg>
+          <sel>from:</sel>
+          <arg type="GSListLink*">start</arg>
+          <sel>back:</sel>
+          <arg type="BOOL">aFlag</arg>
+          <desc>
+            Searches the linked list returning the link
+            containing <var>object</var> or <code>nil</code>
+            if it is not found. <br /> The comparison is performed
+            using the
+            <ref type="method" id="-isEqual:" class="NSObject">
+              [NSObject -isEqual:]
+            </ref>
+            method of <var>object</var>. <br /> If
+            <var>start</var> is <code>nil</code> then the whole
+            list is searched. <br /> This method will <em>not</em>
+            find links containing <code>nil</code> items.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>findIdentical:</sel>
+          <arg type="NSObject*">object</arg>
+          <sel>from:</sel>
+          <arg type="GSListLink*">start</arg>
+          <sel>back:</sel>
+          <arg type="BOOL">aFlag</arg>
+          <desc>
+            Searches the linked list returning the link
+            containing <var>object</var> or <code>nil</code>
+            if it is not found. <br /> If <var>start</var> is
+            <code>nil</code> then the whole list is searched.
+            <br /> A direct pointer comparison is used to
+            determine equality.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>head</sel>
+          <desc>
+            Returns the first link in the list.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>insert:</sel>
+          <arg type="GSListLink*">link</arg>
+          <sel>after:</sel>
+          <arg type="GSListLink*">at</arg>
+          <desc>
+            Inserts other immediately after the receiver.
+            <br /> Retains the <var>link</var>.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>insert:</sel>
+          <arg type="GSListLink*">link</arg>
+          <sel>before:</sel>
+          <arg type="GSListLink*">at</arg>
+          <desc>
+            Inserts other immediately before the receiver.
+            <br /> Retains the <var>link</var>.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeLink:</sel>
+          <arg type="GSListLink*">link</arg>
+          <desc>
+            Removes the <var>link</var> from the receiver.
+            <br /> releases the <var>link</var>.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>tail</sel>
+          <desc>
+            Returns the last link in the list.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>
+        Software documentation for the GSListLink class
+      </heading>
+      <class name="GSListLink" super="NSObject">
+        <declared>GSLinkedList.h</declared>
+        <desc>
+          GSListLink provides simple doubly linked list
+          functionality to avoid the need to constantly
+          re-invent it (as the OpenStep/Cocoa APIs do not
+          provide this). The emphasis is on speed of operation
+          so instance variables are directly accessible and inline
+          functions are provided to manipulate them (without
+          error cehcking), but you can/should avoid these direct
+          access features unless speed is really critical.
+          <br /> A list may either be 'normal'... (where the
+          head/tail ends of the list have a <code>nil</code>
+          pointer to the previous/next link) or 'circular' in
+          which case the list is not terminated. <br /> The
+          GSListLink item carries a minimal payload of a
+          single item which is retained by the link. <br /> The
+          GSListLink owner is an optional pointer to an
+          object which 'owns' the link... a GSLinkedList
+          instance may use this to check link ownership when
+          manipulating links.
+        </desc>
+        <ivariable type="NSObject*" name="item" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSListLink*" name="next" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSLinkedList*" name="owner" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="GSListLink*" name="previous" validity="public">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <method type="id">
+          <sel>initCircular</sel>
+          <desc>
+            Initialise the receiver as a link for a circular
+            linked list.
+          </desc>
+        </method>
+        <method type="NSObject*">
+          <sel>item</sel>
+          <desc>
+            Return the item in the link.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>next</sel>
+          <desc>
+            Return the next item in the list containing the
+            receiver, or <code>nil</code> if there are no
+            more items.
+          </desc>
+        </method>
+        <method type="GSLinkedList*">
+          <sel>owner</sel>
+          <desc>
+            Return the list which owns the receiver or
+            <code>nil</code> if the receiver is not in a list.
+          </desc>
+        </method>
+        <method type="GSListLink*">
+          <sel>previous</sel>
+          <desc>
+            Return the previous item in the list containing the
+            receiver, or <code>nil</code> if there are no
+            more items.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setItem:</sel>
+          <arg type="NSObject*">anItem</arg>
+          <desc>
+            Set an item value by retaining it and releasing any
+            previous value.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>GSLinkedList types</heading>
+      <p></p>
+      <type type="unsigned int" name="NSUInteger">
+        <desc>
+          <em>Description forthcoming.</em>
+        </desc>
+      </type>
+    </chapter>
+    <chapter>
+      <heading>GSLinkedList functions</heading>
+      <p></p>
+      <function type="void" name="GSLinkCircularInsertAfter">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> after <var>at</var> in a
+          circular list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must point to
+          itsself).
+        </desc>
+      </function>
+      <function type="void" name="GSLinkCircularInsertBefore">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> before <var>at</var> in a
+          circular list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must point to
+          itsself).
+        </desc>
+      </function>
+      <function type="void" name="GSLinkCircularRemove">
+        <arg type="GSListLink*">link</arg>
+        <desc>
+          Removes <var>link</var> from any list it is in.
+          <br /> The <var>link</var> argument must not be
+          <code>nil</code>.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkInsertAfter">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> after <var>at</var> in a
+          normal list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must both be
+          <code>nil</code>).
+        </desc>
+      </function>
+      <function type="void" name="GSLinkInsertBefore">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> before <var>at</var> in a
+          normal list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must both be
+          <code>nil</code>).
+        </desc>
+      </function>
+      <function type="void" name="GSLinkRemove">
+        <arg type="GSListLink*">link</arg>
+        <desc>
+          Removes <var>link</var> from the list it is in.
+          <br /> The <var>link</var> argument must not be
+          <code>nil</code>.
+        </desc>
+      </function>
+      <function type="GSListLink*" name="GSLinkedListFindEqual">
+        <arg type="NSObject*">object</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <arg type="GSListLink*">from</arg>
+        <arg type="BOOL">back</arg>
+        <desc>
+          Searches <var>from</var> <var>list</var> to the end
+          looking for the first link containing
+          <var>object</var> (as determined by using object's
+          <ref type="method" id="-isEqual:" class="NSObject">
+            [NSObject -isEqual:]
+          </ref>
+          method). <br /> If <var>from</var> is
+          <code>nil</code> the <var>list</var> is search
+          <var>from</var> head or tail as appropriate to the
+          direction in which it is searched.
+        </desc>
+      </function>
+      <function type="GSListLink*" name="GSLinkedListFindIdentical">
+        <arg type="NSObject*">object</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <arg type="GSListLink*">from</arg>
+        <arg type="BOOL">back</arg>
+        <desc>
+          Searches <var>from</var> <var>list</var> to the end
+          looking for the first link containing
+          <var>object</var> (as determined by direct pointer
+          comparison). <br /> If <var>from</var> is
+          <code>nil</code> the <var>list</var> is search
+          <var>from</var> head or tail as appropriate to the
+          direction in which it is searched.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkedListInsertAfter">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> immediately after
+          <var>at</var>. <br /> Updates the head, tail and count
+          variables of <var>list</var>. <br /> Does not
+          retain <var>link</var>.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkedListInsertBefore">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <arg type="GSListLink*">at</arg>
+        <desc>
+          Inserts <var>link</var> immediately before
+          <var>at</var>. <br /> Updates the head, tail and count
+          variables of <var>list</var>. <br /> Does not
+          retain <var>link</var>.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkedListMoveToHead">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <desc>
+          Moves the <var>link</var> to the head of the
+          <var>list</var> if it is not already there.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkedListMoveToTail">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <desc>
+          Moves the <var>link</var> to the tail of the
+          <var>list</var> if it is not already there.
+        </desc>
+      </function>
+      <function type="void" name="GSLinkedListRemove">
+        <arg type="GSListLink*">link</arg>
+        <arg type="GSLinkedList*">list</arg>
+        <desc>
+          Removes <var>link</var> from the <var>list</var>.
+          <br /> Updates the head, tail and count variables of
+          <var>list</var>. <br /> Does not release
+          <var>link</var>.
+        </desc>
+      </function>
+    </chapter>
+  </body>
+</gsdoc>

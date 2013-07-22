@@ -1,0 +1,19 @@
+{
+    ApplicationDescription = "GNUstep System Preferences";
+    ApplicationIcon = "SystemPreferences.tiff";
+    ApplicationName = SystemPreferences;
+    ApplicationRelease = "1.2.0";
+    Authors = (
+	"Riccardo Mottola",
+	"Enrico Sersale <enrico@fibernet.ro>"
+    );
+    Copyright = "Copyright (C) 2005-2010 Free Software Foundation, Inc.";
+    CopyrightDescription = "Released under the GNU General Public License 2.0 or later";
+    GSMainMarkupFile = "";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = SystemPreferences;
+    NSIcon = "SystemPreferences.tiff";
+    NSMainNibFile = "";
+    NSPrincipalClass = SystemPreferences;
+    URL = "http://www.gnustep.org/experience/systempreferences.html";
+}

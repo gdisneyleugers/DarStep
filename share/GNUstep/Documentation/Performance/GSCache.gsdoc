@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSCache">
+  <head>
+    <title>GSCache class documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2005 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSCache class
+      </heading>
+      <class name="GSCache" super="NSObject">
+        <declared>GSCache.h</declared>
+        <desc>
+          The GSCache class is used to maintain a cache of objects
+          in memory for relatively rapid access. <br /> Typical
+          usage might be to keep the results of a database query
+          around for a while in order to re-use them... for
+          instance when application configuration is obtained
+          from a database which might be updated while the
+          application is running. <br /> When the cache is
+          full, old objects are removed to make room for new ones
+          on a least-recently-used basis. <br /> Cache sizes may be
+          limited by the number of objects in the cache, or by
+          the memory used by the cache, or both. Calculation of the
+          size of items in the cache is relatively expensive, so
+          caches are only limited by number of objects in the
+          default case. <br /> Objects stored in the cache may
+          be given a limited lifetime, in which case an attempt to
+          fetch an <em>expired</em> object from the cache will
+          cause it to be removed from the cache instead (subject
+          to control by the delegate). <br /> Cache keys may be
+          objects of any type as <strong>long</strong> as they
+          are copyable (and the copied keys are immutable) and
+          implement the
+          <ref type="method" id="-hash">
+            -hash
+          </ref>
+          and <ref type="method" id="-isEqual:">-isEqual:</ref>
+          methods such that any two keys can be tested for
+          equality and used as dictionary keys. <br /> NB.
+          GSCache currently does not support subclassing... use
+          it as is or extend it via categories, but do not try to
+          add instance variables.
+        </desc>
+        <method type="NSArray*" factory="yes">
+          <sel>allInstances</sel>
+          <desc>
+            Return all the current cache instances... useful if
+            you want to do something to all cache instances in your
+            process.
+          </desc>
+        </method>
+        <method type="NSString*" factory="yes">
+          <sel>description</sel>
+          <desc>
+            Return a report on all GSCache instances... calls
+            the
+            <ref type="method" id="-description" class="GSCache">
+              [GSCache -description]
+            </ref>
+            method of the individual cache instances to get a
+            report on each one.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>currentObjects</sel>
+          <desc>
+            Return the count of objects currently in the cache.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>currentSize</sel>
+          <desc>
+            Return the total size of the objects currently in
+            the cache.
+          </desc>
+        </method>
+        <method type="id">
+          <sel>delegate</sel>
+          <desc>
+            Return the delegate object previously set using the
+            <ref type="method" id="-setDelegate:">
+              -setDelegate:
+            </ref>
+            method.
+          </desc>
+        </method>
+        <method type="NSString*">
+          <sel>description</sel>
+          <desc>
+            Returns a string describing the status of the
+            receiver for debug/reporting.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>lifetime</sel>
+          <desc>
+            Return the default lifetime for items set in the
+            cache. <br /> A value of zero means that items are
+            not purged based on lifetime.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>maxObjects</sel>
+          <desc>
+            Return the maximum number of items in the cache.
+            <br /> A value of zero means there is no limit.
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>maxSize</sel>
+          <desc>
+            Return the maximum tital size of items in the cache.
+            <br /> A value of zero means there is no limit.
+          </desc>
+        </method>
+        <method type="NSString*">
+          <sel>name</sel>
+          <desc>
+            Return the name of this instance (as set using
+            -setName:)
+          </desc>
+        </method>
+        <method type="id">
+          <sel>objectForKey:</sel>
+          <arg type="id">aKey</arg>
+          <desc>
+            Return the cached value for the specified key, or
+            <code>nil</code> if there is no value in the cache.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>purge</sel>
+          <desc>
+            Remove all items whose lifetimes have passed (if
+            lifetimes are in use for the cache). <br />
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setDelegate:</sel>
+          <arg type="id">anObject</arg>
+          <desc>
+            Sets the delegate for the receiver. <br /> The
+            delegate object is not retained. <br /> If a
+            delegate it set, it will be sent the messages in
+            the (GSCacheDelegate) protocol (if it implements them
+            ... which it does not need to do).
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setLifetime:</sel>
+          <arg type="unsigned">max</arg>
+          <desc>
+            Sets the lifetime (seconds) for items added to the
+            cache. If this is set to zero then items are not
+            removed from the cache based on lifetimes when the
+            cache is full and an object is added, though
+            <em>expired</em> items are still removed when an
+            attempt to retrieve them is made.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setMaxObjects:</sel>
+          <arg type="unsigned">max</arg>
+          <desc>
+            Sets the maximum number of objects in the cache. If
+            this is non-zero then an attempt to set an object in a
+            full cache will result in the least recently used item
+            in the cache being removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setMaxSize:</sel>
+          <arg type="unsigned">max</arg>
+          <desc>
+            Sets the maximum total size for objects in the cache.
+            If this is non-zero then an attempt to set an object
+            whose size would exceed the cache limit will result
+            in the least recently used items in the cache being
+            removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setName:</sel>
+          <arg type="NSString*">name</arg>
+          <desc>
+            Sets the <var>name</var> of this instance.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setObject:</sel>
+          <arg type="id">anObject</arg>
+          <sel>forKey:</sel>
+          <arg type="id">aKey</arg>
+          <desc>
+            Sets (or replaces)the cached value for the specified
+            key. <br /> The value of <var>anObject</var> may be
+            <code>nil</code> to remove any cached object for
+            <var>aKey</var>.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setObject:</sel>
+          <arg type="id">anObject</arg>
+          <sel>forKey:</sel>
+          <arg type="id">aKey</arg>
+          <sel>lifetime:</sel>
+          <arg type="unsigned">lifetime</arg>
+          <desc>
+            Sets (or replaces)the cached value for the specified
+            key, giving the value the specified
+            <var>lifetime</var> (in seconds). A
+            <var>lifetime</var> of zero means that the item is
+            not limited by <var>lifetime</var>. <br /> The value of
+            <var>anObject</var> may be <code>nil</code> to remove
+            any cached object for <var>aKey</var>.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setObject:</sel>
+          <arg type="id">anObject</arg>
+          <sel>forKey:</sel>
+          <arg type="id">aKey</arg>
+          <sel>until:</sel>
+          <arg type="NSDate*">expires</arg>
+          <desc>
+            Sets (or replaces)the cached value for the specified
+            key, giving the value the specified expiry date. Calls
+            <ref type="method" id="-setObject:forKey:lifetime:">
+              -setObject:forKey:lifetime:
+            </ref>
+            to do the real work... this is just a convenience method
+            to handle working out the lifetime in seconds. <br /> If
+            <var>expires</var> is <code>nil</code> or not in the
+            future, this method simply removes the cache entry
+            for <var>aKey</var>. If it is many years in the future,
+            the item is set in the cache so that it is not limited
+            by lifetime.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>shrinkObjects:</sel>
+          <arg type="unsigned">objects</arg>
+          <sel>andSize:</sel>
+          <arg type="unsigned">size</arg>
+          <desc>
+            Called by
+            <ref type="method" id="-setObject:forKey:lifetime:">
+              -setObject:forKey:lifetime:
+            </ref>
+            to make space for a new object in the cache (also when
+            the cache is resized). <br /> This will, if a lifetime
+            is set (see the
+            <ref type="method" id="-setLifetime:">
+              -setLifetime:
+            </ref>
+            method) first purge all <em>expired</em>
+            <var>objects</var> from the cache, then (if
+            necessary) remove <var>objects</var> from the
+            cache until the number of <var>objects</var> and
+            <var>size</var> of cache meet the limits specified.
+            <br /> If the <var>objects</var> argument is zero
+            then all <var>objects</var> are removed from the
+            cache. <br /> The <var>size</var> argument is used
+            <em>only</em> if a maximum <var>size</var> is set for
+            the cache.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>
+        Software documentation for the
+        NSObject(GSCacheSizeInBytes)
+        category
+      </heading>
+      <category name="GSCacheSizeInBytes" class="NSObject">
+        <declared>GSCache.h</declared>
+        <desc>
+          <p>
+            This category declares the
+            <ref type="method" id="-sizeInBytes:">
+              -sizeInBytes:
+            </ref>
+            method which is used by
+            <ref type="class" id="GSCache">GSCache</ref>
+              to ask objects for their size when adding them to a
+              cache which has a limited size in bytes.
+            </p>
+            <p>
+              The
+              <ref type="class" id="NSObject">NSObject</ref>
+                implementation of this method is
+                intended to provide a rough estimnate of
+                object size which subclasses may refine in order
+                to provide more accurate sizing information. <br />
+                Subclasses should call the superclass
+                implementation and use the resulting
+                size information (if it is zero then the object is
+                in the exclude set and the subclass implementation
+                should also return zero) as a starting point on
+                which to add the sizes of any objects contained.
+              </p>
+              For example:
+<example>
+ - (unsigned) sizeInBytes: (NSMutableSet*)exclude
+ {
+   unsigned size = [super sizeInBytes: exclude];
+   if (size > 0)
+     {
+       size += [myInstanceVariable sizeInBytes: exclude];
+     }
+   return size;
+ }
+ </example>
+          <p>
+            The performance library contains implementations giving
+            reasonable size estimates for several common
+            classes:
+          </p>
+          <list>
+            <item>NSArray</item> <item>NSData</item>
+            <item>NSDictionary</item> <item>NSSet</item>
+            <item>NSString</item>
+            <item>
+              GSMimeDocument (if built with the GNUstep
+              base library)
+            </item>
+          </list>
+          <p>
+            The default
+            <ref type="class" id="NSObject">NSObject</ref>
+              ) implementation provides a reasonable size for any
+              class whose instance variables do not include other
+              objects or pointers to memory allocated on the
+              heap.
+            </p>
+        </desc>
+        <method type="unsigned">
+          <sel>sizeInBytes:</sel>
+          <arg type="NSMutableSet*">exclude</arg>
+          <desc>
+            If the receiver is a member of the <var>exclude</var>
+            set, this method simply returns zero. Otherwise, the
+            receiver adds itsself to the <var>exclude</var>
+            set and returns its own size in bytes (the size of the
+            memory used to hold all the instance variables
+            defined for the receiver's class including all
+            superclasses).
+          </desc>
+        </method>
+      </category>
+    </chapter>
+    <chapter>
+      <heading>
+        Software documentation for the GSCacheDelegate
+        protocol
+      </heading>
+      <protocol name="GSCacheDelegate">
+        <declared>GSCache.h</declared>
+        <desc>
+          This protocol defines the messages which may be sent to
+          a delegate of a GSCache object. The messages are only sent
+          if the delegate actually implements them, so a delegate
+          does not need to actually conform to the protocol.
+        </desc>
+        <method type="void">
+          <sel>mayRefreshItem:</sel>
+          <arg type="id">anObject</arg>
+          <sel>withKey:</sel>
+          <arg type="id">aKey</arg>
+          <sel>lifetime:</sel>
+          <arg type="unsigned">lifetime</arg>
+          <sel>after:</sel>
+          <arg type="unsigned">delay</arg>
+          <desc>
+            Alerts the delegate to the fact that
+            <var>anObject</var>, which was cached using
+            <var>aKey</var> and will expire <var>delay</var>
+            seconds in the future has been looked up now, and
+            needs to be refreshed if it is not to expire from the
+            cache. <br /> This is called the first time an
+            attempt is made to access the cached value for
+            <var>aKey</var> and the object is found in the cache
+            but more than half its <var>lifetime</var> has expired.
+            <br /> The delegate method (if implemented) may
+            replace the item in the cache immediately, or do it
+            later asynchronously, or may simply take no action.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>shouldKeepItem:</sel>
+          <arg type="id">anObject</arg>
+          <sel>withKey:</sel>
+          <arg type="id">aKey</arg>
+          <sel>lifetime:</sel>
+          <arg type="unsigned">lifetime</arg>
+          <sel>after:</sel>
+          <arg type="unsigned">delay</arg>
+          <desc>
+            Asks the delegate to decide whether
+            <var>anObject</var>, which was cached using
+            <var>aKey</var> and expired <var>delay</var> seconds
+            ago should still be retained in the cache. <br /> This
+            is called when an attempt is made to access the cached
+            value for <var>aKey</var> and the object is found in
+            the cache but it is no longer valid (has expired).
+            <br /> If the method returns <code>YES</code>, then
+            <var>anObject</var> will not be removed as it
+            normally would. This allows the delegate to change
+            the cached item or refresh it. <br /> For instance, the
+            delegate could replace the object in the cache
+            before returning <code>YES</code> in order to update
+            the cached value when its <var>lifetime</var> has
+            expired. <br /> Another possibility would be for
+            the delegate to return <code>YES</code> (in order to
+            continue using the existing object) and queue an
+            asynchronous database query to update the
+            cache later. In this case the expiry time of the item
+            will be reset relative to the current time, based upon
+            its original <var>lifetime</var>.
+          </desc>
+        </method>
+      </protocol>
+    </chapter>
+  </body>
+</gsdoc>

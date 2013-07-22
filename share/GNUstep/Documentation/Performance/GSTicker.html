@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSTicker class documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSTicker">GSTicker class documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2005 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the GSTicker class</a>
+        </li>
+        <li>
+          <a href="#002000000000">Software documentation for the GSTicker protocol</a>
+        </li>
+        <li>
+          <a href="#003000000000">GSTicker functions</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSTicker class
+      </a></h1>
+    <h2><a name="class$GSTicker">GSTicker</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSTicker.h</dd>
+      </dl>
+    </blockquote>
+    <blockquote>
+      <dl>
+        <dt><b>Conforms to:</b></dt>
+        <dd><a rel="gsdoc" href="#protocol$(GSTicker)">GSTicker</a></dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          Wrapper round the more efficient ticker functions...
+          this class provides convenience methods to get NSDate
+          objects, and also provides support for registering
+          observers ofr second by second ticks.
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+last">+last</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+newSecond$">+newSecond:</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+now">+now</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+registerObserver$userInfo$">+registerObserver:userInfo:</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+start">+start</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+tick">+tick</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+unregisterObserver$">+unregisterObserver:</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker+update">+update</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-last">-last</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-newSecond$">-newSecond:</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-now">-now</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-start">-start</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-tick">-tick</a></li>
+      <li><a rel="gsdoc" href="GSTicker.html#method$GSTicker-update">-update</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSTicker+last">last&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>last</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeLast">
+              GSTickerTimeLast()
+            </a>
+
+            and returns the result as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+newSecond$">newSecond:&nbsp;</a></h3>
+    + (void) <b>newSecond:</b> (id)userInfo;<br />
+    <div class="desc">
+      
+            A dummy method... does nothing, but allows the GSTicker
+            class itsself to act as an observer of regular
+            timeouts. <br /> Thus, you may register the class
+            as its own observer in order to set up a timer to ensure
+            that date/time information is updated at the start of
+            every second.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+now">now&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>now</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeNow">
+              GSTickerTimeNow()
+            </a>
+
+            and returns the result as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+registerObserver$userInfo$">registerObserver:&nbsp;userInfo:&nbsp;</a></h3>
+    + (void) <b>registerObserver:</b> (id<<a rel="gsdoc" href="#protocol$(GSTicker)">GSTicker</a>>)anObject<b> userInfo:</b> (id)userInfo;<br />
+    <div class="desc">
+      
+            Registers an object to receive a
+            <a rel="gsdoc" href="#method$(GSTicker)-newSecond$">
+              [&lt;GSTicker&gt;-newSecond:]
+            </a>
+
+            message at the start of every second. <br /> Also
+            starts a timer in the current thread (unless one is
+            already running) to notify registered objects of
+            new seconds. <br /> The observer and the
+            <var>userInfo</var> are retained by the ticker.
+            <br /> Adding an observer more than once has no
+            effect. <br /> NB. You must not add or remove
+            observers inside the callback routine.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+start">start&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>start</b>;<br />
+    <div class="desc">
+      
+            Returns the result of
+            <a rel="gsdoc" href="#function$GSTickerTimeStart">
+              GSTickerTimeStart()
+            </a>
+
+            as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+tick">tick&nbsp;</a></h3>
+    + (unsigned) <b>tick</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeTick">
+              GSTickerTimeTick()
+            </a>
+
+            and returns the result.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+unregisterObserver$">unregisterObserver:&nbsp;</a></h3>
+    + (void) <b>unregisterObserver:</b> (id<<a rel="gsdoc" href="#protocol$(GSTicker)">GSTicker</a>>)anObject;<br />
+    <div class="desc">
+      
+            Unregisters an observer previously set in the
+            current thread using the
+            <a rel="gsdoc" href="#method$GSTicker+registerObserver$userInfo$">
+              +registerObserver:userInfo:
+            </a>
+
+            method. <br /> If all observers in a thread are
+            removed, the timer for the thread is cancelled at
+            the start of the next second.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker+update">update&nbsp;</a></h3>
+    + (void) <b>update</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeNow">
+              GSTickerTimeNow()
+            </a>
+
+            ;
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-last">last&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>last</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeLast">
+              GSTickerTimeLast()
+            </a>
+
+            and returns the result as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-newSecond$">newSecond:&nbsp;</a></h3>
+    - (void) <b>newSecond:</b> (id)userInfo;<br />
+    <div class="desc">
+      
+            See
+            <a rel="gsdoc" href="#method$GSTicker+newSecond$">
+              +newSecond:
+            </a>
+
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-now">now&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>now</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeNow">
+              GSTickerTimeNow()
+            </a>
+
+            and returns the result as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-start">start&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*) <b>start</b>;<br />
+    <div class="desc">
+      
+            Returns the result of
+            <a rel="gsdoc" href="#function$GSTickerTimeStart">
+              GSTickerTimeStart()
+            </a>
+
+            as an NSDate.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-tick">tick&nbsp;</a></h3>
+    - (unsigned) <b>tick</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeTick">
+              GSTickerTimeTick()
+            </a>
+
+            and returns the result.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSTicker-update">update&nbsp;</a></h3>
+    - (void) <b>update</b>;<br />
+    <div class="desc">
+      
+            Calls
+            <a rel="gsdoc" href="#function$GSTickerTimeNow">
+              GSTickerTimeNow()
+            </a>
+
+            ;
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+
+          <h1><a name="002000000000">
+        Software documentation for the GSTicker protocol
+      </a></h1>
+    <h2><a name="protocol$(GSTicker)">GSTicker</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSTicker.h</dd>
+      </dl>
+    </blockquote>
+    <blockquote>
+      <dl>
+        <dt><b>Conforms to:</b></dt>
+        <dd><a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#protocol$(NSObject)">NSObject</a></dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          <em>Description forthcoming.</em>
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSTicker.html#method$(GSTicker)-newSecond$">-newSecond:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$(GSTicker)-newSecond$">newSecond:&nbsp;</a></h3>
+    - (void) <b>newSecond:</b> (id)userInfo;<br />
+    <div class="desc">
+      
+            Sent to tell observers that the ticker has noticed
+            that a new second has occurred. The tick argument is
+            the user information provided in when registering the
+            observer. <br /> This message is sent to each
+            registered observer when the timeout for the
+            thread occurs. It is not guaranteed to be called
+            every second... other processing in the thread may
+            delay it.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+
+          <h1><a name="003000000000">GSTicker functions</a></h1>
+    <p>
+    </p>
+    <h3><a name="function$GSTickerTimeLast">GSTickerTimeLast</a></h3>
+    <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/TypesAndConstants.html#type$NSTimeInterval">NSTimeInterval</a> GSTickerTimeLast();<br />
+    <div class="desc">
+      
+          Returns the timestamp of the most recent call to
+          <a rel="gsdoc" href="#function$GSTickerTimeNow">
+            GSTickerTimeNow()
+          </a>
+
+          .
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSTickerTimeNow">GSTickerTimeNow</a></h3>
+    <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/TypesAndConstants.html#type$NSTimeInterval">NSTimeInterval</a> GSTickerTimeNow();<br />
+    <div class="desc">
+      
+          Convenience function to provide timing
+          information quickly. <br /> This returns the
+          current date/time, and stores the value for use by
+          the
+          <a rel="gsdoc" href="#function$GSTickerTimeLast">
+            GSTickerTimeLast()
+          </a>
+
+          function.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSTickerTimeStart">GSTickerTimeStart</a></h3>
+    <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/TypesAndConstants.html#type$NSTimeInterval">NSTimeInterval</a> GSTickerTimeStart();<br />
+    <div class="desc">
+      
+          This returns the timestamp from which GSTicker was first
+          used.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSTickerTimeTick">GSTickerTimeTick</a></h3>
+    unsigned int GSTickerTimeTick();<br />
+    <div class="desc">
+      
+          A convenience method to return the current clock &apos;tick&apos;...
+          which is the current second based on the time we
+          started. This does <em>not</em> check the current
+          time, but relies on
+          <a rel="gsdoc" href="#function$GSTickerTimeLast">
+            GSTickerTimeLast()
+          </a>
+
+          returning an up to date value (so if you need an
+          accurate tick, you should ensure that
+          <a rel="gsdoc" href="#function$GSTickerTimeNow">
+            GSTickerTimeNow()
+          </a>
+
+          is called at least once a second). <br /> The returned
+          value is always greater than zero, and is basically
+          calculated as (GSTickerTimeLast() -
+          <a rel="gsdoc" href="#function$GSTickerTimeStart">
+            GSTickerTimeStart()
+          </a>
+
+          + 1). <br /> In the event that the system clock is reset
+          into the past, the value of
+          <a rel="gsdoc" href="#function$GSTickerTimeStart">
+            GSTickerTimeStart()
+          </a>
+
+          is automatically adjusted to ensure that the result of a
+          call to
+          <a rel="gsdoc" href="#function$GSTickerTimeTick">
+            GSTickerTimeTick()
+          </a>
+
+          is never less than the result of any earlier call to the
+          function.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <br />
+    </font>
+</body>
+</html>

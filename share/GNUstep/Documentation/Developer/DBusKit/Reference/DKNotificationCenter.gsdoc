@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="DKNotificationCenter">
+  <head>
+    <title>DKNotificationCenter class documentation</title>
+    <author name="Niels Grewe">
+      <email address="niels.grewe@halbordnung.de">
+        niels.grewe@halbordnung.de
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the DKNotificationCenter
+        class
+      </heading>
+      <class name="DKNotificationCenter" super="NSObject">
+        <declared>DBusKit/DKNotificationCenter.h</declared>
+        <desc>
+          The DKNotificationCenter class allows Objective-C objects
+          to watch for notifications from other D-Bus objects
+          ('signals' in the D-Bus dialect) or to post
+          notifications to D-Bus themselves. You can use
+          this class just as you would use an
+          NSNotificationCenter. Notification
+          names will be mapped to signals as follows: If the
+          introspection data for theD-Bus signal carries
+          an <code>org.gnustep.openstep.notification</code>
+          annotation,the value of this annotation will be
+          used as the name of the notification. Otherwise, the
+          notification name will be
+          <code>
+            DKSignal_&lt;InterfaceName&gt;_&lt;SignalName&gt;
+          </code>
+          . Additionally, D-Bus provides a rather sophisticated
+          matching mechanism to catch only signal emissions
+          with a specific signature. This mechanism is available
+          to applications through the
+          <ref type="method" id="-addObserver:selector:signal:interface:sender:destination:">-addObserver:selector:signal:interface:sender:destination:</ref> method and its more specific variants. Unfortunately, at this time, you need to specify identical match rules when removing the observer again. Every notification from D-Bus carries a reference to a proxy for the object emitting the signal and also guarantees that the following keys are present in the dictionary: <deflist><term>member</term> <desc>The name of the signal being emitted (e.g. "NameOwnerChanged"</desc> <term>interface</term> <desc>The name of the interface to which the signal belongs. (e.g. "org.freedesktop.DBus").</desc> <term>sender</term> <desc>The service emitting the signal (e.g. "org.freedesktop.DBus"). This will always be the unique name of the service, even if you registered the signal for another name.</desc> <term>path</term> <desc>The path to the object emitting the signal (e.g "/org/freedesktop/DBus").</desc> <term>destination</term> <desc>The intended receiver of the signal, might be empty if the signal was broadcast, which is usually the case.</desc></deflist> Additionally the userInfo dictionary will contain keys for every argument specified in the signal, named "arg <em>N</em> ". The dictionary might also contain further keys if <code>org.gnustep.openstep.notification.key</code> annotations were available.
+        </desc>
+        <method type="id" factory="yes">
+          <sel>centerForBusType:</sel>
+          <arg type="DKDBusBusType">type</arg>
+          <desc>
+            Returns a notification center for the specified bus
+            <var>type</var>.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>sessionBusCenter</sel>
+          <desc>
+            Returns a notification center for the session
+            message bus.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>systemBusCenter</sel>
+          <desc>
+            Returns a notification center for the system
+            message bus.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>addObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>selector:</sel>
+          <arg type="SEL">notifySelector</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">notificationName</arg>
+          <sel>object:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <desc>
+            Watches the bus for signals matching
+            <var>notificationName</var> from <var>sender</var>.
+            If one of them is <code>nil</code>, the value will not
+            be used to restrict the notifications delivered to the
+            <var>observer</var>. Notifications are delivered by
+            calling <var>notifySelector</var> on
+            <var>observer</var> as a receiver. Neither can be
+            <code>nil</code> and <var>notifySelector</var> takes
+            exactly one argument (the notification).
+          </desc>
+        </method>
+        <method type="void">
+          <sel>addObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>selector:</sel>
+          <arg type="SEL">notifySelector</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">notificationName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <desc>
+            Similar to
+            <ref type="method" id="-addObserver:selector:name:object:">-addObserver:selector:name:object:</ref> but allows to specify both <var>sender</var> and <var>destination</var> of the notification.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>addObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>selector:</sel>
+          <arg type="SEL">notifySelector</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <desc>
+            Similar to
+            <ref type="method" id="-addObserver:selector:name:sender:destination:">-addObserver:selector:name:sender:destination:</ref> but allows finer grained control over what signals to match. (E.g. it would be possible to request all notifications matching a particular interface only.).
+          </desc>
+        </method>
+        <method type="void">
+          <sel>addObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>selector:</sel>
+          <arg type="SEL">notifySelector</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <sel>filter:</sel>
+          <arg type="NSString*">filter</arg>
+          <sel>atIndex:</sel>
+          <arg type="NSUInteger">index</arg>
+          <desc>
+            Similar to
+            <ref type="method" id="-addObserver:selector:signal:interface:sender:destination:">-addObserver:selector:signal:interface:sender:destination:</ref> but additionally allows matching a single argument. Due to D-Bus constraints, <var>index</var> must be less than 64. The signal will only be matched if the value of the argument at <var>index</var> <em>is equal</em> to the value of <var>filter</var>. Additionally, this matching is limited to string arguments.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>addObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>selector:</sel>
+          <arg type="SEL">notifySelector</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <sel>filtersAndIndices:</sel>
+          <arg type="NSString*">firstFilter</arg>
+          <vararg />
+          <desc>
+            Similar to
+            <ref type="method" id="-addObserver:selector:signal:interface:sender:destination:filter:atIndex:">-addObserver:selector:signal:interface:sender:destination:filter:atIndex:</ref> but allows matching more than one signal. The argument list needs to be terminated by <code>nil</code>. If you want to match the first argument, specify that particular match as the first one and set <var>firstIndex</var> to <code>0</code>. NOTE: This method will be deprecated once a replacement is available.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>postNotification:</sel>
+          <arg type="NSNotification*">notification</arg>
+          <desc>
+            NOTE: Not yet implemented.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>postNotificationName:</sel>
+          <arg type="NSString*">name</arg>
+          <sel>object:</sel>
+          <arg type="id">sender</arg>
+          <desc>
+            NOTE: Not yet implemented.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>postNotificationName:</sel>
+          <arg type="NSString*">name</arg>
+          <sel>object:</sel>
+          <arg type="id">sender</arg>
+          <sel>userInfo:</sel>
+          <arg type="NSDictionary*">info</arg>
+          <desc>
+            NOTE: Not yet implemented.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>postSignalName:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>object:</sel>
+          <arg type="id">sender</arg>
+          <desc>
+            NOTE: Not yet implemented.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>postSignalName:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>object:</sel>
+          <arg type="id">sender</arg>
+          <sel>userInfo:</sel>
+          <arg type="NSDictionary*">info</arg>
+          <desc>
+            NOTE: Not yet implemented.
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>registerNotificationName:</sel>
+          <arg type="NSString*">notificationName</arg>
+          <sel>asSignal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>inInterface:</sel>
+          <arg type="NSString*">interface</arg>
+          <desc>
+            This method allows notification names to be registered
+            for specific signals. E.g.:
+<example>
+ [[DKNotificationCenter sessionBusCenter] registerNotificationName: @"DKNameChanged"
+                                                          asSignal: @"NameOwnerChanged"
+                                                       inInterface: @"org.freedesktop.DBus"];
+ </example>
+            would deliver all " <code>NameOwnerChanged</code> "
+            emissions as notifications named "
+            <code>DKNameChanged</code> ". The method returns
+            <code>NO</code> if the notification name has already
+            been registered.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <desc>
+            Removes all observation activities involving the
+            <var>observer</var>.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">notificationName</arg>
+          <sel>object:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">notificationName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>object:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <sel>filter:</sel>
+          <arg type="NSString*">filter</arg>
+          <sel>atIndex:</sel>
+          <arg type="NSUInteger">index</arg>
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>removeObserver:</sel>
+          <arg type="id">observer</arg>
+          <sel>signal:</sel>
+          <arg type="NSString*">signalName</arg>
+          <sel>interface:</sel>
+          <arg type="NSString*">interfaceName</arg>
+          <sel>sender:</sel>
+          <arg type="DKProxy*">sender</arg>
+          <sel>destination:</sel>
+          <arg type="DKProxy*">destination</arg>
+          <sel>filtersAndIndices:</sel>
+          <arg type="NSString*">firstFilter</arg>
+          <vararg />
+          <desc>
+            Removes all observation activities matching the
+            arguments specified. The match is inclusive.
+            Every observation for a more specific rule will also
+            be removed. NOTE: This method will be deprecated once a
+            replacement is available.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+  </body>
+</gsdoc>

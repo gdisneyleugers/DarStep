@@ -1,0 +1,5 @@
+DBusKit/dependencies: \
+	../Headers/../Headers/DKProxy.h \
+	../Headers/../Headers/DKPort.h \
+	DBusKit.gsdoc \
+	../Headers/../Headers/DKNotificationCenter.h

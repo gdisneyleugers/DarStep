@@ -1,0 +1,9 @@
+{
+  NOTE = "Automatically generated, do not edit!";
+  NSExecutable = "XCode";
+  NSMainNibFile = "";
+  NSPrincipalClass = "XCode";
+  Classes = 
+("GSXCBuildContext", "PBXAbstractBuildPhase", "PBXAbstractTarget", "PBXAggregateTarget", "PBXBuildFile", "PBXBuildRule", "PBXCoder", "PBXContainerItemProxy", "PBXContainer", "PBXCopyFilesBuildPhase", "PBXFileReference", "PBXFrameworksBuildPhase", "PBXGroup", "PBXHeadersBuildPhase", "PBXNativeTarget", "PBXProject", "PBXReferenceProxy", "PBXResourcesBuildPhase", "PBXRezBuildPhase", "PBXShellScriptBuildPhase", "PBXSourcesBuildPhase", "PBXTargetDependency", "PBXVariantGroup", "XCBuildConfiguration", "XCConfigurationList", "XCVersionGroup")
+  ;
+}

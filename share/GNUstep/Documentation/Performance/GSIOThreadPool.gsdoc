@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSIOThreadPool">
+  <head>
+    <title>GSIOThreadPool class documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSIOThreadPool class
+      </heading>
+      <class name="GSIOThreadPool" super="NSObject">
+        <declared>GSIOThreadPool.h</declared>
+        <desc>
+          This class provides a thread pool for performing methods
+          which need to make use of a runloop for I/O and/or
+          timers. <br /> Operations are performed on these
+          threads using the standard
+          <ref type="method" id="-performSelector:onThread:withObject:waitUntilDone:">-performSelector:onThread:withObject:waitUntilDone:</ref> method... the pool is simply used to keep track of allocation of threads so that you can share jobs between them. <br /> NB. The threading API in OSX 10.4 and earlier is incapable of supporting this functionality... in that case this class cannot be instantiated and initialised.
+        </desc>
+        <ivariable type="NSUInteger" name="maxThreads" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSLock*" name="poolLock" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSMutableArray*" name="threads" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <ivariable type="NSTimeInterval" name="timeout" validity="protected">
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </ivariable>
+        <method type="GSIOThreadPool*" factory="yes">
+          <sel>sharedPool</sel>
+          <desc>
+            Returns an instance intended for sharing between
+            sections of code which wish to make use of
+            threading by performing operations in other
+            threads, but which don't mind operations being
+            interleaved with those belonging to oither
+            sections of code. <br /> Always returns the same
+            instance whenever the method is called.
+          </desc>
+        </method>
+        <method type="NSThread*">
+          <sel>acquireThread</sel>
+          <desc>
+            Selects a thread from the pool to be used for some
+            job.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>countForThread:</sel>
+          <arg type="NSThread*">aThread</arg>
+          <desc>
+            Returns the acquire count for the specified thread.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>maxThreads</sel>
+          <desc>
+            Returns the currently configured maximum number of
+            threads in the pool.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setThreads:</sel>
+          <arg type="NSUInteger">max</arg>
+          <desc>
+            Specify the maximum number of threads in the pool
+            (the actual number used may be lower than this value).
+            <br /> Default is 0 (no thread pooling in use).
+            <br /> The pool creates threads on demand up to the
+            specified limit (or a lower limit if dictated by
+            system resources) but will not destroy idle threads
+            unless the limit is subsequently lowered. <br />
+            Setting a value of zero means that operations are
+            performed in the main thread.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setTimeout:</sel>
+          <arg type="NSTimeInterval">t</arg>
+          <desc>
+            Specifies the timeout allowed for a thread to
+            close down when the pool is deallocated or has its
+            size decreased. Any operations in progress in the
+            thread need to close down within this period.
+          </desc>
+        </method>
+        <method type="NSTimeInterval">
+          <sel>timeout</sel>
+          <desc>
+            Returns the current timeout set for the pool.
+          </desc>
+        </method>
+        <method type="void">
+          <sel>unacquireThread:</sel>
+          <arg type="NSThread*">aThread</arg>
+          <desc>
+            Releases a thread previously selected from the
+            pool.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>GSIOThreadPool types</heading>
+      <p></p>
+      <type type="unsigned int" name="NSUInteger">
+        <desc>
+          <em>Description forthcoming.</em>
+        </desc>
+      </type>
+    </chapter>
+  </body>
+</gsdoc>

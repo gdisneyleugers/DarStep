@@ -1,0 +1,133 @@
+{
+    "(GSCacheDelegate)" = (
+	"-mayRefreshItem:withKey:lifetime:after:",
+	"-shouldKeepItem:withKey:lifetime:after:"
+    );
+    "(GSTicker)" = (
+	"-newSecond:"
+    );
+    GSCache = (
+	"+allInstances",
+	"+description",
+	"-currentObjects",
+	"-currentSize",
+	"-delegate",
+	"-description",
+	"-lifetime",
+	"-maxObjects",
+	"-maxSize",
+	"-name",
+	"-objectForKey:",
+	"-purge",
+	"-setDelegate:",
+	"-setLifetime:",
+	"-setMaxObjects:",
+	"-setMaxSize:",
+	"-setName:",
+	"-setObject:forKey:",
+	"-setObject:forKey:lifetime:",
+	"-setObject:forKey:until:",
+	"-shrinkObjects:andSize:"
+    );
+    GSFIFO = (
+	"+stats",
+	"-count",
+	"-get:count:shouldBlock:",
+	"-get",
+	"-initWithCapacity:granularity:timeout:multiProducer:multiConsumer:boundaries:name:",
+	"-initWithCapacity:name:",
+	"-initWithName:",
+	"-put:count:shouldBlock:",
+	"-put:",
+	"-stats",
+	"-statsGet",
+	"-statsPut",
+	"-tryGet",
+	"-tryPut:"
+    );
+    GSIOThreadPool = (
+	"+sharedPool",
+	"-acquireThread",
+	"-countForThread:",
+	"-maxThreads",
+	"-setThreads:",
+	"-setTimeout:",
+	"-timeout",
+	"-unacquireThread:"
+    );
+    GSLinkedList = (
+	"-append:",
+	"-count",
+	"-empty",
+	"-findEqual:from:back:",
+	"-findIdentical:from:back:",
+	"-head",
+	"-insert:after:",
+	"-insert:before:",
+	"-removeLink:",
+	"-tail"
+    );
+    GSListLink = (
+	"-initCircular",
+	"-item",
+	"-next",
+	"-owner",
+	"-previous",
+	"-setItem:"
+    );
+    GSThreadPool = (
+	"+sharedPool",
+	"-drain:",
+	"-flush",
+	"-isEmpty",
+	"-isIdle",
+	"-isSuspended",
+	"-maxOperations",
+	"-maxThreads",
+	"-resume",
+	"-scheduleSelector:onReceiver:withObject:",
+	"-setOperations:",
+	"-setThreads:",
+	"-suspend"
+    );
+    GSThroughput = (
+	"+allInstances",
+	"+description",
+	"+setTick:",
+	"+tick",
+	"-add:",
+	"-add:duration:",
+	"-addDuration:",
+	"-description",
+	"-enableNotifications:",
+	"-endDuration",
+	"-endDuration:",
+	"-init",
+	"-initWithDurations:forPeriods:ofLength:",
+	"-name",
+	"-setName:",
+	"-startDuration:"
+    );
+    GSTicker = (
+	"+last",
+	"+newSecond:",
+	"+now",
+	"+registerObserver:userInfo:",
+	"+start",
+	"+tick",
+	"+unregisterObserver:",
+	"+update",
+	"-last",
+	"-newSecond:",
+	"-now",
+	"-start",
+	"-tick",
+	"-update"
+    );
+    "NSMutableArray(GSSkipMutableArray)" = (
+	"+skipArray"
+    );
+    "NSObject(GSCacheSizeInBytes)" = (
+	"-sizeInBytes:"
+    );
+}

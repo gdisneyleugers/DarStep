@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSThreadPool class documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSThreadPool">GSThreadPool class documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2010 Free Software Foundation, Inc.</p>
+
+        <div>
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSThreadPool class
+      </a></h1>
+    <h2><a name="class$GSThreadPool">GSThreadPool</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSThreadPool.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          This class provides a thread pool for performing methods
+          of objects in parallel in other threads. <br /> This is
+          similar to the NSOperationQueue class but is a
+          lightweight alternative designed to operate
+          rather faster though with slightly decreased
+          functionality... for instance there is no
+          dependency checking supported.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_GSThreadPool_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool+sharedPool">+sharedPool</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-drain$">-drain:</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-flush">-flush</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-isEmpty">-isEmpty</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-isIdle">-isIdle</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-isSuspended">-isSuspended</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-maxOperations">-maxOperations</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-maxThreads">-maxThreads</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-resume">-resume</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-scheduleSelector$onReceiver$withObject$">-scheduleSelector:onReceiver:withObject:</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-setOperations$">-setOperations:</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-setThreads$">-setThreads:</a></li>
+      <li><a rel="gsdoc" href="GSThreadPool.html#method$GSThreadPool-suspend">-suspend</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSThreadPool+sharedPool">sharedPool&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="#class$GSThreadPool">GSThreadPool</a>*) <b>sharedPool</b>;<br />
+    <div class="desc">
+      
+            Returns an instance intended for sharing between
+            sections of code which wish to make use of
+            threading by performing operations in other
+            threads, but which don&apos;t mind operations being
+            interleaved with those belonging to oither
+            sections of code. <br /> Always returns the same
+            instance whenever the method is called.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-drain$">drain:&nbsp;</a></h3>
+    - (BOOL) <b>drain:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSDate.html#class$NSDate">NSDate</a>*)before;<br />
+    <div class="desc">
+      
+            Waits until the pool of operations is empty or until
+            the specified timestamp. Returns <code>YES</code> if
+            the pool was emptied, <code>NO</code> otherwise.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-flush">flush&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>) <b>flush</b>;<br />
+    <div class="desc">
+      
+            Removes all operations which have not yet started,
+            returning a count of the abandoned operations.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-isEmpty">isEmpty&nbsp;</a></h3>
+    - (BOOL) <b>isEmpty</b>;<br />
+    <div class="desc">
+      
+            Returns <code>YES</code> if no operations are
+            waiting to be performed, <code>NO</code> otherwise.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-isIdle">isIdle&nbsp;</a></h3>
+    - (BOOL) <b>isIdle</b>;<br />
+    <div class="desc">
+      
+            Returns <code>YES</code> if <code>NO</code>
+            operations are in progress, <code>NO</code>
+            otherwise.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-isSuspended">isSuspended&nbsp;</a></h3>
+    - (BOOL) <b>isSuspended</b>;<br />
+    <div class="desc">
+      
+            Returns <code>YES</code> if startup of new
+            operations is suspended, <code>NO</code>
+            otherwise.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-maxOperations">maxOperations&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>) <b>maxOperations</b>;<br />
+    <div class="desc">
+      
+            Returns the currently configured maximum number of
+            operations which may be scheduled at any one
+            time.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-maxThreads">maxThreads&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>) <b>maxThreads</b>;<br />
+    <div class="desc">
+      
+            Returns the currently configured maximum number of
+            threads in the pool.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-resume">resume&nbsp;</a></h3>
+    - (void) <b>resume</b>;<br />
+    <div class="desc">
+      
+            Reverses the effect of
+            <a rel="gsdoc" href="#method$GSThreadPool-suspend">
+              -suspend
+            </a>
+
+            .
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-scheduleSelector$onReceiver$withObject$">scheduleSelector:&nbsp;onReceiver:&nbsp;withObject:&nbsp;</a></h3>
+    - (void) <b>scheduleSelector:</b> (SEL)aSelector<b> onReceiver:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*)aReceiver<b> withObject:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*)anArgument;<br />
+    <div class="desc">
+      
+            Adds the object to the queue for which operations
+            should be performed. <br /> You may add an object
+            more than once, but that may result in the operation
+            being performed simultaneously in more than one
+            thread. <br /> If the pool is configured with zero
+            threads or zero operations, this method will simply
+            perform the operation immediately. <br /> The
+            operation will be performed in a context where
+            there is an exception handler set to trap exceptions,
+            and an autorelease pool to deal with autoreleased
+            objects.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-setOperations$">setOperations:&nbsp;</a></h3>
+    - (void) <b>setOperations:</b> (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>)max;<br />
+    <div class="desc">
+      
+            Specify the number of operations which may be
+            waiting. <br /> Default is 100. <br /> Setting a
+            value of zero ensures that operations are performed
+            immediately rather than being queued.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-setThreads$">setThreads:&nbsp;</a></h3>
+    - (void) <b>setThreads:</b> (<a rel="gsdoc" href="GSLinkedList.html#type$NSUInteger">NSUInteger</a>)max;<br />
+    <div class="desc">
+      
+            Specify the maximum number of threads in the pool
+            (the actual number used may be lower than this value).
+            <br /> Default is 2. <br /> The pool creates threads
+            on demand up to the specified limit (or a lower limit if
+            dictated by system resources) but will not destroy
+            idle threads unless the limit is subsequently
+            released. <br /> Setting a value of zero means
+            that operations are performed in the main thread. In
+            this case
+            <a rel="gsdoc" href="#method$GSThreadPool-drain$">
+              -drain:
+            </a>
+
+            will be used (with a 30 second limit) followed by
+            <a rel="gsdoc" href="#method$GSThreadPool-flush">
+              -flush
+            </a>
+
+            to ensure that the queue is emptied before the threads
+            are shut down.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSThreadPool-suspend">suspend&nbsp;</a></h3>
+    - (void) <b>suspend</b>;<br />
+    <div class="desc">
+      
+            Turns off startup of new operations.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_GSThreadPool_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for GSThreadPool Class</h2>
+    <h3><a name="ivariable$GSThreadPool*idle">idle</a></h3>
+    @protected GSLinkedList* <b>idle</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*live">live</a></h3>
+    @protected GSLinkedList* <b>live</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*maxOperations">maxOperations</a></h3>
+    @protected NSUInteger <b>maxOperations</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*maxThreads">maxThreads</a></h3>
+    @protected NSUInteger <b>maxThreads</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*operations">operations</a></h3>
+    @protected GSLinkedList* <b>operations</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*poolLock">poolLock</a></h3>
+    @protected NSRecursiveLock* <b>poolLock</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*processed">processed</a></h3>
+    @protected NSUInteger <b>processed</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*shutdown">shutdown</a></h3>
+    @protected BOOL <b>shutdown</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*suspended">suspended</a></h3>
+    @protected BOOL <b>suspended</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSThreadPool*unused">unused</a></h3>
+    @protected GSLinkedList* <b>unused</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+    <br />
+    </font>
+</body>
+</html>

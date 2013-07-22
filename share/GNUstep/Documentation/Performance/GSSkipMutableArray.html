@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSSkipMutableArray documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSSkipMutableArray">GSSkipMutableArray documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Matt Rice (<a href="mailto:ratmice@yahoo.com"><code>ratmice@yahoo.com</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2006 Free Software Foundation, Inc.</p>
+
+        <div>
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the
+        NSMutableArray(GSSkipMutableArray)
+        category
+      </a></h1>
+    <h2><a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSArray.html#class$NSMutableArray">NSMutableArray</a>(<a name="category$NSMutableArray(GSSkipMutableArray)">GSSkipMutableArray</a>)</h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSSkipMutableArray.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          
+    </p>
+    <p>
+
+            An NSMutableArray category to provide an NSMutableArray
+            instance which uses a skip list variant for it&apos;s
+            underlying data structure.
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            While a skip list is typically sorted and represents
+            a dictionary. the indexed skip list is sorted by index
+            and maintains deltas to represent the distance between
+            linked nodes.
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            The underlying data structure looks much like the
+            figure below:
+              </p>
+    <p>
+      
+
+<pre>
+index -&gt;  HEAD   1    2    3    4    5    6    TAIL
+           5| ---------------------&gt; # ------&gt;  #
+           3| -----------&gt; 2 ------&gt; # ------&gt;  #
+           1| -&gt; 1 -&gt; 1 -&gt; 1 -&gt; 1 -&gt; 1 -&gt; # -&gt;  #
+  </pre>
+      
+          
+    </p>
+    <p>
+
+            Where the numbers represent how many indexes it is to
+            the next node of the appropriate level. The bottom
+            level always points to the next node.
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            Finding a specific index starts at the top level,
+            until the current depth + the next nodes delta is
+            larger than wanted index, then it goes down 1 level,
+            and repeats until it finds the wanted index.
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            Addition and removal of indexes requires an update
+            of the deltas of nodes which begin before, and end after
+            the wanted index, these are the places where it goes
+            down a level.
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            The rationale behind it was where a linked list based
+            mutable array will quickly add and remove elements,
+            it may perform poorly at accessing any random index
+            (because it must traverse the entire list to get
+            to the index).
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            While a C array based mutable array will perform good
+            at random index access it may perform poorly at adding
+            and removing indexes (because it must move all items
+            after the altered index).
+              </p>
+    <p>
+      
+          
+    </p>
+    <p>
+
+            While a GSSkipMutableArray may not outperform a
+            linked list or a C array based mutable array at
+            their specific strengths, it attempts to not suffer
+            from either of their weaknesses, at the cost of
+            additional memory overhead.
+              </p>
+    <p>
+      
+        
+    </div>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSSkipMutableArray.html#method$NSMutableArray(GSSkipMutableArray)+skipArray">+skipArray</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$NSMutableArray(GSSkipMutableArray)+skipArray">skipArray&nbsp;</a></h3>
+    + (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSArray.html#class$NSMutableArray">NSMutableArray</a>*) <b>skipArray</b>;<br />
+    <div class="desc">
+      
+            Creates and returns an autoreleased NSMutableArray
+            implemented as a skip list for rapid
+            insertion/deletion within very large
+            arrays.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+    <br />
+    </font>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="GSFIFO">
+  <head>
+    <title>GSFIFO class documentation</title>
+    <author name="Richard Frith-Macdonald">
+      <email address="rfm@gnu.org">
+        rfm@gnu.org
+      </email>
+    </author>
+    <copy>2011 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the GSFIFO class
+      </heading>
+      <class name="GSFIFO" super="NSObject">
+        <declared>GSFIFO.h</declared>
+        <desc>
+          GSFIFO manages a first-in-first-out queue of items.
+          <br /> Items in the queue are <em>NOT</em> retained
+          objects... memory management is not the job of this
+          class and it is not intended to be treated as a
+          'collection', rather its role is intended to be
+          that of an inter-thread coordination mechanism. <br />
+          Instances of the GSFIFO class are intended to
+          support the producer-consumer model of processing.
+          The ideal example is that of a production line, where you
+          have a stream of items to be processed and while that
+          processing can be broken down into separate
+          stages, they must be done in a particular order. The
+          FIFO is used as the link betwen those stages, ensuring
+          that the required ordering is maintained even when
+          separate threads handle each stage. <br /> Where
+          there is a single producer and a single consumer
+          thread, a fast lock-free algorthm is used to get/pu
+          items from the FIFO. <br /> To minimise the overheads
+          of using the FIFO, we provide inline functions to support
+          the addition of items in the single producer thread case
+          and to support the removal of items in the single
+          consumer thread case. When operating that way, the
+          overhead of using the FIFO is only a few CPU cycles
+          and it becomes reasonable to split sequentional
+          processing into a <strong>long</strong> series of
+          small operations each handled by a separate thread
+          (making effective use of a multi-cpu machine). <br />
+          The FIFO may also be useful where you don't have a
+          strictly sequential process to manage, but some
+          parts need to be sequential... in these cases it may
+          make sense to have multiple consumers and/or producers.
+          In these cases, some locking is required and the use of
+          the inline functions is not allowed (you must call the
+          <ref type="method" id="-get">
+            -get
+          </ref>
+          and <ref type="method" id="-put:">-put:</ref> methods.
+          <br /> It is recommended that you create FIFOs using
+          the
+          <ref type="method" id="-initWithName:">
+            -initWithName:
+          </ref>
+          method so that you can easily use the NSUserDefaults
+          system to adjust their configurations to tests/tweak
+          performance.
+        </desc>
+        <ivariable type="uint32_t" name="_capacity" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="uint64_t" name="_getTryFailure" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="uint64_t" name="_getTrySuccess" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="volatile uint64_t" name="_head" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="void**" name="_items" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="uint64_t" name="_putTryFailure" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="uint64_t" name="_putTrySuccess" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <ivariable type="volatile uint64_t" name="_tail" validity="public">
+          <desc>
+            <em>Warning</em> the underscore at the start of the
+            name of this instance variable indicates that, even
+            though it is not technically <em>private</em>, it is
+            intended for internal use within the package, and
+            you should not use the variable in other code.
+          </desc>
+        </ivariable>
+        <method type="NSString*" factory="yes">
+          <sel>stats</sel>
+          <desc>
+            Return statistics for all current GSFIFO instances.
+            <br /> Statistics for FIFOs which are configued to
+            be lock-free are empty (listing the name only) except
+            where we can safely obtain get or put stats because
+            the FIFOs consumer/producer thread is the same as the
+            current thread.
+          </desc>
+        </method>
+        <method type="NSUInteger">
+          <sel>count</sel>
+          <desc>
+            Returns the approximate number of items in the
+            FIFO.
+          </desc>
+        </method>
+        <method type="void*">
+          <sel>get</sel>
+          <desc>
+            Gets the next item from the FIFO, blocking if
+            necessary until an item is available. Raises an
+            exception if the FIFO is configured with a
+            timeout and it is exceeded. <br /> Implemented
+            using
+            <ref type="method" id="-get:count:shouldBlock:">
+              -get:count:shouldBlock:
+            </ref>
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>get:</sel>
+          <arg type="void**">buf</arg>
+          <sel>count:</sel>
+          <arg type="unsigned">count</arg>
+          <sel>shouldBlock:</sel>
+          <arg type="BOOL">block</arg>
+          <desc>
+            Reads up to <var>count</var> items from the FIFO into
+            <var>buf</var>. If <var>block</var> is
+            <code>YES</code>, this blocks if necessary until at
+            least one item is available, and raises an exception
+            if the FIFO is configured with a timeout and it is
+            exceeded. <br /> Returns the number of items
+            actually read.
+          </desc>
+        </method>
+        <method type="id" init="yes">
+          <sel>initWithCapacity:</sel>
+          <arg type="uint32_t">c</arg>
+          <sel>granularity:</sel>
+          <arg type="uint16_t">g</arg>
+          <sel>timeout:</sel>
+          <arg type="uint16_t">t</arg>
+          <sel>multiProducer:</sel>
+          <arg type="BOOL">mp</arg>
+          <sel>multiConsumer:</sel>
+          <arg type="BOOL">mc</arg>
+          <sel>boundaries:</sel>
+          <arg type="NSArray*">a</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">n</arg>
+          <desc>
+            Initialises the receiver with the specified
+            capacity (buffer size). <br /> The capacity must
+            lie in the range from one to <var>a</var> million,
+            othewrwise the receiver is deallocated and this
+            method returns <code>nil</code>. <br /> If the
+            granularity value is non-zero, it is treated as
+            the maximum time in milliseconds for which <var>a</var>
+            <ref type="method" id="-get">
+              -get
+            </ref>
+            or <ref type="method" id="-put:">-put:</ref> operation
+            will pause between successive attempts. <br /> If the
+            timeout value is non-zero, it is treated as the
+            total time in milliseconds for which <var>a</var>
+            <ref type="method" id="-get">
+              -get
+            </ref>
+            or <ref type="method" id="-put:">-put:</ref> operation
+            may block, and <var>a</var> longer delay will cause
+            those methods to raise an exception. <br /> If the
+            multiProducer or multiConsumer flag is
+            <code>YES</code>, the FIFO is configured to support
+            multiple producer/consumer threads using locking.
+            <br /> The boundaries array is an ordered list of
+            NSNumber objects containing time intervals found
+            boundaries of bands into which to categorise
+            wait time stats. Any wait whose duration is less than
+            the interval specified in the Nth element is counted in
+            the stat's for the Nth band. If this is
+            <code>nil</code>, <var>a</var> default set of
+            bundaries is used. If it is an empty array then
+            no time based stats are recorded. <br /> The name string
+            is <var>a</var> unique identifier for the receiver and
+            is used when printing diagnostics and statistics. If an
+            instance with the same name already exists, the
+            receiveris deallocated and an exception is
+            raised.
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithCapacity:</sel>
+          <arg type="uint32_t">c</arg>
+          <sel>name:</sel>
+          <arg type="NSString*">n</arg>
+          <desc>
+            Initialises the receiver as a multi-producer,
+            multi-consumer FIFO with no timeout and with
+            default stats gathering enabled. <br /> However,
+            these values (including the supplied capacity) may be
+            overridden as specified in
+            <ref type="method" id="-initWithName:">
+              -initWithName:
+            </ref>
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithName:</sel>
+          <arg type="NSString*">n</arg>
+          <desc>
+            Initialises the receiver using the specified
+            name and obtaining other details from the
+            NSUserDefaults system using defaults keys
+            where 'NNN' is the supplied name. <br /> The
+            GSFIFOCapacityNNN default specifies the
+            capacity for the FIFO, and if missing a capacity
+            of 1000 is assumed. <br /> The GSFIFOGranularityNNN
+            integer is zero by default. <br /> The
+            GSFIFOTimeoutNNN integer is zero by
+            default. <br /> The GSFIFOSingleConsumerNNN
+            boolean is <code>NO</code> by default. <br /> The
+            GSFIFOSingleProducerNNN boolean is
+            <code>NO</code> by default. <br /> The
+            GSFIFOBoundariesNNN array is missing by
+            default. <br />
+          </desc>
+        </method>
+        <method type="void">
+          <sel>put:</sel>
+          <arg type="void*">item</arg>
+          <desc>
+            Adds an <var>item</var> to the FIFO, blocking if
+            necessary until there is space in the buffer.
+            Raises an exception if the FIFO is configured with a
+            timeout and it is exceeded.br /> Implemented using
+            <ref type="method" id="-put:count:shouldBlock:">
+              -put:count:shouldBlock:
+            </ref>
+          </desc>
+        </method>
+        <method type="unsigned">
+          <sel>put:</sel>
+          <arg type="void**">buf</arg>
+          <sel>count:</sel>
+          <arg type="unsigned">count</arg>
+          <sel>shouldBlock:</sel>
+          <arg type="BOOL">block</arg>
+          <desc>
+            Writes up to <var>count</var> items from
+            <var>buf</var> into the FIFO. If <var>block</var> is
+            <code>YES</code>, this blocks if necessary until at
+            least one item can be written, and raises an
+            exception if the FIFO is configured with a
+            timeout and it is exceeded. <br /> Returns the
+            number of items actually written.
+          </desc>
+        </method>
+        <method type="NSString*">
+          <sel>stats</sel>
+          <desc>
+            Return any available statistics for the receiver.
+            <br />
+          </desc>
+        </method>
+        <method type="NSString*">
+          <sel>statsGet</sel>
+          <desc>
+            Return statistics on get operations for the
+            receiver. <br /> NB. If the recever is not
+            configured for multiple consumers, this method
+            may only be called from the single consumer thread.
+          </desc>
+        </method>
+        <method type="NSString*">
+          <sel>statsPut</sel>
+          <desc>
+            Return statistics on put operations for the
+            receiver. <br /> NB. If the recever is not
+            configured for multiple producers, this method
+            may only be called from the single producer thread.
+          </desc>
+        </method>
+        <method type="void*">
+          <sel>tryGet</sel>
+          <desc>
+            Checks the FIFO and returns the first available item
+            or NULL if the FIFO is empty. <br /> Implemented using
+            <ref type="method" id="-get:count:shouldBlock:">
+              -get:count:shouldBlock:
+            </ref>
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>tryPut:</sel>
+          <arg type="void*">item</arg>
+          <desc>
+            Attempts to put an <var>item</var> into the FIFO,
+            returning <code>YES</code> on success or
+            <code>NO</code> if the FIFO is full. <br />
+            Implemented using
+            <ref type="method" id="-put:count:shouldBlock:">
+              -put:count:shouldBlock:
+            </ref>
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>GSFIFO functions</heading>
+      <p></p>
+      <function type="void*" name="GSGetFastFIFO">
+        <arg type="GSFIFO*">receiver</arg>
+        <desc>
+          Function to efficiently get an item from a fast
+          FIFO, blocking if necessary until an item is available
+          or the timeout occurs. <br /> Warning... only for use if
+          the FIFO is NOT configured for multiple consumers.
+        </desc>
+      </function>
+      <function type="void*" name="GSGetFastNonBlockingFIFO">
+        <arg type="GSFIFO*">receiver</arg>
+        <desc>
+          Function to efficiently get an item from a fast
+          FIFO. <br /> Returns NULL if the FIFO is empty. <br />
+          Warning... only for use if the FIFO is NOT configured
+          for multiple consumers.
+        </desc>
+      </function>
+      <function type="void" name="GSPutFastFIFO">
+        <arg type="GSFIFO*">receiver</arg>
+        <arg type="void*">item</arg>
+        <desc>
+          Function to efficiently put an <var>item</var> to a
+          fast FIFO, blocking if necessary untile there is space
+          in the FIFO or until the timeout occurs. <br /> Warning...
+          only for use if the FIFO is NOT configured for multiple
+          producers.
+        </desc>
+      </function>
+      <function type="BOOL" name="GSPutFastNonBlockingFIFO">
+        <arg type="GSFIFO*">receiver</arg>
+        <arg type="void*">item</arg>
+        <desc>
+          Function to efficiently put an <var>item</var> to a
+          fast FIFO. <br /> Returns <code>YES</code> on success,
+          <code>NO</code> on failure (FIFO is full). <br />
+          Warning... only for use if the FIFO is NOT configured
+          for multiple producers.
+        </desc>
+      </function>
+    </chapter>
+  </body>
+</gsdoc>

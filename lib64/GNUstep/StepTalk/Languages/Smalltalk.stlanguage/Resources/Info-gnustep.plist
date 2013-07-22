@@ -1,0 +1,18 @@
+{
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = Smalltalk;
+    NSMainNibFile = "";
+    NSPrincipalClass = SmalltalkEngine;
+    STFileTypes = (
+	st,
+	stalk
+    );
+    StepTalkLanguages = {
+	Smalltalk = {
+	    EngineClass = SmalltalkEngine;
+	    FileTypes = (
+		st
+	    );
+	};
+    };
+}

@@ -1,0 +1,10 @@
+{
+    CFBundleShortVersionString = "0.23.1";
+    CFBundleVersion = "023.1";
+    GSBundleShortVersionString = "0.23.1";
+    GSBundleVersion = "023.1";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = "libgnustep-back-023";
+    NSMainNibFile = "";
+    NSPrincipalClass = GSBackend;
+}

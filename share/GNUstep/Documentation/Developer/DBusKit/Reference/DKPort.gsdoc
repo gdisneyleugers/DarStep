@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="DKPort">
+  <head>
+    <title>DKPort class documentation</title>
+    <author name="Niels Grewe">
+      <email address="niels.grewe@halbordnung.de">
+        niels.grewe@halbordnung.de
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the DKPort class
+      </heading>
+      <class name="DKPort" super="NSPort">
+        <declared>DBusKit/DKPort.h</declared>
+        <desc>
+          DKPort is used by the Distributed Objects system to
+          communicate with D-Bus. Unless you have special
+          needs, don't create DKPort instances yourself, but use
+          the interfaces provided by NSConnection instead. The
+          default
+          <ref id="+port" type="method" class="NSPort">
+            <ref type="method" id="+port">
+              +port
+            </ref>
+          </ref>
+          message will return a port connected to the session
+          bus.
+        </desc>
+        <method type="void" factory="yes">
+          <sel>enableWorkerThread</sel>
+          <desc>
+            This method should be called by an application that
+            wants to make use of the multithreaded features of
+            DBusKit. After this method has been called, it is
+            no longer safe to call into DBusKit from
+            <ref id="+initialize" type="method" class="NSObject">
+              <ref type="method" id="+initialize">
+                +initialize
+              </ref>
+            </ref>
+            methods, which might result in deadlock from the
+            Objective-C runtime.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>portForBusType:</sel>
+          <arg type="DKDBusBusType">type</arg>
+          <desc>
+            Returns a port to the specified message bus without
+            any specified remote side.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>sessionBusPort</sel>
+          <desc>
+            Returns a port to the session message bus.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>systemBusPort</sel>
+          <desc>
+            Returns a port to the system message bus.
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithRemote:</sel>
+          <arg type="NSString*">remote</arg>
+          <desc>
+            Return a DKPort instance connected to the specified
+            D-Bus peer on the session message bus.
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithRemote:</sel>
+          <arg type="NSString*">remote</arg>
+          <sel>onBus:</sel>
+          <arg type="DKDBusBusType">bus</arg>
+          <desc>
+            Return a DKPort instance connected to the specified
+            D-Bus peer on the specified message <var>bus</var>.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+  </body>
+</gsdoc>

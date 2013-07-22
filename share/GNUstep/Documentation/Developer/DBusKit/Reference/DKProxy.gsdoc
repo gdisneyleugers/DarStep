@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE gsdoc PUBLIC "-//GNUstep//DTD gsdoc 1.0.3//EN" "http://www.gnustep.org/gsdoc-1_0_3.dtd">
+<gsdoc base="DKProxy">
+  <head>
+    <title>DKProxy documentation</title>
+    <author name="Niels Grewe">
+      <email address="niels.grewe@halbordnung.de">
+        niels.grewe@halbordnung.de
+      </email>
+    </author>
+    <copy>2010 Free Software Foundation, Inc.</copy>
+  </head>
+  <body>
+    <front><contents /></front>
+    <chapter>
+      <heading>
+        Software documentation for the DKDBus class
+      </heading>
+      <class name="DKDBus" super="DKProxy">
+        <declared>DBusKit/DKProxy.h</declared>
+        <desc>
+          The DKDBus class exposes the D-Bus objects specifically
+          (i.e. the "org.freedesktop.DBus" service). The
+          instances returned by this class are shared
+          objects: Calling
+          <ref type="method" id="-setPrimaryDBusInterface:">
+            -setPrimaryDBusInterface:
+          </ref>
+          on them has no effect. DKDBus instances also emit
+          notifications about the state of the bus they
+          represent. An application can watch for a
+          <code>DKBusDisconnectedNotification</code> and
+          <code>DKBusReconnectedNotification</code> to be
+          notified about state changes for the bus.
+        </desc>
+        <ivariable type="BOOL" name="isDisconnected" validity="protected">
+          <desc>
+            The isDisconnected flag is set by a bus object that
+            experiences a bus failure and tries to
+            reconnect to the bus.
+          </desc>
+        </ivariable>
+        <method type="id" factory="yes">
+          <sel>busWithBusType:</sel>
+          <arg type="DKDBusBusType">type</arg>
+          <desc>
+            Returns a reference to the org.freedesktop.DBus
+            service on the bus specified by <var>type</var>.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>sessionBus</sel>
+          <desc>
+            Returns a reference to the org.freedesktop.DBus
+            service on the session message bus.
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>systemBus</sel>
+          <desc>
+            Returns a reference to the org.freedesktop.DBus
+            service on the system message bus.
+          </desc>
+        </method>
+      </class>
+    </chapter>
+    <chapter>
+      <heading>
+        Software documentation for the DKProxy class
+      </heading>
+      <class name="DKProxy" super="NSProxy">
+        <declared>DBusKit/DKProxy.h</declared>
+        <conform>NSCoding</conform>
+        <desc>
+          The DKProxy class is used to send messages to D-Bus
+          objects. Usually, you don't create them yourself but
+          by using the DKPort and NSConnection classes.
+        </desc>
+        <method type="id" factory="yes">
+          <sel>proxyWithPort:</sel>
+          <arg type="DKPort*">aPort</arg>
+          <sel>path:</sel>
+          <arg type="NSString*">aPath</arg>
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </method>
+        <method type="id" factory="yes">
+          <sel>proxyWithService:</sel>
+          <arg type="NSString*">aService</arg>
+          <sel>path:</sel>
+          <arg type="NSString*">aPath</arg>
+          <sel>bus:</sel>
+          <arg type="DKDBusBusType">type</arg>
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </method>
+        <method type="BOOL">
+          <sel>hasSameScopeAs:</sel>
+          <arg type="DKProxy*">aProxy</arg>
+          <desc>
+            Checks whether the to proxies are attached to the
+            same D-Bus service.
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithEndpoint:</sel>
+          <arg type="DKEndpoint*">anEndpoint</arg>
+          <sel>andService:</sel>
+          <arg type="NSString*">aService</arg>
+          <sel>andPath:</sel>
+          <arg type="NSString*">aPath</arg>
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithPort:</sel>
+          <arg type="DKPort*">aPort</arg>
+          <sel>path:</sel>
+          <arg type="NSString*">aPath</arg>
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </method>
+        <method type="id">
+          <sel>initWithService:</sel>
+          <arg type="NSString*">aService</arg>
+          <sel>path:</sel>
+          <arg type="NSString*">aPath</arg>
+          <sel>bus:</sel>
+          <arg type="DKDBusBusType">type</arg>
+          <desc>
+            <em>Description forthcoming.</em>
+          </desc>
+        </method>
+        <method type="void">
+          <sel>setPrimaryDBusInterface:</sel>
+          <arg type="NSString*">anInterface</arg>
+          <desc>
+            D-Bus allows identically named methods to appear in
+            multiple interfaces. By default and in accordance
+            with the D-Bus specification, DKProxy will call the
+            first available implementation unless you specify the
+            interface. If you usually call methods from a
+            specific interface, you can designate the
+            interface as the primary one by calling
+            <ref type="method" id="-setPrimaryDBusInterface:">
+              -setPrimaryDBusInterface:
+            </ref>
+            .
+          </desc>
+        </method>
+      </class>
+    </chapter>
+  </body>
+</gsdoc>

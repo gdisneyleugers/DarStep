@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+    <title>GSLinkedList documentation</title>
+  </head>
+  <body>
+    <font face="serif">
+    <h1><a name="title$GSLinkedList">GSLinkedList documentation</a></h1>
+    <h3>Authors</h3>
+    <dl>
+      <dt>Richard Frith-Macdonald (<a href="mailto:rfm@gnu.org"><code>rfm@gnu.org</code></a>)</dt>
+      <dd>
+      </dd>
+    </dl>
+    <p><b>Copyright:</b> (C) 2010 Free Software Foundation, Inc.</p>
+
+        <div>
+      <hr width="50%" align="left" />
+      <h3>Contents -</h3>
+      <ol>
+        <li>
+          <a href="#001000000000">Software documentation for the GSLinkedList class</a>
+        </li>
+        <li>
+          <a href="#002000000000">Software documentation for the GSListLink class</a>
+        </li>
+        <li>
+          <a href="#003000000000">GSLinkedList types</a>
+        </li>
+        <li>
+          <a href="#004000000000">GSLinkedList functions</a>
+        </li>
+      </ol>
+      <hr width="50%" align="left" />
+    </div>
+
+          <h1><a name="001000000000">
+        Software documentation for the GSLinkedList class
+      </a></h1>
+    <h2><a name="class$GSLinkedList">GSLinkedList</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSLinkedList.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          GSLinkedList manages a list of GSListLink
+          objects.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_GSLinkedList_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-append$">-append:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-count">-count</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-empty">-empty</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-findEqual$from$back$">-findEqual:from:back:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-findIdentical$from$back$">-findIdentical:from:back:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-head">-head</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-insert$after$">-insert:after:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-insert$before$">-insert:before:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-removeLink$">-removeLink:</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSLinkedList-tail">-tail</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSLinkedList-append$">append:&nbsp;</a></h3>
+    - (void) <b>append:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)link;<br />
+    <div class="desc">
+      
+            Appends <var>link</var> at the end of the linked
+            list managed by the receiver. <br /> Retains the
+            <var>link</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-count">count&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#type$NSUInteger">NSUInteger</a>) <b>count</b>;<br />
+    <div class="desc">
+      
+            Returns the number of links in the list.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-empty">empty&nbsp;</a></h3>
+    - (void) <b>empty</b>;<br />
+    <div class="desc">
+      
+            Remove all links from the list and release them all.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-findEqual$from$back$">findEqual:&nbsp;from:&nbsp;back:&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>findEqual:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*)object<b> from:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)start<b> back:</b> (BOOL)aFlag;<br />
+    <div class="desc">
+      
+            Searches the linked list returning the link
+            containing <var>object</var> or <code>nil</code>
+            if it is not found. <br /> The comparison is performed
+            using the
+            
+              [NSObject -isEqual:]
+            
+
+            method of <var>object</var>. <br /> If
+            <var>start</var> is <code>nil</code> then the whole
+            list is searched. <br /> This method will <em>not</em>
+            find links containing <code>nil</code> items.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-findIdentical$from$back$">findIdentical:&nbsp;from:&nbsp;back:&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>findIdentical:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*)object<b> from:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)start<b> back:</b> (BOOL)aFlag;<br />
+    <div class="desc">
+      
+            Searches the linked list returning the link
+            containing <var>object</var> or <code>nil</code>
+            if it is not found. <br /> If <var>start</var> is
+            <code>nil</code> then the whole list is searched.
+            <br /> A direct pointer comparison is used to
+            determine equality.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-head">head&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>head</b>;<br />
+    <div class="desc">
+      
+            Returns the first link in the list.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-insert$after$">insert:&nbsp;after:&nbsp;</a></h3>
+    - (void) <b>insert:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)link<b> after:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)at;<br />
+    <div class="desc">
+      
+            Inserts other immediately after the receiver.
+            <br /> Retains the <var>link</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-insert$before$">insert:&nbsp;before:&nbsp;</a></h3>
+    - (void) <b>insert:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)link<b> before:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)at;<br />
+    <div class="desc">
+      
+            Inserts other immediately before the receiver.
+            <br /> Retains the <var>link</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-removeLink$">removeLink:&nbsp;</a></h3>
+    - (void) <b>removeLink:</b> (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*)link;<br />
+    <div class="desc">
+      
+            Removes the <var>link</var> from the receiver.
+            <br /> releases the <var>link</var>.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSLinkedList-tail">tail&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>tail</b>;<br />
+    <div class="desc">
+      
+            Returns the last link in the list.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_GSLinkedList_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for GSLinkedList Class</h2>
+    <h3><a name="ivariable$GSLinkedList*count">count</a></h3>
+    @public NSUInteger <b>count</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSLinkedList*head">head</a></h3>
+    @public GSListLink* <b>head</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSLinkedList*tail">tail</a></h3>
+    @public GSListLink* <b>tail</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+
+          <h1><a name="002000000000">
+        Software documentation for the GSListLink class
+      </a></h1>
+    <h2><a name="class$GSListLink">GSListLink</a> : <a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a></h2>
+    <blockquote class="declared">
+      <dl>
+        <dt><b>Declared in:</b></dt>
+        <dd>GSLinkedList.h</dd>
+      </dl>
+    </blockquote>
+    <div class="desc">
+      
+          GSListLink provides simple doubly linked list
+          functionality to avoid the need to constantly
+          re-invent it (as the OpenStep/Cocoa APIs do not
+          provide this). The emphasis is on speed of operation
+          so instance variables are directly accessible and inline
+          functions are provided to manipulate them (without
+          error cehcking), but you can/should avoid these direct
+          access features unless speed is really critical.
+          <br /> A list may either be &apos;normal&apos;... (where the
+          head/tail ends of the list have a <code>nil</code>
+          pointer to the previous/next link) or &apos;circular&apos; in
+          which case the list is not terminated. <br /> The
+          GSListLink item carries a minimal payload of a
+          single item which is retained by the link. <br /> The
+          GSListLink owner is an optional pointer to an
+          object which &apos;owns&apos; the link... a GSLinkedList
+          instance may use this to check link ownership when
+          manipulating links.
+        
+    </div>
+    <hr width="50%" align="left" />
+    <a href="#_GSListLink_ivars">Instance Variables</a>
+    <br/><br/>
+    <b>Method summary</b>
+    <ul>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-initCircular">-initCircular</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-item">-item</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-next">-next</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-owner">-owner</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-previous">-previous</a></li>
+      <li><a rel="gsdoc" href="GSLinkedList.html#method$GSListLink-setItem$">-setItem:</a></li>
+    </ul>
+    <hr width="50%" align="left" />
+<div class="method">
+    <h3><a name="method$GSListLink-initCircular">initCircular&nbsp;</a></h3>
+    - (id) <b>initCircular</b>;<br />
+    <div class="desc">
+      
+            Initialise the receiver as a link for a circular
+            linked list.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSListLink-item">item&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*) <b>item</b>;<br />
+    <div class="desc">
+      
+            Return the item in the link.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSListLink-next">next&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>next</b>;<br />
+    <div class="desc">
+      
+            Return the next item in the list containing the
+            receiver, or <code>nil</code> if there are no
+            more items.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSListLink-owner">owner&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>*) <b>owner</b>;<br />
+    <div class="desc">
+      
+            Return the list which owns the receiver or
+            <code>nil</code> if the receiver is not in a list.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSListLink-previous">previous&nbsp;</a></h3>
+    - (<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>*) <b>previous</b>;<br />
+    <div class="desc">
+      
+            Return the previous item in the list containing the
+            receiver, or <code>nil</code> if there are no
+            more items.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<div class="method">
+    <h3><a name="method$GSListLink-setItem$">setItem:&nbsp;</a></h3>
+    - (void) <b>setItem:</b> (<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>*)anItem;<br />
+    <div class="desc">
+      
+            Set an item value by retaining it and releasing any
+            previous value.
+          
+    </div>
+    <hr width="25%" align="left" />
+</div>
+<a name="_GSListLink_ivars"/>    <br/><hr width="50%" align="left" />
+    <h2>Instance Variables for GSListLink Class</h2>
+    <h3><a name="ivariable$GSListLink*item">item</a></h3>
+    @public NSObject* <b>item</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSListLink*next">next</a></h3>
+    @public GSListLink* <b>next</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSListLink*owner">owner</a></h3>
+    @public GSLinkedList* <b>owner</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="ivariable$GSListLink*previous">previous</a></h3>
+    @public GSListLink* <b>previous</b>;<br />
+    <div class="desc">
+      
+            <em>Description forthcoming.</em>
+          
+    </div>
+    <hr width="25%" align="left" />
+    <br/><hr width="50%" align="left" /><br/>
+
+          <h1><a name="003000000000">GSLinkedList types</a></h1>
+    <p>
+    </p>
+    <h3><a name="type$NSUInteger">NSUInteger</a></h3>
+    typedef unsigned int NSUInteger;<br />
+    <div class="desc">
+      
+          <em>Description forthcoming.</em>
+        
+    </div>
+    <hr width="25%" align="left" />
+
+          <h1><a name="004000000000">GSLinkedList functions</a></h1>
+    <p>
+    </p>
+    <h3><a name="function$GSLinkCircularInsertAfter">GSLinkCircularInsertAfter</a></h3>
+    void GSLinkCircularInsertAfter(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> after <var>at</var> in a
+          circular list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must point to
+          itsself).
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkCircularInsertBefore">GSLinkCircularInsertBefore</a></h3>
+    void GSLinkCircularInsertBefore(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> before <var>at</var> in a
+          circular list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must point to
+          itsself).
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkCircularRemove">GSLinkCircularRemove</a></h3>
+    void GSLinkCircularRemove(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>);<br />
+    <div class="desc">
+      
+          Removes <var>link</var> from any list it is in.
+          <br /> The <var>link</var> argument must not be
+          <code>nil</code>.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkInsertAfter">GSLinkInsertAfter</a></h3>
+    void GSLinkInsertAfter(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> after <var>at</var> in a
+          normal list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must both be
+          <code>nil</code>).
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkInsertBefore">GSLinkInsertBefore</a></h3>
+    void GSLinkInsertBefore(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> before <var>at</var> in a
+          normal list. <br /> Arguments must not be
+          <code>nil</code> and <var>link</var> must not be in a
+          list (ie its next and previous pointers must both be
+          <code>nil</code>).
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkRemove">GSLinkRemove</a></h3>
+    void GSLinkRemove(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>);<br />
+    <div class="desc">
+      
+          Removes <var>link</var> from the list it is in.
+          <br /> The <var>link</var> argument must not be
+          <code>nil</code>.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListFindEqual">GSLinkedListFindEqual</a></h3>
+    <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* GSLinkedListFindEqual(<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>* <b>object</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>from</b>, BOOL <b>back</b>);<br />
+    <div class="desc">
+      
+          Searches <var>from</var> <var>list</var> to the end
+          looking for the first link containing
+          <var>object</var> (as determined by using object&apos;s
+          
+            [NSObject -isEqual:]
+          
+
+          method). <br /> If <var>from</var> is
+          <code>nil</code> the <var>list</var> is search
+          <var>from</var> head or tail as appropriate to the
+          direction in which it is searched.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListFindIdentical">GSLinkedListFindIdentical</a></h3>
+    <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* GSLinkedListFindIdentical(<a rel="gsdoc" href="/usr/share/GNUstep/Documentation/Developer/Base/Reference/NSObject.html#class$NSObject">NSObject</a>* <b>object</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>from</b>, BOOL <b>back</b>);<br />
+    <div class="desc">
+      
+          Searches <var>from</var> <var>list</var> to the end
+          looking for the first link containing
+          <var>object</var> (as determined by direct pointer
+          comparison). <br /> If <var>from</var> is
+          <code>nil</code> the <var>list</var> is search
+          <var>from</var> head or tail as appropriate to the
+          direction in which it is searched.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListInsertAfter">GSLinkedListInsertAfter</a></h3>
+    void GSLinkedListInsertAfter(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> immediately after
+          <var>at</var>. <br /> Updates the head, tail and count
+          variables of <var>list</var>. <br /> Does not
+          retain <var>link</var>.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListInsertBefore">GSLinkedListInsertBefore</a></h3>
+    void GSLinkedListInsertBefore(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>, <a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>at</b>);<br />
+    <div class="desc">
+      
+          Inserts <var>link</var> immediately before
+          <var>at</var>. <br /> Updates the head, tail and count
+          variables of <var>list</var>. <br /> Does not
+          retain <var>link</var>.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListMoveToHead">GSLinkedListMoveToHead</a></h3>
+    void GSLinkedListMoveToHead(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>);<br />
+    <div class="desc">
+      
+          Moves the <var>link</var> to the head of the
+          <var>list</var> if it is not already there.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListMoveToTail">GSLinkedListMoveToTail</a></h3>
+    void GSLinkedListMoveToTail(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>);<br />
+    <div class="desc">
+      
+          Moves the <var>link</var> to the tail of the
+          <var>list</var> if it is not already there.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <h3><a name="function$GSLinkedListRemove">GSLinkedListRemove</a></h3>
+    void GSLinkedListRemove(<a rel="gsdoc" href="#class$GSListLink">GSListLink</a>* <b>link</b>, <a rel="gsdoc" href="#class$GSLinkedList">GSLinkedList</a>* <b>list</b>);<br />
+    <div class="desc">
+      
+          Removes <var>link</var> from the <var>list</var>.
+          <br /> Updates the head, tail and count variables of
+          <var>list</var>. <br /> Does not release
+          <var>link</var>.
+        
+    </div>
+    <hr width="25%" align="left" />
+    <br />
+    </font>
+</body>
+</html>
