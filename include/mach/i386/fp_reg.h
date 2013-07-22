@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2000 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
+ * 
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. The rights granted to you under the License
+ * may not be used to create, or enable the creation or redistribution of,
+ * unlawful or unlicensed copies of an Apple operating system, or to
+ * circumvent, violate, or enable the circumvention or violation of, any
+ * terms of an Apple operating system software license agreement.
+ * 
+ * Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this file.
+ * 
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ * 
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
+ */
+/*
+ * @OSF_COPYRIGHT@
+ */
 /* 
  * Mach Operating System
  * Copyright (c) 1992-1989 Carnegie Mellon University
@@ -23,52 +53,11 @@
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
  */
-
-#ifndef	_MACH_I386_FP_REG_H_
-#define	_MACH_I386_FP_REG_H_
 /*
- *	Floating point registers and status, as saved
- *	and restored by FP save/restore instructions.
  */
-struct i386_fp_save	{
-	unsigned short	fp_control;	/* control */
-	unsigned short	fp_unused_1;
-	unsigned short	fp_status;	/* status */
-	unsigned short	fp_unused_2;
-	unsigned short	fp_tag;		/* register tags */
-	unsigned short	fp_unused_3;
-	unsigned int	fp_eip;		/* eip at failed instruction */
-	unsigned short	fp_cs;		/* cs at failed instruction */
-	unsigned short	fp_opcode;	/* opcode of failed instruction */
-	unsigned int	fp_dp;		/* data address */
-	unsigned short	fp_ds;		/* data segment */
-	unsigned short	fp_unused_4;
-};
 
-struct i386_fp_regs {
-	unsigned short	fp_reg_word[8][5];
-					/* space for 8 80-bit FP registers */
-};
-
-struct i386_xfp_save {
-	unsigned short	fp_control;	/* control */
-	unsigned short	fp_status;	/* status */
-	unsigned short	fp_tag;		/* register tags */
-	unsigned short	fp_opcode;	/* opcode of failed instruction */
-	unsigned int	fp_eip;		/* eip at failed instruction */
-	unsigned short	fp_cs;		/* cs at failed instruction */
-	unsigned short	fp_unused_1;
-	unsigned int	fp_dp;		/* data address */
-	unsigned short	fp_ds;		/* data segment */
-	unsigned short	fp_unused_2;
-	unsigned int	fp_mxcsr;	/* MXCSR */
-	unsigned int	fp_mxcsr_mask;	/* MXCSR_MASK */
-	unsigned char	fp_reg_word[8][16];
-					/* space for 8 128-bit FP registers */
-	unsigned char	fp_xreg_word[8][16];
-					/* space for 8 128-bit XMM registers */
-	unsigned int	padding[56];
-} __attribute__((aligned(16)));
+#ifndef	_I386_FP_SAVE_H_
+#define	_I386_FP_SAVE_H_
 
 /*
  * Control register
@@ -124,6 +113,6 @@ struct i386_xfp_save {
 #define	FP_SOFT		1		/* software FP emulator */
 #define	FP_287		2		/* 80287 */
 #define	FP_387		3		/* 80387 or 80486 */
-#define	FP_387X		4		/* FXSAVE/RSTOR-capable */
+#define FP_FXSR		4		/* Fast save/restore SIMD Extension */
 
-#endif	/* _MACH_I386_FP_REG_H_ */
+#endif	/* _I386_FP_SAVE_H_ */

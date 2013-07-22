@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2000-2006 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
+ * 
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. The rights granted to you under the License
+ * may not be used to create, or enable the creation or redistribution of,
+ * unlawful or unlicensed copies of an Apple operating system, or to
+ * circumvent, violate, or enable the circumvention or violation of, any
+ * terms of an Apple operating system software license agreement.
+ * 
+ * Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this file.
+ * 
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ * 
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
+ */
+/*
+ * @OSF_COPYRIGHT@
+ */
 /* 
  * Mach Operating System
  * Copyright (c) 1991,1990,1989,1988,1987 Carnegie Mellon University
@@ -24,6 +54,8 @@
  * the rights to redistribute these changes.
  */
 /*
+ */
+/*
  *	File:	mach/vm_param.h
  *	Author:	Avadis Tevanian, Jr., Michael Wayne Young
  *	Date:	1985
@@ -36,63 +68,6 @@
 #define _MACH_VM_PARAM_H_
 
 #include <mach/machine/vm_param.h>
-#include <mach/machine/vm_types.h>
 
-/*
- *	The machine independent pages are refered to as PAGES.  A page
- *	is some number of hardware pages, depending on the target machine.
- *
- *	All references to the size of a page should be done
- *	with PAGE_SIZE, PAGE_SHIFT, or PAGE_MASK.
- *	They may be implemented as either constants or variables,
- *	depending on more-specific code.
- *	If they're variables, they had better be initialized
- *	by the time system-independent code starts getting called.
- *
- *	Regardless whether it is implemented with a constant or a variable,
- *	the PAGE_SIZE is assumed to be a power of two throughout the
- *	virtual memory system implementation.
- *
- *	More-specific code must at least provide PAGE_SHIFT;
- *	we can calculate the others if necessary.
- *	(However, if PAGE_SHIFT really refers to a variable,
- *	PAGE_SIZE and PAGE_MASK should also be variables
- *	so their values don't have to be constantly recomputed.)
- */
-#ifndef PAGE_SHIFT
-#error mach/machine/vm_param.h needs to define PAGE_SHIFT.
-#endif
-
-#ifndef PAGE_SIZE
-#define PAGE_SIZE (1 << PAGE_SHIFT)
-#endif
-
-#ifndef PAGE_MASK
-#define PAGE_MASK (PAGE_SIZE-1)
-#endif
-
-/*
- *	Convert addresses to pages and vice versa.
- *	No rounding is used.
- */
-
-#define atop(x)		(((vm_size_t)(x)) >> PAGE_SHIFT)
-#define ptoa(x)		((vm_offset_t)((x) << PAGE_SHIFT))
-
-/*
- *	Round off or truncate to the nearest page.  These will work
- *	for either addresses or counts.  (i.e. 1 byte rounds to 1 page
- *	bytes.
- */
-
-#define round_page(x)	((vm_offset_t)((((vm_offset_t)(x)) + PAGE_MASK) & ~PAGE_MASK))
-#define trunc_page(x)	((vm_offset_t)(((vm_offset_t)(x)) & ~PAGE_MASK))
-
-/*
- *	Determine whether an address is page-aligned, or a count is
- *	an exact page multiple.
- */
-
-#define	page_aligned(x)	((((vm_offset_t) (x)) & PAGE_MASK) == 0)
 
 #endif	/* _MACH_VM_PARAM_H_ */

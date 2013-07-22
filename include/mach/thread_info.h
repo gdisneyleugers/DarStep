@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2000-2005 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
+ * 
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. The rights granted to you under the License
+ * may not be used to create, or enable the creation or redistribution of,
+ * unlawful or unlicensed copies of an Apple operating system, or to
+ * circumvent, violate, or enable the circumvention or violation of, any
+ * terms of an Apple operating system software license agreement.
+ * 
+ * Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this file.
+ * 
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ * 
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
+ */
+/*
+ * @OSF_COPYRIGHT@
+ */
 /* 
  * Mach Operating System
  * Copyright (c) 1991,1990,1989,1988,1987 Carnegie Mellon University
@@ -24,6 +54,8 @@
  * the rights to redistribute these changes.
  */
 /*
+ */
+/*
  *	File:	mach/thread_info
  *
  *	Thread information structure and definitions.
@@ -40,11 +72,14 @@
 #include <mach/boolean.h>
 #include <mach/policy.h>
 #include <mach/time_value.h>
+#include <mach/message.h>
+#include <mach/machine/vm_types.h>
 
 /*
  *	Generic information structure to allow for expansion.
  */
-typedef	integer_t	*thread_info_t;		/* varying array of ints */
+typedef	natural_t	thread_flavor_t;
+typedef	integer_t	*thread_info_t;		/* varying array of int */
 
 #define THREAD_INFO_MAX		(1024)	/* maximum array size */
 typedef	integer_t	thread_info_data_t[THREAD_INFO_MAX];
@@ -52,26 +87,37 @@ typedef	integer_t	thread_info_data_t[THREAD_INFO_MAX];
 /*
  *	Currently defined information.
  */
-#define THREAD_BASIC_INFO	1		/* basic information */
+#define THREAD_BASIC_INFO         	3     /* basic information */
 
 struct thread_basic_info {
-	time_value_t	user_time;	/* user run time */
-	time_value_t	system_time;	/* system run time */
-	integer_t	cpu_usage;	/* scaled cpu usage percentage */
-	integer_t	base_priority;	/* base scheduling priority */
-	integer_t	cur_priority;	/* current scheduling priority */
-	integer_t	run_state;	/* run state (see below) */
-	integer_t	flags;		/* various flags (see below) */
-	integer_t	suspend_count;	/* suspend count for thread */
-	integer_t	sleep_time;	/* number of seconds that thread
-					   has been sleeping */
-	time_value_t	creation_time;	/* time stamp of creation */
+        time_value_t    user_time;      /* user run time */
+        time_value_t    system_time;    /* system run time */
+        integer_t       cpu_usage;      /* scaled cpu usage percentage */
+	policy_t	policy;		/* scheduling policy in effect */
+        integer_t       run_state;      /* run state (see below) */
+        integer_t       flags;          /* various flags (see below) */
+        integer_t       suspend_count;  /* suspend count for thread */
+        integer_t       sleep_time;     /* number of seconds that thread
+                                           has been sleeping */
 };
 
-typedef struct thread_basic_info	thread_basic_info_data_t;
-typedef struct thread_basic_info	*thread_basic_info_t;
-#define THREAD_BASIC_INFO_COUNT	\
-		(sizeof(thread_basic_info_data_t) / sizeof(natural_t))
+typedef struct thread_basic_info  thread_basic_info_data_t;
+typedef struct thread_basic_info  *thread_basic_info_t;
+#define THREAD_BASIC_INFO_COUNT   ((mach_msg_type_number_t) \
+                (sizeof(thread_basic_info_data_t) / sizeof(natural_t)))
+
+#define THREAD_IDENTIFIER_INFO		4     /* thread id and other information */
+
+struct thread_identifier_info {
+	uint64_t	thread_id;	/* system-wide unique 64-bit thread id */
+	uint64_t	thread_handle;	/* handle to be used by libproc */
+	uint64_t	dispatch_qaddr;	/* libdispatch queue address */
+};
+
+typedef struct thread_identifier_info  thread_identifier_info_data_t;
+typedef struct thread_identifier_info  *thread_identifier_info_t;
+#define THREAD_IDENTIFIER_INFO_COUNT   ((mach_msg_type_number_t) \
+                (sizeof(thread_identifier_info_data_t) / sizeof(natural_t)))
 
 /*
  *	Scale factor for usage field.
@@ -97,21 +143,12 @@ typedef struct thread_basic_info	*thread_basic_info_t;
 #define TH_FLAGS_SWAPPED	0x1	/* thread is swapped out */
 #define TH_FLAGS_IDLE		0x2	/* thread is an idle thread */
 
-#define THREAD_SCHED_INFO	2
+/*
+ * Obsolete interfaces.
+ */
 
-struct thread_sched_info {
-	integer_t	policy;		/* scheduling policy */
-	integer_t	data;		/* associated data */
-	integer_t	base_priority;	/* base priority */
-	integer_t	max_priority;   /* max priority */
-	integer_t	cur_priority;	/* current priority */
-/*boolean_t*/integer_t	depressed;	/* depressed ? */
-	integer_t	depress_priority; /* priority depressed from */
-};
-
-typedef struct thread_sched_info	thread_sched_info_data_t;
-typedef struct thread_sched_info	*thread_sched_info_t;
-#define	THREAD_SCHED_INFO_COUNT	\
-		(sizeof(thread_sched_info_data_t) / sizeof(natural_t))
+#define THREAD_SCHED_TIMESHARE_INFO	10
+#define THREAD_SCHED_RR_INFO		11
+#define THREAD_SCHED_FIFO_INFO		12
 
 #endif	/* _MACH_THREAD_INFO_H_ */

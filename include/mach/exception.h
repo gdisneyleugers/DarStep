@@ -1,3 +1,33 @@
+/*
+ * Copyright (c) 2000 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
+ * 
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. The rights granted to you under the License
+ * may not be used to create, or enable the creation or redistribution of,
+ * unlawful or unlicensed copies of an Apple operating system, or to
+ * circumvent, violate, or enable the circumvention or violation of, any
+ * terms of an Apple operating system software license agreement.
+ * 
+ * Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this file.
+ * 
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ * 
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
+ */
+/*
+ * @OSF_COPYRIGHT@
+ */
 /* 
  * Mach Operating System
  * Copyright (c) 1991,1990,1989,1988,1987 Carnegie Mellon University
@@ -27,32 +57,6 @@
 #ifndef	_MACH_EXCEPTION_H_
 #define	_MACH_EXCEPTION_H_
 
-#include <mach/machine/exception.h>
-
-/*
- *	Machine-independent exception definitions.
- */
-
-#define EXC_BAD_ACCESS		1	/* Could not access memory */
-		/* Code contains kern_return_t describing error. */
-		/* Subcode contains bad memory address. */
-
-#define EXC_BAD_INSTRUCTION	2	/* Instruction failed */
-		/* Illegal or undefined instruction or operand */
-
-#define EXC_ARITHMETIC		3	/* Arithmetic exception */
-		/* Exact nature of exception is in code field */
-
-#define EXC_EMULATION		4	/* Emulation instruction */
-		/* Emulation support instruction encountered */
-		/* Details in code and subcode fields	*/
-
-#define EXC_SOFTWARE		5	/* Software generated exception */
-		/* Exact exception is in code field. */
-		/* Codes 0 - 0xFFFF reserved to hardware */
-		/* Codes 0x10000 - 0x1FFFF reserved for OS emulation (Unix) */
-
-#define EXC_BREAKPOINT		6	/* Trace, breakpoint, etc. */
-		/* Details in code field. */
+#include <mach/exception_types.h>
 
 #endif	/* _MACH_EXCEPTION_H_ */

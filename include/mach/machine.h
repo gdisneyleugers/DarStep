@@ -1,3 +1,30 @@
+/*
+ * Copyright (c) 2000-2007 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
+ * 
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. The rights granted to you under the License
+ * may not be used to create, or enable the creation or redistribution of,
+ * unlawful or unlicensed copies of an Apple operating system, or to
+ * circumvent, violate, or enable the circumvention or violation of, any
+ * terms of an Apple operating system software license agreement.
+ * 
+ * Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this file.
+ * 
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ * 
+ * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
+ */
 /* 
  * Mach Operating System
  * Copyright (c) 1991,1990,1989,1988,1987 Carnegie Mellon University
@@ -33,82 +60,59 @@
 #ifndef	_MACH_MACHINE_H_
 #define _MACH_MACHINE_H_
 
+#ifndef __ASSEMBLER__
+
+#include <stdint.h>
 #include <mach/machine/vm_types.h>
 #include <mach/boolean.h>
 
-/*
- *	For each host, there is a maximum possible number of
- *	cpus that may be available in the system.  This is the
- *	compile-time constant NCPUS, which is defined in cpus.h.
- *
- *	In addition, there is a machine_slot specifier for each
- *	possible cpu in the system.
- */
-
-struct machine_info {
-	integer_t	major_version;	/* kernel major version id */
-	integer_t	minor_version;	/* kernel minor version id */
-	integer_t	max_cpus;	/* max number of cpus compiled */
-	integer_t	avail_cpus;	/* number actually available */
-	vm_size_t	memory_size;	/* size of memory in bytes */
-};
-
-typedef struct machine_info	*machine_info_t;
-typedef struct machine_info	machine_info_data_t;	/* bogus */
-
 typedef integer_t	cpu_type_t;
 typedef integer_t	cpu_subtype_t;
+typedef integer_t	cpu_threadtype_t;
 
-#define CPU_STATE_MAX		3
+#define CPU_STATE_MAX		4
 
 #define CPU_STATE_USER		0
 #define CPU_STATE_SYSTEM	1
 #define CPU_STATE_IDLE		2
+#define CPU_STATE_NICE		3
 
-struct machine_slot {
-/*boolean_t*/integer_t	is_cpu;		/* is there a cpu in this slot? */
-	cpu_type_t	cpu_type;	/* type of cpu */
-	cpu_subtype_t	cpu_subtype;	/* subtype of cpu */
-/*boolean_t*/integer_t	running;	/* is cpu running */
-	integer_t	cpu_ticks[CPU_STATE_MAX];
-	integer_t	clock_freq;	/* clock interrupt frequency */
-};
 
-typedef struct machine_slot	*machine_slot_t;
-typedef struct machine_slot	machine_slot_data_t;	/* bogus */
 
-#ifdef	MACH_KERNEL
-extern struct machine_info	machine_info;
-extern struct machine_slot	machine_slot[NCPUS];
-#endif	/* MACH_KERNEL */
+/*
+ * Capability bits used in the definition of cpu_type.
+ */
+#define	CPU_ARCH_MASK	0xff000000		/* mask for architecture bits */
+#define CPU_ARCH_ABI64	0x01000000		/* 64 bit ABI */
 
 /*
  *	Machine types known by all.
- *
- *	When adding new types & subtypes, please also update slot_name.c
- *	in the libmach sources.
  */
+ 
+#define CPU_TYPE_ANY		((cpu_type_t) -1)
 
 #define CPU_TYPE_VAX		((cpu_type_t) 1)
-#define CPU_TYPE_ROMP		((cpu_type_t) 2)
-#define CPU_TYPE_MC68020	((cpu_type_t) 3)
-#define CPU_TYPE_NS32032	((cpu_type_t) 4)
-#define CPU_TYPE_NS32332        ((cpu_type_t) 5)
-#define CPU_TYPE_NS32532        ((cpu_type_t) 6)
-#define CPU_TYPE_I386		((cpu_type_t) 7)
-#define CPU_TYPE_MIPS		((cpu_type_t) 8)
-#define	CPU_TYPE_MC68030	((cpu_type_t) 9)
-#define CPU_TYPE_MC68040	((cpu_type_t) 10)
+/* skip				((cpu_type_t) 2)	*/
+/* skip				((cpu_type_t) 3)	*/
+/* skip				((cpu_type_t) 4)	*/
+/* skip				((cpu_type_t) 5)	*/
+#define	CPU_TYPE_MC680x0	((cpu_type_t) 6)
+#define CPU_TYPE_X86		((cpu_type_t) 7)
+#define CPU_TYPE_I386		CPU_TYPE_X86		/* compatibility */
+#define	CPU_TYPE_X86_64		(CPU_TYPE_X86 | CPU_ARCH_ABI64)
+
+/* skip CPU_TYPE_MIPS		((cpu_type_t) 8)	*/
+/* skip 			((cpu_type_t) 9)	*/
+#define CPU_TYPE_MC98000	((cpu_type_t) 10)
 #define CPU_TYPE_HPPA           ((cpu_type_t) 11)
 #define CPU_TYPE_ARM		((cpu_type_t) 12)
 #define CPU_TYPE_MC88000	((cpu_type_t) 13)
 #define CPU_TYPE_SPARC		((cpu_type_t) 14)
 #define CPU_TYPE_I860		((cpu_type_t) 15)
-#define	CPU_TYPE_ALPHA		((cpu_type_t) 16)
-#define CPU_TYPE_I486		((cpu_type_t) 17)
-#define CPU_TYPE_PENTIUM	((cpu_type_t) 18)
-#define CPU_TYPE_PENTIUMPRO	((cpu_type_t) 19)
-#define CPU_TYPE_POWERPC	((cpu_type_t) 20)
+/* skip	CPU_TYPE_ALPHA		((cpu_type_t) 16)	*/
+/* skip				((cpu_type_t) 17)	*/
+#define CPU_TYPE_POWERPC		((cpu_type_t) 18)
+#define CPU_TYPE_POWERPC64		(CPU_TYPE_POWERPC | CPU_ARCH_ABI64)
 
 /*
  *	Machine subtypes (these are defined here, instead of in a machine
@@ -117,10 +121,39 @@ extern struct machine_slot	machine_slot[NCPUS];
  */
 
 /*
- *	VAX subtypes (these do *not* necessarily conform to the actual cpu
+ * Capability bits used in the definition of cpu_subtype.
+ */
+#define CPU_SUBTYPE_MASK	0xff000000	/* mask for feature flags */
+#define CPU_SUBTYPE_LIB64	0x80000000	/* 64 bit libraries */
+
+
+/*
+ *	Object files that are hand-crafted to run on any
+ *	implementation of an architecture are tagged with
+ *	CPU_SUBTYPE_MULTIPLE.  This functions essentially the same as
+ *	the "ALL" subtype of an architecture except that it allows us
+ *	to easily find object files that may need to be modified
+ *	whenever a new implementation of an architecture comes out.
+ *
+ *	It is the responsibility of the implementor to make sure the
+ *	software handles unsupported implementations elegantly.
+ */
+#define	CPU_SUBTYPE_MULTIPLE		((cpu_subtype_t) -1)
+#define CPU_SUBTYPE_LITTLE_ENDIAN	((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_BIG_ENDIAN		((cpu_subtype_t) 1)
+
+/*
+ *     Machine threadtypes.
+ *     This is none - not defined - for most machine types/subtypes.
+ */
+#define CPU_THREADTYPE_NONE		((cpu_threadtype_t) 0)
+
+/*
+ *	VAX subtypes (these do *not* necessary conform to the actual cpu
  *	ID assigned by DEC available via the SID register).
  */
 
+#define	CPU_SUBTYPE_VAX_ALL	((cpu_subtype_t) 0) 
 #define CPU_SUBTYPE_VAX780	((cpu_subtype_t) 1)
 #define CPU_SUBTYPE_VAX785	((cpu_subtype_t) 2)
 #define CPU_SUBTYPE_VAX750	((cpu_subtype_t) 3)
@@ -135,55 +168,77 @@ extern struct machine_slot	machine_slot[NCPUS];
 #define CPU_SUBTYPE_UVAXIII	((cpu_subtype_t) 12)
 
 /*
- *	ROMP subtypes.
+ * 	680x0 subtypes
+ *
+ * The subtype definitions here are unusual for historical reasons.
+ * NeXT used to consider 68030 code as generic 68000 code.  For
+ * backwards compatability:
+ * 
+ *	CPU_SUBTYPE_MC68030 symbol has been preserved for source code
+ *	compatability.
+ *
+ *	CPU_SUBTYPE_MC680x0_ALL has been defined to be the same
+ *	subtype as CPU_SUBTYPE_MC68030 for binary comatability.
+ *
+ *	CPU_SUBTYPE_MC68030_ONLY has been added to allow new object
+ *	files to be tagged as containing 68030-specific instructions.
  */
 
-#define CPU_SUBTYPE_RT_PC	((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_RT_APC	((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_RT_135	((cpu_subtype_t) 3)
+#define	CPU_SUBTYPE_MC680x0_ALL		((cpu_subtype_t) 1)
+#define CPU_SUBTYPE_MC68030		((cpu_subtype_t) 1) /* compat */
+#define CPU_SUBTYPE_MC68040		((cpu_subtype_t) 2) 
+#define	CPU_SUBTYPE_MC68030_ONLY	((cpu_subtype_t) 3)
 
 /*
- *	68020 subtypes.
+ *	I386 subtypes
  */
 
-#define CPU_SUBTYPE_SUN3_50	((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_SUN3_160	((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_SUN3_260	((cpu_subtype_t) 3)
-#define CPU_SUBTYPE_SUN3_110	((cpu_subtype_t) 4)
-#define CPU_SUBTYPE_SUN3_60	((cpu_subtype_t) 5)
+#define CPU_SUBTYPE_INTEL(f, m)	((cpu_subtype_t) (f) + ((m) << 4))
 
-#define CPU_SUBTYPE_HP_320	((cpu_subtype_t) 6)
-	/* 16.67 Mhz HP 300 series, custom MMU [HP 320] */
-#define CPU_SUBTYPE_HP_330	((cpu_subtype_t) 7)
-	/* 16.67 Mhz HP 300 series, MC68851 MMU [HP 318,319,330,349] */
-#define CPU_SUBTYPE_HP_350	((cpu_subtype_t) 8)
-	/* 25.00 Mhz HP 300 series, custom MMU [HP 350] */
+#define	CPU_SUBTYPE_I386_ALL			CPU_SUBTYPE_INTEL(3, 0)
+#define CPU_SUBTYPE_386					CPU_SUBTYPE_INTEL(3, 0)
+#define CPU_SUBTYPE_486					CPU_SUBTYPE_INTEL(4, 0)
+#define CPU_SUBTYPE_486SX				CPU_SUBTYPE_INTEL(4, 8)	// 8 << 4 = 128
+#define CPU_SUBTYPE_586					CPU_SUBTYPE_INTEL(5, 0)
+#define CPU_SUBTYPE_PENT	CPU_SUBTYPE_INTEL(5, 0)
+#define CPU_SUBTYPE_PENTPRO	CPU_SUBTYPE_INTEL(6, 1)
+#define CPU_SUBTYPE_PENTII_M3	CPU_SUBTYPE_INTEL(6, 3)
+#define CPU_SUBTYPE_PENTII_M5	CPU_SUBTYPE_INTEL(6, 5)
+#define CPU_SUBTYPE_CELERON				CPU_SUBTYPE_INTEL(7, 6)
+#define CPU_SUBTYPE_CELERON_MOBILE		CPU_SUBTYPE_INTEL(7, 7)
+#define CPU_SUBTYPE_PENTIUM_3			CPU_SUBTYPE_INTEL(8, 0)
+#define CPU_SUBTYPE_PENTIUM_3_M			CPU_SUBTYPE_INTEL(8, 1)
+#define CPU_SUBTYPE_PENTIUM_3_XEON		CPU_SUBTYPE_INTEL(8, 2)
+#define CPU_SUBTYPE_PENTIUM_M			CPU_SUBTYPE_INTEL(9, 0)
+#define CPU_SUBTYPE_PENTIUM_4			CPU_SUBTYPE_INTEL(10, 0)
+#define CPU_SUBTYPE_PENTIUM_4_M			CPU_SUBTYPE_INTEL(10, 1)
+#define CPU_SUBTYPE_ITANIUM				CPU_SUBTYPE_INTEL(11, 0)
+#define CPU_SUBTYPE_ITANIUM_2			CPU_SUBTYPE_INTEL(11, 1)
+#define CPU_SUBTYPE_XEON				CPU_SUBTYPE_INTEL(12, 0)
+#define CPU_SUBTYPE_XEON_MP				CPU_SUBTYPE_INTEL(12, 1)
+
+#define CPU_SUBTYPE_INTEL_FAMILY(x)	((x) & 15)
+#define CPU_SUBTYPE_INTEL_FAMILY_MAX	15
+
+#define CPU_SUBTYPE_INTEL_MODEL(x)	((x) >> 4)
+#define CPU_SUBTYPE_INTEL_MODEL_ALL	0
 
 /*
- *	32032/32332/32532 subtypes.
+ *	X86 subtypes.
  */
 
-#define CPU_SUBTYPE_MMAX_DPC	    ((cpu_subtype_t) 1)	/* 032 CPU */
-#define CPU_SUBTYPE_SQT		    ((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_MMAX_APC_FPU    ((cpu_subtype_t) 3)	/* 32081 FPU */
-#define CPU_SUBTYPE_MMAX_APC_FPA    ((cpu_subtype_t) 4)	/* Weitek FPA */
-#define CPU_SUBTYPE_MMAX_XPC	    ((cpu_subtype_t) 5)	/* 532 CPU */
-#define CPU_SUBTYPE_PC532           ((cpu_subtype_t) 6) /* pc532 board */
+#define CPU_SUBTYPE_X86_ALL		((cpu_subtype_t)3)
+#define CPU_SUBTYPE_X86_64_ALL		((cpu_subtype_t)3)
+#define CPU_SUBTYPE_X86_ARCH1		((cpu_subtype_t)4)
 
-/*
- *	80386/80486 subtypes.
- */
 
-#define CPU_SUBTYPE_AT386	((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_EXL		((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_iPSC386	((cpu_subtype_t) 3)
-#define	CPU_SUBTYPE_SYMMETRY	((cpu_subtype_t) 4)
-#define CPU_SUBTYPE_PS2         ((cpu_subtype_t) 5)    /* PS/2 w/ MCA */
+#define CPU_THREADTYPE_INTEL_HTT	((cpu_threadtype_t) 1)
 
 /*
  *	Mips subtypes.
  */
 
+#define	CPU_SUBTYPE_MIPS_ALL	((cpu_subtype_t) 0)
 #define CPU_SUBTYPE_MIPS_R2300	((cpu_subtype_t) 1)
 #define CPU_SUBTYPE_MIPS_R2600	((cpu_subtype_t) 2)
 #define CPU_SUBTYPE_MIPS_R2800	((cpu_subtype_t) 3)
@@ -193,75 +248,106 @@ extern struct machine_slot	machine_slot[NCPUS];
 #define CPU_SUBTYPE_MIPS_R3000	((cpu_subtype_t) 7)
 
 /*
- * 	MC68030 subtypes.
+ *	MC98000 (PowerPC) subtypes
  */
-
-#define CPU_SUBTYPE_NeXT	((cpu_subtype_t) 1) 
-	/* NeXt thinks MC68030 is 6 rather than 9 */
-#define CPU_SUBTYPE_HP_340	((cpu_subtype_t) 2) 
-	/* 16.67 Mhz HP 300 series [HP 332,340] */
-#define CPU_SUBTYPE_HP_360	((cpu_subtype_t) 3) 
-	/* 25.00 Mhz HP 300 series [HP 360] */
-#define CPU_SUBTYPE_HP_370	((cpu_subtype_t) 4) 
-	/* 33.33 Mhz HP 300 series [HP 370] */
+#define	CPU_SUBTYPE_MC98000_ALL	((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_MC98601	((cpu_subtype_t) 1)
 
 /*
- *	HPPA subtypes.
+ *	HPPA subtypes for Hewlett-Packard HP-PA family of
+ *	risc processors. Port by NeXT to 700 series. 
  */
 
-#define CPU_SUBTYPE_HPPA_825	((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_HPPA_835	((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_HPPA_840	((cpu_subtype_t) 3)
-#define CPU_SUBTYPE_HPPA_850	((cpu_subtype_t) 4)
-#define CPU_SUBTYPE_HPPA_855	((cpu_subtype_t) 5)
-
-/* 
- * 	ARM subtypes.
- */
-
-#define CPU_SUBTYPE_ARM_A500_ARCH	((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_ARM_A500		((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_ARM_A440		((cpu_subtype_t) 3)
-#define CPU_SUBTYPE_ARM_M4		((cpu_subtype_t) 4)
-#define CPU_SUBTYPE_ARM_A680		((cpu_subtype_t) 5)
+#define	CPU_SUBTYPE_HPPA_ALL		((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_HPPA_7100		((cpu_subtype_t) 0) /* compat */
+#define CPU_SUBTYPE_HPPA_7100LC		((cpu_subtype_t) 1)
 
 /*
  *	MC88000 subtypes.
  */
-
-#define CPU_SUBTYPE_MMAX_JPC		((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_LUNA88K             ((cpu_subtype_t) 2)
-
-/*
- *	Sparc subtypes.
- */
-
-#define CPU_SUBTYPE_SUN4_260		((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_SUN4_110		((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_SUN4_330		((cpu_subtype_t) 3)
-#define CPU_SUBTYPE_SUN4C_60		((cpu_subtype_t) 4)
-#define CPU_SUBTYPE_SUN4C_65		((cpu_subtype_t) 5)
-#define CPU_SUBTYPE_SUN4C_20		((cpu_subtype_t) 6)
-#define CPU_SUBTYPE_SUN4C_30		((cpu_subtype_t) 7)
-#define CPU_SUBTYPE_SUN4C_40		((cpu_subtype_t) 8)
-#define CPU_SUBTYPE_SUN4C_50		((cpu_subtype_t) 9)
-#define CPU_SUBTYPE_SUN4C_75		((cpu_subtype_t) 10)
+#define	CPU_SUBTYPE_MC88000_ALL	((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_MC88100	((cpu_subtype_t) 1)
+#define CPU_SUBTYPE_MC88110	((cpu_subtype_t) 2)
 
 /*
- *	i860 subtypes.
+ *	SPARC subtypes
  */
-
-#define CPU_SUBTYPE_iPSC860		((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_OKI860		((cpu_subtype_t) 2)
+#define	CPU_SUBTYPE_SPARC_ALL		((cpu_subtype_t) 0)
 
 /*
- *	Alpha subtypes.
+ *	I860 subtypes
  */
+#define CPU_SUBTYPE_I860_ALL	((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_I860_860	((cpu_subtype_t) 1)
 
-#define CPU_SUBTYPE_ALPHA_EV3		((cpu_subtype_t) 1)
-#define CPU_SUBTYPE_ALPHA_EV4		((cpu_subtype_t) 2)
-#define CPU_SUBTYPE_ALPHA_ISP		((cpu_subtype_t) 3)
-#define CPU_SUBTYPE_ALPHA_21064		((cpu_subtype_t) 4)
+/*
+ *	PowerPC subtypes
+ */
+#define CPU_SUBTYPE_POWERPC_ALL		((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_POWERPC_601		((cpu_subtype_t) 1)
+#define CPU_SUBTYPE_POWERPC_602		((cpu_subtype_t) 2)
+#define CPU_SUBTYPE_POWERPC_603		((cpu_subtype_t) 3)
+#define CPU_SUBTYPE_POWERPC_603e	((cpu_subtype_t) 4)
+#define CPU_SUBTYPE_POWERPC_603ev	((cpu_subtype_t) 5)
+#define CPU_SUBTYPE_POWERPC_604		((cpu_subtype_t) 6)
+#define CPU_SUBTYPE_POWERPC_604e	((cpu_subtype_t) 7)
+#define CPU_SUBTYPE_POWERPC_620		((cpu_subtype_t) 8)
+#define CPU_SUBTYPE_POWERPC_750		((cpu_subtype_t) 9)
+#define CPU_SUBTYPE_POWERPC_7400	((cpu_subtype_t) 10)
+#define CPU_SUBTYPE_POWERPC_7450	((cpu_subtype_t) 11)
+#define CPU_SUBTYPE_POWERPC_970		((cpu_subtype_t) 100)
+
+/*
+ *	ARM subtypes
+ */
+#define CPU_SUBTYPE_ARM_ALL             ((cpu_subtype_t) 0)
+#define CPU_SUBTYPE_ARM_V4T             ((cpu_subtype_t) 5)
+#define CPU_SUBTYPE_ARM_V6              ((cpu_subtype_t) 6)
+#define CPU_SUBTYPE_ARM_V5TEJ           ((cpu_subtype_t) 7)
+#define CPU_SUBTYPE_ARM_XSCALE		((cpu_subtype_t) 8)
+#define CPU_SUBTYPE_ARM_V7		((cpu_subtype_t) 9)
+#define CPU_SUBTYPE_ARM_V7F		((cpu_subtype_t) 10) /* Cortex A9 */
+#define CPU_SUBTYPE_ARM_V7K		((cpu_subtype_t) 12) /* Kirkwood40 */
+
+#endif /* !__ASSEMBLER__ */
+
+/*
+ *	CPU families (sysctl hw.cpufamily)
+ *
+ * These are meant to identify the CPU's marketing name - an
+ * application can map these to (possibly) localized strings.
+ * NB: the encodings of the CPU families are intentionally arbitrary.
+ * There is no ordering, and you should never try to deduce whether
+ * or not some feature is available based on the family.
+ * Use feature flags (eg, hw.optional.altivec) to test for optional
+ * functionality.
+ */
+#define CPUFAMILY_UNKNOWN   		0
+#define CPUFAMILY_POWERPC_G3		0xcee41549
+#define CPUFAMILY_POWERPC_G4		0x77c184ae
+#define CPUFAMILY_POWERPC_G5		0xed76d8aa
+#define CPUFAMILY_INTEL_6_13		0xaa33392b
+#define CPUFAMILY_INTEL_YONAH		0x73d67300
+#define CPUFAMILY_INTEL_MEROM		0x426f69ef
+#define CPUFAMILY_INTEL_PENRYN		0x78ea4fbc
+#define CPUFAMILY_INTEL_NEHALEM		0x6b5a4cd2
+#define CPUFAMILY_INTEL_WESTMERE	0x573b5eec
+#define CPUFAMILY_INTEL_SANDYBRIDGE	0x5490b78c
+#define CPUFAMILY_INTEL_IVYBRIDGE	0x1f65e835
+#define CPUFAMILY_ARM_9			0xe73283ae
+#define CPUFAMILY_ARM_11		0x8ff620d8
+#define CPUFAMILY_ARM_XSCALE		0x53b005f5
+#define CPUFAMILY_ARM_13		0x0cc90e64
+#define CPUFAMILY_ARM_14		0x96077ef1
+
+/* The following synonyms are deprecated: */
+#define CPUFAMILY_INTEL_6_14	CPUFAMILY_INTEL_YONAH
+#define CPUFAMILY_INTEL_6_15	CPUFAMILY_INTEL_MEROM
+#define CPUFAMILY_INTEL_6_23	CPUFAMILY_INTEL_PENRYN
+#define CPUFAMILY_INTEL_6_26	CPUFAMILY_INTEL_NEHALEM
+
+#define CPUFAMILY_INTEL_CORE	CPUFAMILY_INTEL_YONAH
+#define CPUFAMILY_INTEL_CORE2	CPUFAMILY_INTEL_MEROM
 
 
 #endif	/* _MACH_MACHINE_H_ */
