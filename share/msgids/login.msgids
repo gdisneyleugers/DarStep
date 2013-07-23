@@ -1,0 +1,5 @@
+login 36000 login_message_user 0 36000 36100
+login 36000 login_get_location 1 36001 36101
+login 36000 login_get_idle_time 2 36002 36102
+login 36000 login_get_input_devices 3 36003 36103
+login 36000 login_get_login_collection 4 36004 36104

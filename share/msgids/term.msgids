@@ -1,0 +1,11 @@
+term 28000 term_getctty 0 28000 28100
+term 28000 term_open_ctty 1 28001 28101
+term 28000 term_set_nodename 2 28002 28102
+term 28000 term_get_nodename 3 28003 28103
+term 28000 term_set_filenode 4 28004 28104
+term 28000 term_get_bottom_type 5 28005 28105
+term 28000 term_on_machdev 6 28006 28106
+term 28000 term_on_hurddev 7 28007 28107
+term 28000 term_on_pty 8 28008 28108
+term 28000 termctty_open_terminal 9 28009 28109
+term 28000 term_get_peername 10 28010 28110

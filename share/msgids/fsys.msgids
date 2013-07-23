@@ -1,0 +1,10 @@
+fsys 22000 fsys_startup 0 22000 22100
+fsys 22000 fsys_goaway 1 22001 22101
+fsys 22000 fsys_getroot 2 22002 22102
+fsys 22000 fsys_getfile 3 22003 22103
+fsys 22000 fsys_syncfs 4 22004 22104
+fsys 22000 fsys_set_options 5 22005 22105
+fsys 22000 fsys_getpriv 6 22006 22106
+fsys 22000 fsys_init 7 22007 22107
+fsys 22000 fsys_forward 8 22008 22108
+fsys 22000 fsys_get_options 9 22009 22109

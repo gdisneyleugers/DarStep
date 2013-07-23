@@ -1,0 +1,3 @@
+process_reply 24100 proc_setmsgport_reply 13 24113 0
+process_reply 24100 proc_getmsgport_reply 19 24119 0
+process_reply 24100 proc_wait_reply 20 24120 0

@@ -1,0 +1,2 @@
+auth_reply 25100 auth_user_authenticate_reply 2 25102 0
+auth_reply 25100 auth_server_authenticate_reply 3 25103 0

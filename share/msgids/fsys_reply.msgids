@@ -1,0 +1,10 @@
+fsys_reply 22100 fsys_startup_reply 0 22100 0
+fsys_reply 22100 fsys_goaway_reply 1 22101 0
+fsys_reply 22100 fsys_getroot_reply 2 22102 0
+fsys_reply 22100 fsys_getfile_reply 3 22103 0
+fsys_reply 22100 fsys_syncfs_reply 4 22104 0
+fsys_reply 22100 fsys_set_options_reply 5 22105 0
+fsys_reply 22100 fsys_getpriv_reply 6 22106 0
+fsys_reply 22100 fsys_init_reply 7 22107 0
+fsys_reply 22100 fsys_forward_reply 8 22108 0
+fsys_reply 22100 fsys_get_options_reply 9 22109 0

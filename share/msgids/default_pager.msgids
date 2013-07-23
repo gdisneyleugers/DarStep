@@ -1,0 +1,7 @@
+default_pager 2275 default_pager_object_create 0 2275 2375
+default_pager 2275 default_pager_info 1 2276 2376
+default_pager 2275 default_pager_objects 2 2277 2377
+default_pager 2275 default_pager_object_pages 3 2278 2378
+default_pager 2275 default_pager_paging_file 4 2279 2379
+default_pager 2275 default_pager_paging_storage 6 2281 2381
+default_pager 2275 default_pager_object_set_size 7 2282 2382

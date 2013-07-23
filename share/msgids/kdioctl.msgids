@@ -1,0 +1,2 @@
+kdioctl 120000 kdioctl_kdskbdmode 1 120001 120101
+kdioctl 120000 kdioctl_kdgkbdmode 2 120002 120102

@@ -1,0 +1,16 @@
+socket 26000 socket_create 0 26000 26100
+socket 26000 socket_listen 1 26001 26101
+socket 26000 socket_accept 2 26002 26102
+socket 26000 socket_connect 3 26003 26103
+socket 26000 socket_bind 4 26004 26104
+socket 26000 socket_name 5 26005 26105
+socket 26000 socket_peername 6 26006 26106
+socket 26000 socket_connect2 7 26007 26107
+socket 26000 socket_create_address 8 26008 26108
+socket 26000 socket_fabricate_address 9 26009 26109
+socket 26000 socket_whatis_address 10 26010 26110
+socket 26000 socket_shutdown 11 26011 26111
+socket 26000 socket_getopt 12 26012 26112
+socket 26000 socket_setopt 13 26013 26113
+socket 26000 socket_send 14 26014 26114
+socket 26000 socket_recv 15 26015 26115

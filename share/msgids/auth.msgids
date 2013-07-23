@@ -1,0 +1,4 @@
+auth 25000 auth_getids 0 25000 25100
+auth 25000 auth_makeauth 1 25001 25101
+auth 25000 auth_user_authenticate 2 25002 25102
+auth 25000 auth_server_authenticate 3 25003 25103

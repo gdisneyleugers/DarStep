@@ -1,0 +1,2 @@
+auth_reply 25000 auth_user_authenticate_request 2 25002 0
+auth_reply 25000 auth_server_authenticate_request 3 25003 0

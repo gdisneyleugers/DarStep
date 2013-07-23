@@ -1,0 +1,5 @@
+startup 29000 startup_essential_task 0 29000 29100
+startup 29000 startup_request_notification 1 29001 29101
+startup 29000 startup_reboot 2 29002 29102
+startup 29000 startup_procinit 3 29003 29103
+startup 29000 startup_authinit 4 29004 29104

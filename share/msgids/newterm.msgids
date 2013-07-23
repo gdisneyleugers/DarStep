@@ -1,0 +1,2 @@
+newterm 27000 newterm_from_device 0 27000 27100
+newterm 27000 newterm_makenode 1 27001 27101
